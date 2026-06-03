@@ -1,0 +1,29 @@
+# SDD Configuration — dcfiles
+schema: openspec/v1
+
+project:
+  name: dcfiles
+  type: dotfiles-manager
+  description: Gestor de dotfiles + repositorio de dotfiles personales
+
+stack:
+  primary: undetermined
+  note: Repo vacío — stack a decidir en fase de exploración/propuesta
+
+testing:
+  framework: none
+  command: null
+  strict_tdd: false
+
+artifact_store:
+  mode: both
+  openspec_root: openspec/
+  engram_project: dcfiles
+
+session:
+  execution_mode: interactive
+  delivery_strategy: auto-forecast
+  chain_strategy: undetermined
+  review_budget_lines: 2000
+
+generated: 2026-06-03T00:00:00Z
