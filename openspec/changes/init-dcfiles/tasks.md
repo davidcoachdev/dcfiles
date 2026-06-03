@@ -31,10 +31,10 @@ All PRs target main (stacked-to-main pattern). PR 2 depends on PR 1 files being 
 
 ## Phase 1: Foundation
 
-- [ ] 1.1 Create `config/` with example dotfiles: `config/bash/.bashrc`, `config/git/.gitconfig`, `config/tmux/.tmux.conf`
-- [ ] 1.2 Create `lib/utils.sh` — `set -euo pipefail`, color vars, `msg()`, `warn()`, `die()`, `abspath()`, `is_tracked()`, `$DCFILES_HOME` default `~/dcfiles`
-- [ ] 1.3 Create `lib/symlink.sh` — source `utils.sh`, `deploy_all()` (two-pass: overrides-first by `hostname -s`, then base files skipping resolved overrides), `deploy_single()`, `_link()` helper (backup `.dcfiles.bak`, `mkdir -p`, `ln -sf`), `strip_suffix()`
-- [ ] 1.4 Create `.shellcheckrc` — `disable=SC1091` (sourced files are project-internal)
+- [x] 1.1 Create `config/` with example dotfiles: `config/bash/.bashrc`, `config/git/.gitconfig`, `config/tmux/.tmux.conf`
+- [x] 1.2 Create `lib/utils.sh` — `set -euo pipefail`, color vars, `msg()`, `warn()`, `die()`, `abspath()`, `is_tracked()`, `$DCFILES_HOME` default `~/dcfiles`
+- [x] 1.3 Create `lib/symlink.sh` — source `utils.sh`, `deploy_all()` (two-pass: overrides-first by `hostname -s`, then base files skipping resolved overrides), `deploy_single()`, `_link()` helper (backup `.dcfiles.bak`, `mkdir -p`, `ln -sf`), `strip_suffix()`
+- [x] 1.4 Create `.shellcheckrc` — `disable=SC1091` (sourced files are project-internal)
 
 **Verify**: `bash -n lib/utils.sh lib/symlink.sh` passes. `shellcheck lib/utils.sh lib/symlink.sh` zero errors.
 
