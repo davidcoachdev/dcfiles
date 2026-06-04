@@ -40,15 +40,15 @@ All PRs target main (stacked-to-main pattern). PR 2 depends on PR 1 files being 
 
 ## Phase 2: Bootstrap
 
-- [ ] 2.1 Create `install.sh` — shebang + `set -euo pipefail`, check deps (bash≥4.0, git, ln, cp), resolve `$DCFILES_HOME`, clone repo if missing / `git pull` if exists, source `lib/utils.sh` and `lib/symlink.sh`, `deploy_all` (R-001), symlink `bin/dcfiles` → `~/.local/bin/dcfiles` (R-003)
+- [x] 2.1 Create `install.sh` — shebang + `set -euo pipefail`, check deps (bash≥4.0, git, ln, cp, readlink), resolve `$DCFILES_HOME`, clone repo if missing (detects remote from env or git origin), source `lib/utils.sh` and `lib/symlink.sh` via relative `$(dirname "$0")` path, `deploy_all` (R-001), symlink `bin/dcfiles` → `~/.local/bin/dcfiles` (R-003), warn if `~/.local/bin` not in PATH
 
 **Verify**: `bash -n install.sh` passes. `shellcheck install.sh` zero errors. Manual test in temp dir with fake `$HOME`.
 
 ## Phase 3: CLI
 
-- [ ] 3.1 Create `bin/dcfiles` — shebang, set `$DCFILES_HOME`, source libs, `usage()` help, case dispatch:
+- [x] 3.1 Create `bin/dcfiles` — shebang, set `$DCFILES_HOME` from `$(dirname "$0")/..`, source libs via `$DCFILES_HOME`, `usage()` help, case dispatch:
   - `add <file>` — validate exists + not tracked → `mkdir -p` + `cp` into `config/` preserving `$HOME`-relative path → `deploy_single` → `git add` (R-004)
-  - `sync` — `deploy_all` → auto-commit + auto-push changes (R-005). `--fix` flag repairs broken symlinks
+  - `sync` — `deploy_all` → auto-commit + auto-push changes (R-005). `--fix` flag removes broken symlinks before re-deploy
   - `status` — walk `config/`, classify each file: `ok` / `missing` / `overridden` / `broken`, table output (R-006)
   - `diff` — `git diff -- config/` for tracked files, report untracked `$HOME` files (R-007)
 
