@@ -49,10 +49,16 @@ warn() {
     printf "${YELLOW}==>${RESET} %s\n" "$*" >&2
 }
 
-# die — print red error message and exit with status 1
+# die — print red error message and exit with optional status code
+# Usage:  die [<code>] "message"        (default code is 1)
 die() {
+    local code=1
+    if [[ "$1" =~ ^[0-9]+$ ]]; then
+        code="$1"
+        shift
+    fi
     printf "${RED}ERROR:${RESET} %s\n" "$*" >&2
-    exit 1
+    exit "$code"
 }
 
 # ---------------------------------------------------------------------------

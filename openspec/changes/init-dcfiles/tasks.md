@@ -40,15 +40,15 @@ All PRs target main (stacked-to-main pattern). PR 2 depends on PR 1 files being 
 
 ## Phase 2: Bootstrap
 
-- [ ] 2.1 Create `install.sh` — shebang + `set -euo pipefail`, check deps (bash≥4.0, git, ln, cp), resolve `$DCFILES_HOME`, clone repo if missing / `git pull` if exists, source `lib/utils.sh` and `lib/symlink.sh`, `deploy_all` (R-001), symlink `bin/dcfiles` → `~/.local/bin/dcfiles` (R-003)
+- [x] 2.1 Create `install.sh` — shebang + `set -euo pipefail`, check deps (bash≥4.0, git, ln, cp, readlink), resolve `$DCFILES_HOME`, clone repo if missing (detects remote from env or git origin), source `lib/utils.sh` and `lib/symlink.sh` via relative `$(dirname "$0")` path, `deploy_all` (R-001), symlink `bin/dcfiles` → `~/.local/bin/dcfiles` (R-003), warn if `~/.local/bin` not in PATH
 
 **Verify**: `bash -n install.sh` passes. `shellcheck install.sh` zero errors. Manual test in temp dir with fake `$HOME`.
 
 ## Phase 3: CLI
 
-- [ ] 3.1 Create `bin/dcfiles` — shebang, set `$DCFILES_HOME`, source libs, `usage()` help, case dispatch:
+- [x] 3.1 Create `bin/dcfiles` — shebang, set `$DCFILES_HOME` from `$(dirname "$0")/..`, source libs via `$DCFILES_HOME`, `usage()` help, case dispatch:
   - `add <file>` — validate exists + not tracked → `mkdir -p` + `cp` into `config/` preserving `$HOME`-relative path → `deploy_single` → `git add` (R-004)
-  - `sync` — `deploy_all` → auto-commit + auto-push changes (R-005). `--fix` flag repairs broken symlinks
+  - `sync` — `deploy_all` → auto-commit + auto-push changes (R-005). `--fix` flag removes broken symlinks before re-deploy
   - `status` — walk `config/`, classify each file: `ok` / `missing` / `overridden` / `broken`, table output (R-006)
   - `diff` — `git diff -- config/` for tracked files, report untracked `$HOME` files (R-007)
 
@@ -56,15 +56,15 @@ All PRs target main (stacked-to-main pattern). PR 2 depends on PR 1 files being 
 
 ## Phase 4: Tests
 
-- [ ] 4.1 Create `test/helpers/common.bash` — bats `setup()` creating temp `$HOME` with fake config tree (bash, git, tmux files), hostname override fixtures (`.bashrc.terminus`), `teardown()` removing `$TMPDIR`
-- [ ] 4.2 Create `test/unit/symlink.bats` — tests covering R-002: standard deploy, hostname match wins, hostname no-match falls back, backup before overwrite, symlink already correct (idempotent), empty config, broken symlink repair via `--fix`
-- [ ] 4.3 Create `test/integration/cli.bats` — full workflow: add new dotfile → sync deploys → status reports ok → diff shows changes; add already-tracked file (exit 0), add nonexistent file (exit 2), sync `--fix`, status with overridden/missing states (R-003 through R-007)
+- [x] 4.1 Create `test/helpers/common.bash` — bats `setup()` creating temp `$HOME` with fake config tree (bash, git, tmux files), hostname override fixtures (`.bashrc.terminus`), `teardown()` removing `$TMPDIR`
+- [x] 4.2 Create `test/unit/symlink.bats` — tests covering R-002: standard deploy, hostname match wins, hostname no-match falls back, backup before overwrite, symlink already correct (idempotent), empty config, broken symlink repair via `--fix`
+- [x] 4.3 Create `test/integration/cli.bats` — full workflow: add new dotfile → sync deploys → status reports ok → diff shows changes; add already-tracked file (exit 0), add nonexistent file (exit 2), sync `--fix`, status with overridden/missing states (R-003 through R-007)
 
 **Verify**: `bats test/` all pass. `shellcheck test/**/*.bats test/**/*.bash` zero errors.
 
 ## Phase 5: CI & Docs
 
-- [ ] 5.1 Create `.github/workflows/ci.yml` — push/PR trigger, jobs: `shellcheck` (all `*.sh` files, fail on error) + `bats` (install bats-core, run `test/`)
-- [ ] 5.2 Create `README.md` — one-liner bootstrap (`git clone <url> ~/dcfiles && ~/dcfiles/install.sh`), requirements (bash≥4.0, git, coreutils), directory structure, subcommand reference (add/sync/status/diff), hostname override convention
+- [x] 5.1 Create `.github/workflows/ci.yml` — push/PR trigger, jobs: `shellcheck` (all `*.sh` files, fail on error) + `bats` (install bats-core, run `test/`)
+- [x] 5.2 Create `README.md` — one-liner bootstrap (`git clone <url> ~/dcfiles && ~/dcfiles/install.sh`), requirements (bash≥4.0, git, coreutils), directory structure, subcommand reference (add/sync/status/diff), hostname override convention
 
 **Verify**: CI passes on push (`shellcheck` + `bats`). README renders correctly.

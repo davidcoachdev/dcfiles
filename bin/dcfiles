@@ -1,0 +1,272 @@
+#!/usr/bin/env bash
+#
+# dcfiles — Dotfiles CLI manager
+#
+# Usage:
+#   dcfiles add <file>     Add a dotfile to managed config and deploy symlink
+#   dcfiles sync [--fix]   Deploy all symlinks, commit, and push
+#   dcfiles status         Show tracked file states
+#   dcfiles diff           Show config diff
+#
+# Source the shared libs for symlink engine and utilities.
+# This script assumes it lives at $DCFILES_HOME/bin/dcfiles.
+
+set -euo pipefail
+
+# ---------------------------------------------------------------------------
+# Bootstrap paths
+# ---------------------------------------------------------------------------
+script_dir="$(cd "$(dirname "$0")" && pwd -P)"
+DCFILES_HOME="${DCFILES_HOME:-$(dirname "$script_dir")}"
+
+source "${DCFILES_HOME}/lib/utils.sh"
+source "${DCFILES_HOME}/lib/symlink.sh"
+
+# ---------------------------------------------------------------------------
+# Help / usage
+# ---------------------------------------------------------------------------
+usage() {
+    cat <<EOF
+Usage: dcfiles <command> [<args>]
+
+Commands:
+    add <file>     Copy a dotfile into config/, deploy symlink, stage
+    sync [--fix]   Deploy all symlinks, commit, and push changes
+    status         Show state of each tracked file (ok/missing/overridden/broken)
+    diff           Show git diff of tracked config files
+    help           Show this message
+EOF
+}
+
+# ---------------------------------------------------------------------------
+# Subcommand: add
+# ---------------------------------------------------------------------------
+cmd_add() {
+    local file="${1:-}"
+
+    if [[ -z "$file" ]]; then
+        die "Usage: dcfiles add <file>"
+    fi
+
+    # Expand tilde if present
+    file="${file/#\~/$HOME}"
+
+    # Must exist and be a regular file
+    [[ -f "$file" ]] || die 2 "File not found: ${file}"
+
+    # Resolve to absolute canonical path
+    file="$(abspath "$file")"
+
+    # Must not already be tracked by dcfiles
+    if is_tracked "$file"; then
+        msg "Already tracked: ${file}"
+        exit 0
+    fi
+
+    # Must be under $HOME
+    local rel="${file#"$HOME"/}"
+    if [[ "$rel" == "$file" ]]; then
+        die "File is not under \$HOME: ${file}"
+    fi
+
+    local dest="${DCFILES_HOME}/config/${rel}"
+
+    # Create destination directory
+    mkdir -p "$(dirname "$dest")"
+
+    # Copy file into config/ tree
+    cp "$file" "$dest"
+    msg "Copied: ${file} → ${dest}"
+
+    # Deploy symlink back to target location
+    deploy_single "$dest"
+
+    # Stage the new config file for commit
+    git -C "$DCFILES_HOME" add "${dest}"
+    msg "Staged: ${dest}"
+}
+
+# ---------------------------------------------------------------------------
+# Subcommand: sync
+# ---------------------------------------------------------------------------
+cmd_sync() {
+    local fix=false
+    [[ "${1:-}" == "--fix" ]] && fix=true
+
+    if [[ "$fix" == true ]]; then
+        # Remove broken symlinks first so deploy_all can re-create them
+        local config_dir="${DCFILES_HOME}/config"
+        while IFS= read -r -d '' src; do
+            local rel="${src#"${config_dir}"/}"
+            local target="$HOME/$rel"
+            if [[ -L "$target" && ! -e "$target" ]]; then
+                rm "$target"
+                warn "Removed broken symlink: ${target}"
+            fi
+        done < <(find "$config_dir" -type f -print0 2>/dev/null)
+    fi
+
+    # Deploy all symlinks (two-pass: overrides, then base files)
+    deploy_all
+
+    # Auto-commit and push
+    msg "Committing and pushing changes..."
+    git -C "$DCFILES_HOME" add -A
+    git -C "$DCFILES_HOME" commit -m "dcfiles sync" 2>/dev/null || msg "Nothing new to commit"
+    git -C "$DCFILES_HOME" push 2>/dev/null || warn "Push failed — is git remote configured?"
+    msg "Sync complete."
+}
+
+# ---------------------------------------------------------------------------
+# Subcommand: status
+# ---------------------------------------------------------------------------
+cmd_status() {
+    local config_dir="${DCFILES_HOME}/config"
+
+    if [[ ! -d "$config_dir" ]]; then
+        warn "No config directory found at ${config_dir}"
+        exit 0
+    fi
+
+    local hostname
+    hostname="$(hostname -s)"
+    local any_problem=false
+
+    printf "\n%-30s %s\n" "File" "Status"
+    printf -- "%-30s %s\n" "----" "------"
+
+    while IFS= read -r -d '' src; do
+        local name rel subdir
+        name="$(basename "$src")"
+        rel="${src#"${config_dir}"/}"
+        subdir="$(dirname "$rel")"
+        local target="$HOME/$rel"
+
+        # Skip hostname-override files themselves (not deployed directly)
+        [[ "$name" == *".${hostname}" ]] && continue
+
+        # Check for hostname override
+        local override="${config_dir}/${subdir}/${name}.${hostname}"
+        if [[ -f "$override" ]]; then
+            # Override exists — check the target
+            if is_tracked "$target"; then
+                printf "%-30s %s\n" "$rel" "ok"
+            elif [[ -f "$target" && ! -L "$target" ]]; then
+                printf "%-30s %s\n" "$rel" "overridden"
+                any_problem=true
+            elif [[ -L "$target" ]]; then
+                printf "%-30s %s\n" "$rel" "broken"
+                any_problem=true
+            else
+                printf "%-30s %s\n" "$rel" "missing"
+                any_problem=true
+            fi
+            continue
+        fi
+
+        # Base file (no override)
+        if is_tracked "$target"; then
+            printf "%-30s %s\n" "$rel" "ok"
+        elif [[ -f "$target" && ! -L "$target" ]]; then
+            printf "%-30s %s\n" "$rel" "overridden"
+            any_problem=true
+        elif [[ -L "$target" ]]; then
+            printf "%-30s %s\n" "$rel" "broken"
+            any_problem=true
+        else
+            printf "%-30s %s\n" "$rel" "missing"
+            any_problem=true
+        fi
+    done < <(find "$config_dir" -type f -print0)
+
+    printf "\n"
+
+    if [[ "$any_problem" == false ]]; then
+        msg "All files synced."
+    fi
+
+    exit 0  # Always informational per R-006
+}
+
+# ---------------------------------------------------------------------------
+# Subcommand: diff
+# ---------------------------------------------------------------------------
+cmd_diff() {
+    local config_dir="${DCFILES_HOME}/config"
+    local hostname
+    hostname="$(hostname -s)"
+
+    if [[ ! -d "$config_dir" ]]; then
+        warn "No config directory found at ${config_dir}"
+        exit 0
+    fi
+
+    local has_changes=false
+
+    # Show git diff for tracked config files
+    local diff_output
+    diff_output="$(git -C "$DCFILES_HOME" diff -- "config/" 2>/dev/null || true)"
+    if [[ -n "$diff_output" ]]; then
+        has_changes=true
+        git -C "$DCFILES_HOME" diff -- "config/"
+    fi
+
+    # Check for untracked files: targets in $HOME that exist as regular
+    # files (not dcfiles symlinks) but have a corresponding config entry.
+    local untracked=()
+    while IFS= read -r -d '' src; do
+        local name subdir rel
+        name="$(basename "$src")"
+        rel="${src#"${config_dir}"/}"
+        subdir="$(dirname "$rel")"
+        local target="$HOME/$rel"
+
+        # Skip hostname-override files
+        [[ "$name" == *".${hostname}" ]] && continue
+
+        # If target is a regular file (not symlink), it's overridden
+        if [[ -f "$target" && ! -L "$target" ]]; then
+            untracked+=("$rel")
+        fi
+    done < <(find "$config_dir" -type f -print0)
+
+    if [[ ${#untracked[@]} -gt 0 ]]; then
+        has_changes=true
+        printf "\nOverridden files in \$HOME (not dcfiles-managed):\n"
+        for f in "${untracked[@]}"; do
+            printf "  %s (existing file, not a dcfiles symlink)\n" "$f"
+        done
+    fi
+
+    if [[ "$has_changes" == false ]]; then
+        msg "All tracked files match their deployed state."
+    fi
+}
+
+# ---------------------------------------------------------------------------
+# Dispatch
+# ---------------------------------------------------------------------------
+case "${1:-help}" in
+    add)
+        shift
+        cmd_add "${1:-}"
+        ;;
+    sync)
+        shift
+        cmd_sync "${1:-}"
+        ;;
+    status)
+        cmd_status
+        ;;
+    diff)
+        cmd_diff
+        ;;
+    help|--help|-h)
+        usage
+        ;;
+    *)
+        warn "Unknown command: ${1:-}"
+        usage
+        exit 1
+        ;;
+esac
