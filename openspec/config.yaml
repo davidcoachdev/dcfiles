@@ -7,12 +7,12 @@ project:
   description: Gestor de dotfiles + repositorio de dotfiles personales
 
 stack:
-  primary: undetermined
-  note: Repo vacío — stack a decidir en fase de exploración/propuesta
+  primary: bash
+  note: Pure Bash MVP — symlink engine, CLI dispatcher, bootstrap installer. Ready for Rust migration.
 
 testing:
-  framework: none
-  command: null
+  framework: bats-core
+  command: bats test/
   strict_tdd: false
 
 artifact_store:
@@ -23,7 +23,8 @@ artifact_store:
 session:
   execution_mode: interactive
   delivery_strategy: auto-forecast
-  chain_strategy: undetermined
+  chain_strategy: feature-branch-chain
   review_budget_lines: 2000
 
 generated: 2026-06-03T00:00:00Z
+archived: 2026-06-03T18:50:00Z
