@@ -25,7 +25,7 @@ Specify behavior for dcfiles MVP: bootstrap installer and dotfiles CLI.
 - THEN error listing missing deps, exit 1
 
 ### R-002: Symlink Engine with Hostname Overrides
-The symlink engine MUST walk `config/`, mirror tree structure to `$HOME`, and create relative symlinks. Files named `<name>.<hostname>` MUST override `<name>` when `$(hostname -s)` matches. Existing non-symlink files MUST be backed up as `<name>.dcfiles.bak`.
+The symlink engine MUST walk `config/`, mirror tree structure to `$HOME`, and create relative symlinks. Files named `<name>.<hostname>` MUST override `<name>` when `$(hostname -s)` matches.
 
 #### Scenario: Standard deploy
 - GIVEN `config/bash/.bashrc` exists
@@ -43,15 +43,10 @@ The symlink engine MUST walk `config/`, mirror tree structure to `$HOME`, and cr
 - WHEN symlink engine runs
 - THEN `config/bash/.bashrc` used, `.bashrc.terminus` ignored
 
-#### Scenario: Backup before overwrite
-- GIVEN `~/.bashrc` is a regular file (not dcfiles symlink)
-- WHEN symlink engine creates `~/.bashrc`
-- THEN file backed up to `~/.bashrc.dcfiles.bak`, symlink created
-
 #### Scenario: Symlink already correct
 - GIVEN `~/.bashrc` → correct repo target
 - WHEN symlink engine runs
-- THEN symlink left untouched, no backup
+- THEN symlink left untouched
 
 ## ADDED Requirements — dotfiles-sync
 

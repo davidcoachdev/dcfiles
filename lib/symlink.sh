@@ -9,10 +9,6 @@
 # Override convention:
 #   If `config/bash/.bashrc` and `config/bash/.bashrc.<hostname>` both exist,
 #   the hostname-specific file wins when `$(hostname -s)` matches.
-#
-# Backup convention:
-#   If a regular file already exists at the target path it is copied to
-#   `<target>.dcfiles.bak` before being replaced by the symlink.
 
 set -euo pipefail
 
@@ -31,7 +27,7 @@ strip_suffix() {
     printf '%s\n' "${filename%."${suffix}"}"
 }
 
-# _link — create a single relative symlink with backup
+# _link — create a single relative symlink
 # Args:
 #   $1  src         — absolute path to source file in config/
 #   $2  name        — target filename (e.g. ".bashrc")
@@ -44,12 +40,6 @@ _link() {
 
     # Ensure parent directory exists
     mkdir -p "$(dirname "$target")"
-
-    # Backup existing regular file if it is NOT already a dcfiles symlink
-    if [[ -f "$target" && ! -L "$target" ]]; then
-        cp "$target" "${target}.dcfiles.bak"
-        warn "Backed up: ${target} → ${target}.dcfiles.bak"
-    fi
 
     # Create relative symlink (GNU ln --relative)
     ln -sfr "$src" "$target"

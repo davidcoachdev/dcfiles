@@ -22,7 +22,7 @@ DCFILES_HOME=~/dcfiles ~/.local/bin/dcfiles <command> [args]
 
 | Command | What it does |
 |---------|-------------|
-| `add <file>` | Copy a file into `config/`, symlink it to `$HOME`, stage for git. Backs up original as `<file>.dcfiles.bak`. |
+| `add <file>` | Copy a file into `config/`, symlink it to `$HOME`, stage for git. |
 | `sync [--fix]` | Deploy all symlinks from `config/` → `$HOME`, then `git commit && git push`. `--fix` repairs broken symlinks first. |
 | `status` | Show every tracked file: `ok`, `missing`, `overridden`, `broken`. |
 | `diff` | Git diff of config + list of overridden files. |
@@ -32,7 +32,7 @@ DCFILES_HOME=~/dcfiles ~/.local/bin/dcfiles <command> [args]
 - Reply in the user's language (Spanish by default for this repo).
 - Never commit secrets. Files with tokens (`gh/hosts.yml`, ssh keys, aws credentials) use REDACTED in git. The real token lives in the working copy via `git update-index --skip-worktree`.
 - `dcfiles sync` auto-commits AND pushes. Only run when the user explicitly asks.
-- After `dcfiles add`, the original becomes a symlink. Backup is at `<file>.dcfiles.bak`.
+- After `dcfiles add`, the original becomes a symlink.
 - Hostname overrides: `<name>.<hostname>` wins over `<name>` when hostname matches.
 - `config/` mirrors `$HOME` exactly. `config/.bashrc` maps to `~/.bashrc`, not `config/bash/.bashrc`.
 - If `dcfiles` is not found at `~/.local/bin/dcfiles`, link it: `ln -sf ~/dcfiles/bin/dcfiles ~/.local/bin/dcfiles`.
@@ -84,14 +84,13 @@ export PATH="$HOME/.local/bin:$PATH"
 ```
 
 `config/` mirrors `$HOME` exactly. When you `dcfiles add ~/.zshrc`, it copies
-the file into `config/.zshrc` and replaces the original with a symlink. The
-original is backed up as `.zshrc.dcfiles.bak`.
+the file into `config/.zshrc` and replaces the original with a symlink.
 
 ## CLI
 
 | Command | What it does |
 |---------|-------------|
-| `dcfiles add <file>` | Copy a file into `config/` and symlink it. Backs up original. |
+| `dcfiles add <file>` | Copy a file into `config/` and symlink it. |
 | `dcfiles sync [--fix]` | Deploy all symlinks, `git commit`, `git push`. `--fix` repairs broken symlinks first. |
 | `dcfiles status` | Show every tracked file: `ok`, `missing`, `overridden`, `broken`. |
 | `dcfiles diff` | Git diff of config + list of overridden files in `$HOME`. |
@@ -130,15 +129,15 @@ Everything ships with Linux and macOS.
 
 ## Testing & CI
 
-- **Unit tests**: [bats-core](https://github.com/bats-core/bats-core) — 12 tests
-  covering symlink engine, overrides, backups, idempotency
+- **Unit tests**: [bats-core](https://github.com/bats-core/bats-core) — 10 tests
+  covering symlink engine, overrides, idempotency
 - **Integration tests**: 15 tests — full `add → sync → status → diff` workflow
 - **Static analysis**: [shellcheck](https://www.shellcheck.net/) with zero-error policy
 - **CI**: GitHub Actions runs both on every push and PR
 
 ```bash
 bats test/unit/symlink.bats test/integration/cli.bats
-# 27 tests, 0 failures
+# 25 tests, 0 failures
 ```
 
 ## What's Inside This Repo

@@ -2,7 +2,7 @@
 #
 # symlink.bats — Unit tests for the symlink engine (lib/symlink.sh)
 #
-# Covers R-002: two-pass deploy, hostname overrides, backup logic, idempotency.
+# Covers R-002: two-pass deploy, hostname overrides, idempotency.
 
 load ../helpers/common
 
@@ -98,46 +98,6 @@ teardown() {
 }
 
 # ---------------------------------------------------------------------------
-# Backup behavior
-# ---------------------------------------------------------------------------
-
-@test "existing regular file is backed up before symlink creation" {
-    # Create a regular file at the target location BEFORE deploy
-    mkdir -p "${HOME}/bash"
-    echo "# existing bashrc" > "${HOME}/bash/.bashrc"
-
-    deploy_all
-
-    # Original should be backed up
-    [[ -f "${HOME}/bash/.bashrc.dcfiles.bak" ]]
-
-    # And the original location should now be a symlink
-    [[ -L "${HOME}/bash/.bashrc" ]]
-
-    # Backup content should match the original
-    local bak_content
-    bak_content="$(cat "${HOME}/bash/.bashrc.dcfiles.bak")"
-    [[ "$bak_content" == "# existing bashrc" ]]
-}
-
-@test "existing dcfiles symlink is NOT backed up" {
-    deploy_all
-
-    # Now create a non-symlink file for a different config entry
-    rm "${HOME}/git/.gitconfig"
-    echo "# manual gitconfig" > "${HOME}/git/.gitconfig"
-
-    # Re-run deploy — should back up git/.gitconfig
-    deploy_all
-
-    # bash/.bashrc was already a dcfiles symlink — should NOT have a backup
-    [[ ! -f "${HOME}/bash/.bashrc.dcfiles.bak" ]]
-
-    # git/.gitconfig was a regular file — SHOULD have a backup
-    [[ -f "${HOME}/git/.gitconfig.dcfiles.bak" ]]
-}
-
-# ---------------------------------------------------------------------------
 # Idempotency
 # ---------------------------------------------------------------------------
 
@@ -148,10 +108,6 @@ teardown() {
     local target1
     target1="$(readlink "${HOME}/bash/.bashrc")"
 
-    # Also create a backup-snapshot marker
-    local bak_count1
-    bak_count1="$(find "${HOME}" -name '*.dcfiles.bak' | wc -l)"
-
     # Run deploy_all again
     deploy_all
 
@@ -159,11 +115,6 @@ teardown() {
     local target2
     target2="$(readlink "${HOME}/bash/.bashrc")"
     [[ "$target1" == "$target2" ]]
-
-    # No new backups should have been created (no regular files to overwrite)
-    local bak_count2
-    bak_count2="$(find "${HOME}" -name '*.dcfiles.bak' | wc -l)"
-    [[ "$bak_count2" -eq "$bak_count1" ]]
 }
 
 @test "deploy_all does not fail on empty config directory" {

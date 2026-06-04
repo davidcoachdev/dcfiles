@@ -23,7 +23,7 @@ Use this skill when the user wants to:
 - `dcfiles sync` auto-commits AND pushes. Warn before running if there are uncommitted changes.
 - Never commit secrets. Files with tokens (gh hosts.yml, aws credentials, ssh keys) MUST be REDACTED in the repo.
 - Use `--skip-worktree` on files that need real tokens locally but REDACTED in git.
-- After `dcfiles add`, the original file becomes a symlink. The backup is at `<file>.dcfiles.bak`.
+- After `dcfiles add`, the original file becomes a symlink.
 - Hostname overrides: `<name>.<hostname>` deployed when hostname matches. Base `<name>` deployed otherwise.
 
 ## Decision Gates
@@ -53,7 +53,6 @@ Use this skill when the user wants to:
 dcfiles add ~/.config/kitty/kitty.conf
 # → Copies to config/.config/kitty/kitty.conf
 # → Creates symlink ~/.config/kitty/kitty.conf → repo
-# → Original backed up as kitty.conf.dcfiles.bak
 # → Staged for commit
 dcfiles sync  # commit + push
 ```
@@ -89,7 +88,6 @@ git clone https://github.com/davidcoachdev/dcfiles ~/dcfiles
 After any dcfiles operation, report:
 - Files added/copied (if any)
 - Symlinks created
-- Backups made (.dcfiles.bak)
 - Commit status (if sync was run)
 - Any warnings (broken symlinks, missing deps)
 
