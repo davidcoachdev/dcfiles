@@ -56,15 +56,15 @@ All PRs target main (stacked-to-main pattern). PR 2 depends on PR 1 files being 
 
 ## Phase 4: Tests
 
-- [ ] 4.1 Create `test/helpers/common.bash` — bats `setup()` creating temp `$HOME` with fake config tree (bash, git, tmux files), hostname override fixtures (`.bashrc.terminus`), `teardown()` removing `$TMPDIR`
-- [ ] 4.2 Create `test/unit/symlink.bats` — tests covering R-002: standard deploy, hostname match wins, hostname no-match falls back, backup before overwrite, symlink already correct (idempotent), empty config, broken symlink repair via `--fix`
-- [ ] 4.3 Create `test/integration/cli.bats` — full workflow: add new dotfile → sync deploys → status reports ok → diff shows changes; add already-tracked file (exit 0), add nonexistent file (exit 2), sync `--fix`, status with overridden/missing states (R-003 through R-007)
+- [x] 4.1 Create `test/helpers/common.bash` — bats `setup()` creating temp `$HOME` with fake config tree (bash, git, tmux files), hostname override fixtures (`.bashrc.terminus`), `teardown()` removing `$TMPDIR`
+- [x] 4.2 Create `test/unit/symlink.bats` — tests covering R-002: standard deploy, hostname match wins, hostname no-match falls back, backup before overwrite, symlink already correct (idempotent), empty config, broken symlink repair via `--fix`
+- [x] 4.3 Create `test/integration/cli.bats` — full workflow: add new dotfile → sync deploys → status reports ok → diff shows changes; add already-tracked file (exit 0), add nonexistent file (exit 2), sync `--fix`, status with overridden/missing states (R-003 through R-007)
 
 **Verify**: `bats test/` all pass. `shellcheck test/**/*.bats test/**/*.bash` zero errors.
 
 ## Phase 5: CI & Docs
 
-- [ ] 5.1 Create `.github/workflows/ci.yml` — push/PR trigger, jobs: `shellcheck` (all `*.sh` files, fail on error) + `bats` (install bats-core, run `test/`)
-- [ ] 5.2 Create `README.md` — one-liner bootstrap (`git clone <url> ~/dcfiles && ~/dcfiles/install.sh`), requirements (bash≥4.0, git, coreutils), directory structure, subcommand reference (add/sync/status/diff), hostname override convention
+- [x] 5.1 Create `.github/workflows/ci.yml` — push/PR trigger, jobs: `shellcheck` (all `*.sh` files, fail on error) + `bats` (install bats-core, run `test/`)
+- [x] 5.2 Create `README.md` — one-liner bootstrap (`git clone <url> ~/dcfiles && ~/dcfiles/install.sh`), requirements (bash≥4.0, git, coreutils), directory structure, subcommand reference (add/sync/status/diff), hostname override convention
 
 **Verify**: CI passes on push (`shellcheck` + `bats`). README renders correctly.
