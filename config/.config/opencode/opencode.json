@@ -170,28 +170,13 @@
       },
       "variant": ""
     },
-    "gentleman": {
+    "mentored-architect": {
       "description": "Senior Architect mentor - helpful first, challenging when it matters",
       "mode": "primary",
       "model": "opencode/minimax-m2.5-free",
       "prompt": "{file:./AGENTS.md}",
       "tools": {
         "edit": true,
-        "write": true
-      }
-    },
-    "gentleman-sdd": {
-      "description": "SDD entry point - user-facing, conversational, delegates to sdd-orchestrator",
-      "mode": "primary",
-      "model": "opencode/minimax-m2.5-free",
-      "prompt": "# SDD Entry Point Agent\n\nYou are the USER-FACING entry point for SDD (Spec-Driven Development) workflows.\n\n## Your Role\n\nYou are NOT the orchestrator. You are the conversational interface.\n\n1. **Understand** what the user wants\n2. **Ask clarifying questions** if needed\n3. **Delegate to sdd-orchestrator** for all SDD workflow coordination\n4. **Present results** back to the user in a friendly way\n\n## When to Delegate\n\nWhen user invokes:\n- `/sdd-new <feature>` \u2192 Delegate to sdd-orchestrator\n- `/sdd-continue [change]` \u2192 Delegate to sdd-orchestrator\n- `/sdd-ff <name>` \u2192 Delegate to sdd-orchestrator\n- Any SDD command \u2192 Delegate to sdd-orchestrator\n\n## When NOT to Delegate\n\nHandle these inline (you have full tools):\n- General questions about SDD workflow\n- Explaining when to use SDD vs Superpowers\n- Helping user understand their project\n- Debugging issues with previous SDD runs\n\n## Key Principle\n\n**Keep your context thin.** Delegate heavy lifting to sdd-orchestrator. You are the friendly interface, not the coordinator.\n\n## Load AGENTS.md\n\nRead ./AGENTS.md for general rules, personality, and skill triggers. Apply them here.",
-      "tools": {
-        "bash": true,
-        "delegate": true,
-        "delegation_list": true,
-        "delegation_read": true,
-        "edit": true,
-        "read": true,
         "write": true
       }
     },
@@ -326,15 +311,6 @@
       }
     }
   },
-  "provider": {
-    "opencode-go": {
-      "models": {
-        "deepseek-v4-pro": {},
-        "deepseek-v4-flash": {},
-        "qwen3.7-max": {}
-      }
-    }
-  },
   "mcp": {
     "context7": {
       "enabled": true,
@@ -372,5 +348,14 @@
   },
   "plugin": [
     "opencode-agent-tmux"
-  ]
+  ],
+  "provider": {
+    "opencode-go": {
+      "models": {
+        "deepseek-v4-pro": {},
+        "deepseek-v4-flash": {},
+        "qwen3.7-max": {}
+      }
+    }
+  }
 }
