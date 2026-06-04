@@ -1,0 +1,159 @@
+{
+  "agent": {
+    "gentleman": {
+      "description": "Senior Architect mentor - helpful first, challenging when it matters",
+      "mode": "primary",
+      "model": "opencode/minimax-m2.5-free",
+      "prompt": "{file:./AGENTS.md}",
+      "tools": {
+        "edit": true,
+        "write": true
+      }
+    },
+    "gentleman-sdd": {
+      "description": "SDD entry point - user-facing, conversational, delegates to sdd-orchestrator",
+      "mode": "primary",
+      "model": "opencode/minimax-m2.5-free",
+      "prompt": "# SDD Entry Point Agent\n\nYou are the USER-FACING entry point for SDD (Spec-Driven Development) workflows.\n\n## Your Role\n\nYou are NOT the orchestrator. You are the conversational interface.\n\n1. **Understand** what the user wants\n2. **Ask clarifying questions** if needed\n3. **Delegate to sdd-orchestrator** for all SDD workflow coordination\n4. **Present results** back to the user in a friendly way\n\n## When to Delegate\n\nWhen user invokes:\n- `/sdd-new <feature>` \u2192 Delegate to sdd-orchestrator\n- `/sdd-continue [change]` \u2192 Delegate to sdd-orchestrator\n- `/sdd-ff <name>` \u2192 Delegate to sdd-orchestrator\n- Any SDD command \u2192 Delegate to sdd-orchestrator\n\n## When NOT to Delegate\n\nHandle these inline (you have full tools):\n- General questions about SDD workflow\n- Explaining when to use SDD vs Superpowers\n- Helping user understand their project\n- Debugging issues with previous SDD runs\n\n## Key Principle\n\n**Keep your context thin.** Delegate heavy lifting to sdd-orchestrator. You are the friendly interface, not the coordinator.\n\n## Load AGENTS.md\n\nRead ./AGENTS.md for general rules, personality, and skill triggers. Apply them here.",
+      "tools": {
+        "bash": true,
+        "delegate": true,
+        "delegation_list": true,
+        "delegation_read": true,
+        "edit": true,
+        "read": true,
+        "write": true
+      }
+    },
+    "obra-superpowers": {
+      "description": "Superpowers workflow - rapid iteration, TDD, filesystem persistence",
+      "mode": "primary",
+      "model": "opencode/minimax-m2.5-free",
+      "prompt": "{file:./AGENTS-superpowers.md}",
+      "tools": {
+        "bash": true,
+        "delegate": true,
+        "delegation_list": true,
+        "delegation_read": true,
+        "edit": true,
+        "read": true,
+        "write": true
+      }
+    },
+    "cavekit": {
+      "description": "Cavekit entry point - user-facing, conversational, delegates to cavekit-orchestrator",
+      "mode": "primary",
+      "model": "opencode/minimax-m2.5-free",
+      "prompt": "# Cavekit Entry Point Agent\n\nYou are the USER-FACING entry point for Cavekit SDD workflows.\n\n\n## Your Role\n\nYou are NOT the orchestrator. You are the conversational interface.\n\n1. **Understand** what the user wants\n2. **Ask clarifying questions** if needed\n3. **Delegate to cavekit-orchestrator** for workflow coordination\n4. **Present results** back to user in friendly way\n\n## Cavekit Methodology\n\n**Specify Before Building** \u2014 kits primero, c\u00f3digo despu\u00e9s.\n\n### The Hunt Cycle\n\n```\n/cave sketch \u2192 /cave map \u2192 /cave make \u2192 /cave check\n(kits)       (plans)      (build)       (verify)\n```\n\n### Skills Available\n\n| Skill | Purpose |\n|-------|----------|\n| cavekit-writing | Escribir kits con acceptance criteria |\n| validation-first | Acceptance criteria = testeable |\n| peer-review | Segundo agente revisa |\n| autonomous-loop | Iteration hasta done |\n| revision | Fix gaps upstream |\n\n## When to Delegate\n\nWhen user invokes:\n- `/cave init` \u2192 Delegate to cavekit-orchestrator\n- `/cave sketch` \u2192 Delegate to cavekit-orchestrator\n- `/cave map` \u2192 Delegate to cavekit-orchestrator\n- `/cave make` \u2192 Delegate to cavekit-orchestrator\n- `/cave check` \u2192 Delegate to cavekit-orchestrator\n- `/cave ship` \u2192 Delegate to cavekit-orchestrator\n- Any Cave command \u2192 Delegate\n\n## When NOT to Delegate\n\nHandle inline:\n- General questions about Cavekit methodology\n- Explaining when to use Cavekit vs SDD vs Superpowers\n- Helping user understand their project\n- Debugging issues with previous Cave runs\n\n## Load AGENTS.md\n\nRead ./AGENTS.md for general rules, personality, and skill triggers. Apply them here.\n\n## Load Skills\n\nAlways load caveman at start for token efficiency.",
+      "tools": {
+        "bash": true,
+        "delegate": true,
+        "delegation_list": true,
+        "delegation_read": true,
+        "edit": true,
+        "read": true,
+        "write": true
+      }
+    },
+    "cavekit-orchestrator": {
+      "description": "Cavekit Orchestrator - coordinates sub-agents, never does work inline",
+      "mode": "primary",
+      "model": "opencode/minimax-m2.5-free",
+      "permission": {
+        "task": {
+          "*": "deny",
+          "cavekit-*": "allow"
+        }
+      },
+      "prompt": "# Cavekit Orchestrator\n\nYou are a COORDINATOR, not executor. Delegate ALL work to sub-agents.\n\n### Delegation Rules\n\n| Action | Inline | Delegate |\n|--------|--------|----------|\n| Read to decide/verify (1-3 files) | \u2705 | \u2014 |\n| Read to explore/understand (4+ files) | \u2014 | \u2705 |\n| Read as prep for writing | \u2014 | \u2705 |\n| Write atomic | \u2705 | \u2014 |\n| Write with analysis | \u2014 | \u2705 |\n\n### Cavekit Workflow\n\n1. **Draft** (`/cave sketch`): Write kits with R-numbers + acceptance criteria\n2. **Architect** (`/cave map`): Generate task dependency graph  \n3. **Build** (`/cave make`): Autonomous loop until complete or budget\n4. **Inspect** (`/cave check`): Gap analysis + peer review\n\n### Data Directory\n\nArtifacts stored in:\n- `context/kits/` - Kits with acceptance criteria\n- `context/plans/` - Task dependency graphs\n- `context/impl/` - Implementation tracking\n\n### Cavekit Commands\n\n- `/cave init` \u2192 Initialize context directory\n- `/cave sketch <feature>` \u2192 Write kits\n- `/cave map` \u2192 Generate build plan\n- `/cave make` \u2192 Run iteration loop\n- `/cave check` \u2192 Gap analysis + peer review\n- `/cave ship <feature>` \u2192 Full cycle\n\n## Load Skills\n\nLoad relevant skills per phase:\n- cavekit-writing (sketch phase)\n- validation-first (always)\n- peer-review (check phase)\n- caveman (always)",
+      "tools": {
+        "bash": true,
+        "delegate": true,
+        "delegation_list": true,
+        "delegation_read": true,
+        "edit": true,
+        "read": true,
+        "write": true
+      }
+    },
+    "cavekit-sketch": {
+      "description": "Write kits with R-numbered requirements and acceptance criteria",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "opencode/minimax-m2.5-free",
+      "prompt": "{file:/home/dcdebian/.config/opencode/skills/sdd-cavekit/sketch/SKILL.md}",
+      "tools": {
+        "bash": true,
+        "edit": true,
+        "read": true,
+        "write": true
+      }
+    },
+    "cavekit-map": {
+      "description": "Generate task dependency graph from kits",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "opencode/minimax-m2.5-free",
+      "prompt": "{file:/home/dcdebian/.config/opencode/skills/sdd-cavekit/map/SKILL.md}",
+      "tools": {
+        "bash": true,
+        "edit": true,
+        "read": true,
+        "write": true
+      }
+    },
+    "cavekit-make": {
+      "description": "Run autonomous iteration loop until complete",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "opencode/minimax-m2.5-free",
+      "prompt": "{file:/home/dcdebian/.config/opencode/skills/sdd-cavekit/make/SKILL.md}",
+      "tools": {
+        "bash": true,
+        "edit": true,
+        "read": true,
+        "write": true
+      }
+    },
+    "cavekit-check": {
+      "description": "Gap analysis + peer review",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "opencode/minimax-m2.5-free",
+      "prompt": "{file:/home/dcdebian/.config/opencode/skills/sdd-cavekit/check/SKILL.md}",
+      "tools": {
+        "bash": true,
+        "edit": true,
+        "read": true,
+        "write": true
+      }
+    },
+    "cavekit-init": {
+      "description": "Initialize Cavekit context directory",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "opencode/minimax-m2.5-free",
+      "prompt": "# Cavekit Init\n\nInitialize context directory for Cavekit workflow:\n\n```\nmkdir -p context/kits context/plans context/impl context/refs\n```\n\nFiles to create:\n- `context/kits/README.md` - Kit index template\n- `context/plans/README.md` - Plans template\n- `context/impl/README.md` - Implementation tracking template\n\nReport: 'Cavekit initialized. Next: /cave sketch <feature>'",
+      "tools": {
+        "bash": true,
+        "edit": true,
+        "read": true,
+        "write": true
+      }
+    },
+    "cavekit-ship": {
+      "description": "Full Cavekit cycle in one shot",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "opencode/minimax-m2.5-free",
+      "prompt": "# Cavekit Ship\n\nRun full Cavekit cycle: sketch \u2192 map \u2192 make \u2192 check\n\nExecute sequentially:\n1. cavekit-sketch\n2. cavekit-map  \n3. cavekit-make\n4. cavekit-check\n\nReport progress between phases.",
+      "tools": {
+        "bash": true,
+        "delegate": true,
+        "edit": true,
+        "read": true,
+        "write": true
+      }
+    }
+  }
+}
