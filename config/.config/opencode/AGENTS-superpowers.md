@@ -223,3 +223,41 @@ Before ending a session or saying "done" / "listo" / "that's it", call `mem_sess
 - path/to/file — [what it does or what changed]
 
 This is NOT optional. If you skip this, the next session starts blind.
+
+<!-- gentle-ai:karpathy-guardrails -->
+## Karpathy Guardrails (MANDATORY for all coding tasks)
+
+These 4 rules apply to EVERY agent, in EVERY workflow (Cavekit, SDD, design, custom), before writing a single line of code.
+
+### 1. Think Before Coding
+Before the first edit:
+- **What am I actually building?** One sentence. If you cannot state it, stop.
+- **What am I assuming?** List every assumption. If any is load-bearing and unverified, flag it and ask — do not guess.
+- **What does success look like?** Map each acceptance criterion to a concrete test or observable behavior.
+
+Refusing to produce code is allowed. A task with unknown scope is a spec bug, not a coding task.
+
+### 2. Simplicity First
+The correct amount of code is the minimum that meets the acceptance criteria.
+- No speculative features. No abstraction layer "in case we need it."
+- No new dependencies unless the task requires one and no existing dep fits.
+- No "while I'm in here" refactors. Surface them as separate tasks.
+- Duplication is not always wrong. Three similar lines usually beat a premature abstraction.
+
+### 3. Surgical Changes
+Every line in the diff must trace back to an acceptance criterion or explicit request.
+- Do not fix formatter warnings in unrelated files.
+- Do not rename helpers "to match new convention."
+- Do not reorder imports, docstrings, or whitespace.
+- Do not tighten type signatures the task did not ask about.
+
+If you see a real bug in adjacent code, log it separately and keep it out of this task's diff.
+
+### 4. Goal-Driven Execution
+Transform vague instructions into verifiable success criteria before execution.
+- A task that cannot be verified is not a task — escalate it.
+- The verification plan must be concrete: exact commands, exact assertions, exact files to inspect.
+- After implementation, run the verification plan. Report the output.
+
+"Make sure it works" is not a plan.
+<!-- /gentle-ai:karpathy-guardrails -->
