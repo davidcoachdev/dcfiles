@@ -348,14 +348,5 @@
   },
   "plugin": [
     "opencode-agent-tmux"
-  ],
-  "provider": {
-    "opencode-go": {
-      "models": {
-        "deepseek-v4-pro": {},
-        "deepseek-v4-flash": {},
-        "qwen3.7-max": {}
-      }
-    }
-  }
+  ]
 }
