@@ -1,0 +1,27 @@
+[network]
+rpc_url = "https://api.devnet.solana.com"
+ws_url = "wss://api.devnet.solana.com"
+cluster = "devnet"
+timeout = 30
+max_retries = 3
+commitment = "confirmed"
+
+[wallet]
+keypair_path = "/home/dcdebian/.config/solana/id.json"
+wallet_type = "filesystem"
+
+[app]
+log_level = "info"
+data_dir = "/home/dcdebian/.local/share/trust-escrow"
+colored = true
+
+[app.custom]
+
+[programs]
+trust_escrow_v2 = "28QTH6qfG2iKDVXNY8nUTKDjx8yrBrQpnvXCPyJsrwuA"
+
+[programs.additional]
+
+[fees]
+priority_fee = 1000
+max_fee_bps = 500

@@ -1,0 +1,29 @@
+theme = "dcdev"
+rpc_url = "http://127.0.0.1:8899"
+active_wallet = 0
+mainnet_password = "mainnet"
+
+[[wallets]]
+name = "Admin"
+path = "/home/dcdebian/.config/solana/id.json"
+role = "admin"
+
+[[wallets]]
+name = "Client"
+path = "/home/dcdebian/.config/solana/client.json"
+role = "client"
+
+[[wallets]]
+name = "Freelancer"
+path = "/home/dcdebian/.config/solana/freelancer.json"
+role = "freelancer"
+
+[[wallets]]
+name = "Arbiter"
+path = "/home/dcdebian/.config/solana/arbiter.json"
+role = "arbiter"
+
+[[wallets]]
+name = "Treasury"
+path = "/home/dcdebian/.config/solana/treasury.json"
+role = "treasury"
