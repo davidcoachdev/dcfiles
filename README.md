@@ -8,6 +8,49 @@
 
 ---
 
+<!-- AGENTS.md: instructions for AI agents exploring this repo -->
+
+## For AI Agents
+
+You are looking at a **dcfiles repo** — dotfiles managed by the dcfiles CLI.
+
+**How to use dcfiles:**
+
+```bash
+DCFILES_HOME=~/dcfiles ~/.local/bin/dcfiles <command> [args]
+```
+
+| Command | What it does |
+|---------|-------------|
+| `add <file>` | Copy a file into `config/`, symlink it to `$HOME`, stage for git. Backs up original as `<file>.dcfiles.bak`. |
+| `sync [--fix]` | Deploy all symlinks from `config/` → `$HOME`, then `git commit && git push`. `--fix` repairs broken symlinks first. |
+| `status` | Show every tracked file: `ok`, `missing`, `overridden`, `broken`. |
+| `diff` | Git diff of config + list of overridden files. |
+
+**Rules you MUST follow:**
+
+- Reply in the user's language (Spanish by default for this repo).
+- Never commit secrets. Files with tokens (`gh/hosts.yml`, ssh keys, aws credentials) use REDACTED in git. The real token lives in the working copy via `git update-index --skip-worktree`.
+- `dcfiles sync` auto-commits AND pushes. Only run when the user explicitly asks.
+- After `dcfiles add`, the original becomes a symlink. Backup is at `<file>.dcfiles.bak`.
+- Hostname overrides: `<name>.<hostname>` wins over `<name>` when hostname matches.
+- `config/` mirrors `$HOME` exactly. `config/.bashrc` maps to `~/.bashrc`, not `config/bash/.bashrc`.
+- If `dcfiles` is not found at `~/.local/bin/dcfiles`, link it: `ln -sf ~/dcfiles/bin/dcfiles ~/.local/bin/dcfiles`.
+- `DCFILES_HOME` defaults to `~/dcfiles`. Set it if cloned elsewhere.
+
+**Common tasks:**
+
+```
+User: "respaldá mi .zshrc"         → dcfiles add ~/.zshrc
+User: "sync" o "sincronizá"        → dcfiles sync
+User: "cómo están mis configs"     → dcfiles status
+User: "qué cambió"                 → dcfiles diff
+User: "se rompió un symlink"       → dcfiles sync --fix
+User: "instalar en PC nueva"       → git clone + ./install.sh
+```
+
+---
+
 ## Why
 
 Most dotfiles managers pull in runtimes or package managers. dcfiles doesn't.
