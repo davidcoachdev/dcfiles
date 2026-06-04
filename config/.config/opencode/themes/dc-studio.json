@@ -1,0 +1,227 @@
+{
+  "$schema": "https://opencode.ai/theme.json",
+  "defs": {
+    "black0": "#000000",
+    "black1": "#0d0d0d",
+    "black2": "#1a1a1a",
+    "black3": "#262626",
+    "black4": "#333333",
+    "black5": "#404040",
+    "black6": "#4d4d4d",
+    "black7": "#595959",
+    "red7": "#cc0000",
+    "red8": "#e60000",
+    "red9": "#ff0000",
+    "red10": "#ff1a1a",
+    "red11": "#ff3333",
+    "red12": "#ff4d4d",
+    "red13": "#ff6666",
+    "red14": "#ff8080",
+    "red15": "#ff9999",
+    "red16": "#ffb3b3",
+    "red17": "#ffcccc"
+  },
+  "theme": {
+    "primary": {
+      "dark": "red11",
+      "light": "red7"
+    },
+    "secondary": {
+      "dark": "red12",
+      "light": "red6"
+    },
+    "accent": {
+      "dark": "red13",
+      "light": "red8"
+    },
+    "error": {
+      "dark": "red9",
+      "light": "red7"
+    },
+    "warning": {
+      "dark": "red14",
+      "light": "red10"
+    },
+    "success": {
+      "dark": "red13",
+      "light": "red8"
+    },
+    "info": {
+      "dark": "red12",
+      "light": "red7"
+    },
+    "text": {
+      "dark": "red17",
+      "light": "red2"
+    },
+    "textMuted": {
+      "dark": "red14",
+      "light": "red4"
+    },
+    "background": "transparent",
+    "backgroundPanel": {
+      "dark": "black2",
+      "light": "red16"
+    },
+    "backgroundElement": {
+      "dark": "black3",
+      "light": "red15"
+    },
+    "backgroundMenu": {
+      "dark": "black2",
+      "light": "red16"
+    },
+    "border": {
+      "dark": "black5",
+      "light": "red13"
+    },
+    "borderActive": {
+      "dark": "black6",
+      "light": "red11"
+    },
+    "borderSubtle": {
+      "dark": "black4",
+      "light": "red14"
+    },
+    "diffAdded": {
+      "dark": "red13",
+      "light": "red8"
+    },
+    "diffRemoved": {
+      "dark": "red9",
+      "light": "red7"
+    },
+    "diffContext": {
+      "dark": "red14",
+      "light": "red4"
+    },
+    "diffHunkHeader": {
+      "dark": "black5",
+      "light": "red13"
+    },
+    "diffHighlightAdded": {
+      "dark": "red12",
+      "light": "red9"
+    },
+    "diffHighlightRemoved": {
+      "dark": "red8",
+      "light": "red6"
+    },
+    "diffAddedBg": {
+      "dark": "black3",
+      "light": "red16"
+    },
+    "diffRemovedBg": {
+      "dark": "black3",
+      "light": "red16"
+    },
+    "diffContextBg": {
+      "dark": "black2",
+      "light": "red17"
+    },
+    "diffLineNumber": {
+      "dark": "black5",
+      "light": "red12"
+    },
+    "diffAddedLineNumberBg": {
+      "dark": "black3",
+      "light": "red16"
+    },
+    "diffRemovedLineNumberBg": {
+      "dark": "black3",
+      "light": "red16"
+    },
+    "markdownText": {
+      "dark": "red17",
+      "light": "red2"
+    },
+    "markdownHeading": {
+      "dark": "red11",
+      "light": "red7"
+    },
+    "markdownLink": {
+      "dark": "red12",
+      "light": "red6"
+    },
+    "markdownLinkText": {
+      "dark": "red13",
+      "light": "red8"
+    },
+    "markdownCode": {
+      "dark": "red14",
+      "light": "red9"
+    },
+    "markdownBlockQuote": {
+      "dark": "red14",
+      "light": "red4"
+    },
+    "markdownEmph": {
+      "dark": "red15",
+      "light": "red10"
+    },
+    "markdownStrong": {
+      "dark": "red11",
+      "light": "red7"
+    },
+    "markdownHorizontalRule": {
+      "dark": "black5",
+      "light": "red13"
+    },
+    "markdownListItem": {
+      "dark": "red12",
+      "light": "red7"
+    },
+    "markdownListEnumeration": {
+      "dark": "red13",
+      "light": "red8"
+    },
+    "markdownImage": {
+      "dark": "red12",
+      "light": "red6"
+    },
+    "markdownImageText": {
+      "dark": "red13",
+      "light": "red8"
+    },
+    "markdownCodeBlock": {
+      "dark": "red16",
+      "light": "black4"
+    },
+    "syntaxComment": {
+      "dark": "red14",
+      "light": "black5"
+    },
+    "syntaxKeyword": {
+      "dark": "red11",
+      "light": "red7"
+    },
+    "syntaxFunction": {
+      "dark": "red12",
+      "light": "red6"
+    },
+    "syntaxVariable": {
+      "dark": "red13",
+      "light": "red8"
+    },
+    "syntaxString": {
+      "dark": "red14",
+      "light": "red9"
+    },
+    "syntaxNumber": {
+      "dark": "red15",
+      "light": "red10"
+    },
+    "syntaxType": {
+      "dark": "red13",
+      "light": "red8"
+    },
+    "syntaxOperator": {
+      "dark": "red11",
+      "light": "red7"
+    },
+    "syntaxPunctuation": {
+      "dark": "red16",
+      "light": "black4"
+    }
+  }
+}
