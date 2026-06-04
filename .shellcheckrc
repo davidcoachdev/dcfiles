@@ -1,0 +1,7 @@
+# shellcheck configuration for dcfiles
+#
+# SC1091 — "Not following: file was not specified as input"
+#   dcfiles scripts source each other (lib/symlink.sh → lib/utils.sh).
+#   These are project-internal dependencies verified together; the warning
+#   is noise in every case.
+disable=SC1091
