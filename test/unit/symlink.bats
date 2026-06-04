@@ -124,7 +124,7 @@ teardown() {
     deploy_all
 
     # Now create a non-symlink file for a different config entry
-    mkdir -p "${HOME}/git"
+    rm "${HOME}/git/.gitconfig"
     echo "# manual gitconfig" > "${HOME}/git/.gitconfig"
 
     # Re-run deploy — should back up git/.gitconfig

@@ -78,7 +78,7 @@ teardown() {
 
 @test "dcfiles add on non-existent file exits 2" {
     run "${DCFILES_HOME}/bin/dcfiles" add "${HOME}/.nonexistent"
-    [[ "$status" -eq 1 ]]  # die() exits 1
+    [[ "$status" -eq 2 ]]  # R-004: file-not-found → exit code 2
     [[ "$output" == *"File not found"* ]]
 }
 

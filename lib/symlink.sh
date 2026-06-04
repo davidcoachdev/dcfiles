@@ -28,7 +28,7 @@ source "${DCFILES_HOME:?DCFILES_HOME must be set}/lib/utils.sh"
 strip_suffix() {
     local filename="$1"
     local suffix="$2"
-    printf '%s\n' "${filename%.${suffix}}"
+    printf '%s\n' "${filename%."${suffix}"}"
 }
 
 # _link — create a single relative symlink with backup
@@ -86,7 +86,7 @@ deploy_all() {
     while IFS= read -r -d '' src; do
         local name subdir
         name="$(basename "$src")"
-        subdir="$(dirname "${src#${config_dir}/}")"
+        subdir="$(dirname "${src#"${config_dir}"/}")"
 
         # Skip files that do not match this hostname
         [[ "$name" == *".${hostname}" ]] || continue
@@ -102,7 +102,7 @@ deploy_all() {
     while IFS= read -r -d '' src; do
         local name subdir
         name="$(basename "$src")"
-        subdir="$(dirname "${src#${config_dir}/}")"
+        subdir="$(dirname "${src#"${config_dir}"/}")"
 
         # Skip hostname override files themselves
         [[ "$name" == *".${hostname}" ]] && continue
@@ -126,7 +126,7 @@ deploy_single() {
     hostname="$(hostname -s)"
     local config_dir="${DCFILES_HOME}/config"
 
-    local rel="${src#${config_dir}/}"
+    local rel="${src#"${config_dir}"/}"
     local subdir
     subdir="$(dirname "$rel")"
     local name

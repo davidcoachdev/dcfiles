@@ -52,7 +52,7 @@ cmd_add() {
     file="${file/#\~/$HOME}"
 
     # Must exist and be a regular file
-    [[ -f "$file" ]] || die "File not found: ${file}"
+    [[ -f "$file" ]] || die 2 "File not found: ${file}"
 
     # Resolve to absolute canonical path
     file="$(abspath "$file")"
@@ -64,7 +64,7 @@ cmd_add() {
     fi
 
     # Must be under $HOME
-    local rel="${file#$HOME/}"
+    local rel="${file#"$HOME"/}"
     if [[ "$rel" == "$file" ]]; then
         die "File is not under \$HOME: ${file}"
     fi
@@ -97,7 +97,7 @@ cmd_sync() {
         # Remove broken symlinks first so deploy_all can re-create them
         local config_dir="${DCFILES_HOME}/config"
         while IFS= read -r -d '' src; do
-            local rel="${src#${config_dir}/}"
+            local rel="${src#"${config_dir}"/}"
             local target="$HOME/$rel"
             if [[ -L "$target" && ! -e "$target" ]]; then
                 rm "$target"
@@ -138,7 +138,7 @@ cmd_status() {
     while IFS= read -r -d '' src; do
         local name rel subdir
         name="$(basename "$src")"
-        rel="${src#${config_dir}/}"
+        rel="${src#"${config_dir}"/}"
         subdir="$(dirname "$rel")"
         local target="$HOME/$rel"
 
@@ -217,7 +217,7 @@ cmd_diff() {
     while IFS= read -r -d '' src; do
         local name subdir rel
         name="$(basename "$src")"
-        rel="${src#${config_dir}/}"
+        rel="${src#"${config_dir}"/}"
         subdir="$(dirname "$rel")"
         local target="$HOME/$rel"
 
