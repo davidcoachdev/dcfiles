@@ -6,7 +6,6 @@
 # --- List / Navigation ---
 abbr --add ll ls -l
 abbr --add la ls -A
-abbr --add le eza -lah --tree --icons --level 1
 abbr --add l ls -CF
 abbr --add c clear
 

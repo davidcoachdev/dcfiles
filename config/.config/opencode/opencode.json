@@ -304,6 +304,13 @@
         "--tools=agent"
       ],
       "type": "local"
+    },
+    "obscura": {
+      "command": [
+        "obscura",
+        "mcp"
+      ],
+      "type": "local"
     }
   },
   "permission": {
@@ -340,6 +347,6 @@
     "@oh-my-kiro/oh-my-kiro",
     "@zhafron/opencode-kiro-auth",
     "opencode-qwencode-auth",
-    "opencode-gemini-auth"
+    "opencode-gemini-auth@latest"
   ]
 }
