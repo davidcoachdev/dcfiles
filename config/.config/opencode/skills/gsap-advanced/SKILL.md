@@ -334,8 +334,503 @@ function cleanup() {
 ## Commands
 
 ```bash
-npm install gsap ScrollTrigger
+npm install gsap
 ```
+
+## SCROLLTRIGGER STORYTELLING (from MengTo)
+
+## When to Use
+
+- Cinematic sticky product storytelling with progressive UI reveals
+- Scroll-synced animation where copy, UI panels, and media move together
+- Immersive section transitions for premium marketing pages
+
+## Core Architecture
+
+### Sticky Product Storytelling
+```typescript
+gsap.utils.toArray("[data-story-scene]").forEach((scene) => {
+  const panels = scene.querySelectorAll("[data-story-panel]");
+
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: scene,
+      start: "top top",
+      end: `+=${panels.length * window.innerHeight}`,
+      scrub: 1.1,
+      pin: true,
+      anticipatePin: 1,
+    },
+  })
+    .to(panels, { yPercent: -100 * (panels.length - 1), ease: "none" })
+    .to(scene.querySelectorAll("[data-story-depth]"), { yPercent: -16, ease: "none" }, 0);
+});
+```
+
+### Progressive UI Reveal Pattern
+```typescript
+function initStoryScenes() {
+  gsap.utils.toArray("[data-product-story]").forEach((section) => {
+    const frames = section.querySelectorAll("[data-story-frame]");
+    const labels = section.querySelectorAll("[data-story-label]");
+
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: "+=200%",
+        scrub: 1,
+        pin: true,
+      },
+    })
+      .fromTo(frames, { autoAlpha: 0 }, { autoAlpha: 1, stagger: 0.25, ease: "none" })
+      .fromTo(labels, { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.2, ease: "none" }, 0);
+  });
+}
+```
+
+### Section Handoff (Scene Transition)
+```typescript
+// Let the current scene smoothly transition into the next
+gsap.to(".current-scene", {
+  scale: 0.95,
+  autoAlpha: 0,
+  filter: "blur(8px)",
+  scrollTrigger: {
+    trigger: ".next-scene",
+    start: "top bottom",
+    end: "top center",
+    scrub: 1,
+  },
+});
+
+gsap.fromTo(".next-scene",
+  { scale: 1.05, autoAlpha: 0, filter: "blur(12px)" },
+  { scale: 1, autoAlpha: 1, filter: "blur(0px)", scrollTrigger: {
+    trigger: ".next-scene",
+    start: "top center",
+    end: "center center",
+    scrub: 1,
+  }}
+);
+```
+
+## Tuning Knobs
+- **Pin duration**: extend for dense product stories, shorten for simple scenes
+- **Scrub feel**: direct scrub (`true`) for technical walkthroughs, eased scrub (`0.8-1.4`) for cinematic
+- **Reveal density**: more micro-reveals for complex UI, fewer for narrative sections
+- **Transition intensity**: high-impact for section handoffs, subtle for content changes
+
+## Performance Rules (Storytelling)
+- Use `gsap.context()` in React, revert on unmount
+- Kill ScrollTriggers on route changes: `ScrollTrigger.getAll().forEach(t => t.kill())`
+- Refresh after images/fonts load: `ScrollTrigger.refresh()`
+- Use `matchMedia()` to simplify sticky choreography on mobile
+
+
+
+## CINEMATIC GSAP + LENIS MOTION SYSTEM (from MengTo)
+
+## When to Use
+
+- Full premium motion language, not one isolated animation
+- Smooth scrolling + scroll reveals + pinned scenes + parallax + hover motion + cursor behavior
+- Luxury editorial, Apple-level polish, creative studio portfolio
+
+## Motion Taste
+
+- **Smooth, elegant, slightly delayed, intentional**
+- Staggered motion guides reading order
+- Layered movement creates depth without busyness
+- ScrollTrigger starts scenes when they enter viewport
+
+**Avoid**: bounce/elastic/springy motion, fast abrupt transitions, large scale jumps, over-animated UI.
+
+## Base Motion Tokens
+
+| Property | Value |
+|----------|-------|
+| Eases | `power3.out`, `power4.out`, `expo.out` |
+| Scroll scrub | `0.8` to `1.4` |
+| Reveal duration | `0.75s` to `1.1s` |
+| Hover duration | `0.35s` to `0.6s` |
+| Cursor lag | `0.25s` to `0.45s` |
+| Word stagger | `0.035s` to `0.07s` |
+| Line stagger | `0.08s` to `0.14s` |
+| Card stagger | `0.06s` to `0.1s` |
+| Reveal trigger | `start: "top 82%"` |
+| Pin handoff | `anticipatePin: 1` |
+
+## Setup (Lenis + GSAP)
+
+```bash
+npm i gsap lenis
+```
+
+```typescript
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+gsap.defaults({ ease: "power3.out", duration: 0.85 });
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let lenis;
+
+if (!reduceMotion) {
+  lenis = new Lenis({
+    lerp: 0.08,
+    smoothWheel: true,
+    wheelMultiplier: 0.9,
+  });
+
+  lenis.on("scroll", ScrollTrigger.update);
+  gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+}
+```
+
+## Markup API (Data Attributes)
+
+```html
+<!-- Text reveals -->
+<h1 data-motion-text="lines">Digital products with cinematic restraint.</h1>
+<p data-motion-text="words">Every interaction should feel deliberate.</p>
+
+<!-- Scroll reveals -->
+<section data-reveal-group>
+  <article data-reveal="fade-up" data-reveal-item>...</article>
+</section>
+
+<!-- Image reveals -->
+<figure data-image-reveal data-parallax-section>
+  <img data-parallax-image src="/studio.jpg" alt="">
+</figure>
+
+<!-- Interactive -->
+<a data-magnetic data-cursor-label="Explore" href="/work">Explore</a>
+<div data-cursor><span data-cursor-label></span></div>
+```
+
+## CSS Foundation
+
+```css
+html.has-motion [data-motion-text],
+html.has-motion [data-reveal],
+html.has-motion [data-reveal-item],
+html.has-motion [data-image-reveal] {
+  visibility: hidden;
+}
+
+.motion-line-mask, .motion-word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.motion-line, .motion-word {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+
+[data-image-reveal] { overflow: hidden; }
+
+[data-parallax-image] {
+  display: block; width: 100%; height: 115%;
+  object-fit: cover; will-change: transform;
+}
+
+[data-cursor] {
+  position: fixed; left: 0; top: 0; z-index: 9999;
+  pointer-events: none; mix-blend-mode: difference;
+  transform: translate3d(-50%, -50%, 0);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  [data-cursor] { display: none; }
+}
+```
+
+## Staggered Text Reveals
+
+```typescript
+function splitWords(element: HTMLElement) {
+  if (element.dataset.motionSplit === "true") return;
+  const text = element.textContent || "";
+  const parts = text.split(/(\s+)/);
+  element.textContent = "";
+  element.setAttribute("aria-label", text.trim());
+
+  parts.forEach((part) => {
+    if (!part.trim()) { element.appendChild(document.createTextNode(part)); return; }
+    const mask = document.createElement("span");
+    const word = document.createElement("span");
+    mask.className = "motion-word-mask";
+    word.className = "motion-word";
+    word.textContent = part;
+    mask.appendChild(word);
+    element.appendChild(mask);
+  });
+  element.dataset.motionSplit = "true";
+}
+
+function initTextReveals() {
+  if (reduceMotion) { gsap.set("[data-motion-text]", { autoAlpha: 1 }); return; }
+
+  gsap.utils.toArray("[data-motion-text='words']").forEach((el) => {
+    splitWords(el);
+    const words = el.querySelectorAll(".motion-word");
+    gsap.set(el, { autoAlpha: 1 });
+    gsap.fromTo(words,
+      { yPercent: 110, autoAlpha: 0, filter: "blur(8px)" },
+      { yPercent: 0, autoAlpha: 1, filter: "blur(0px)",
+        duration: 0.9, ease: "power4.out", stagger: 0.055,
+        scrollTrigger: { trigger: el, start: "top 82%", once: true }
+      }
+    );
+  });
+}
+```
+
+## Scroll Reveals (Preset Map)
+
+```typescript
+const revealPresets = {
+  "fade-up":    { from: { y: 32, autoAlpha: 0 }, to: { y: 0, autoAlpha: 1 } },
+  "blur-in":    { from: { y: 18, autoAlpha: 0, filter: "blur(10px)" }, to: { y: 0, autoAlpha: 1, filter: "blur(0px)" } },
+  "scale":      { from: { scale: 0.96, autoAlpha: 0 }, to: { scale: 1, autoAlpha: 1 } },
+  "slide-left": { from: { x: 48, autoAlpha: 0 }, to: { x: 0, autoAlpha: 1 } },
+};
+
+function initScrollReveals() {
+  if (reduceMotion) { gsap.set("[data-reveal]", { autoAlpha: 1 }); return; }
+
+  gsap.utils.toArray("[data-reveal-group]").forEach((group) => {
+    const items = group.querySelectorAll("[data-reveal-item]");
+    gsap.fromTo(items,
+      { y: 36, autoAlpha: 0, filter: "blur(8px)" },
+      { y: 0, autoAlpha: 1, filter: "blur(0px)",
+        duration: 0.95, ease: "power4.out", stagger: 0.075,
+        scrollTrigger: { trigger: group, start: "top 82%", once: true }
+      }
+    );
+  });
+}
+```
+
+## Clip Image Reveals
+
+```typescript
+function initImageReveals() {
+  if (reduceMotion) { gsap.set("[data-image-reveal]", { autoAlpha: 1, clipPath: "none" }); return; }
+
+  gsap.utils.toArray("[data-image-reveal]").forEach((figure) => {
+    const image = figure.querySelector("img");
+    gsap.set(figure, { autoAlpha: 1 });
+
+    gsap.timeline({ scrollTrigger: { trigger: figure, start: "top 82%", once: true } })
+      .fromTo(figure, { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 1.1, ease: "power4.out" })
+      .fromTo(image, { scale: 1.08, autoAlpha: 0.75 }, { scale: 1, autoAlpha: 1, duration: 1.2, ease: "power4.out" }, 0);
+  });
+}
+```
+
+## Premium Hover (Magnetic + QuickTo)
+
+```typescript
+function initMagnetic() {
+  if (reduceMotion || window.matchMedia("(pointer: coarse)").matches) return;
+
+  gsap.utils.toArray("[data-magnetic]").forEach((element) => {
+    const strength = Number(element.dataset.magnetic || 0.18);
+    const xTo = gsap.quickTo(element, "x", { duration: 0.45, ease: "power3.out" });
+    const yTo = gsap.quickTo(element, "y", { duration: 0.45, ease: "power3.out" });
+
+    element.addEventListener("pointermove", (e) => {
+      const rect = element.getBoundingClientRect();
+      xTo((e.clientX - rect.left - rect.width / 2) * strength);
+      yTo((e.clientY - rect.top - rect.height / 2) * strength);
+    });
+    element.addEventListener("pointerleave", () => { xTo(0); yTo(0); });
+  });
+}
+```
+
+## Custom Cursor
+
+```typescript
+function initCursor() {
+  if (reduceMotion || window.matchMedia("(pointer: coarse)").matches) return;
+
+  const cursor = document.querySelector("[data-cursor]");
+  if (!cursor) return;
+
+  const xTo = gsap.quickTo(cursor, "x", { duration: 0.35, ease: "power3.out" });
+  const yTo = gsap.quickTo(cursor, "y", { duration: 0.35, ease: "power3.out" });
+
+  document.addEventListener("pointermove", (e) => { xTo(e.clientX); yTo(e.clientY); });
+
+  gsap.utils.toArray("[data-cursor-label]").forEach((target) => {
+    target.addEventListener("pointerenter", () => gsap.to(cursor, { scale: 1.75, duration: 0.35 }));
+    target.addEventListener("pointerleave", () => gsap.to(cursor, { scale: 1, duration: 0.35 }));
+  });
+}
+```
+
+## Init Order
+
+```typescript
+initTextReveals();
+initScrollReveals();
+initImageReveals();
+initParallax();
+initHorizontalGalleries();
+initStoryScenes();
+initMagnetic();
+initCursor();
+ScrollTrigger.refresh();
+```
+
+## Choreography Rules
+- **Hero**: background/media first → headline lines → copy → CTA last
+- **Sections**: label first → heading → media → cards/details last
+- **Pinned scenes**: one idea per viewport
+- **Parallax**: background slower, foreground faster, text stable
+- **Cursor**: support navigation intent, don't fight it
+
+
+
+## CINEMATIC SCROLL STORYTELLING (from MengTo)
+
+## Page Anatomy
+
+A premium scroll storytelling page follows this structure:
+
+1. **Preloader**: black screen, progress bar, brand/title, intro fade
+2. **Hero**: image parallax, masked headline reveal, scroll cue
+3. **Intro**: word-by-word kinetic typography
+4. **Story sections**: scroll-triggered fade-up, blur-in, clip reveals
+5. **Recent Projects**: sticky card stack with scale + layered depth
+6. **Gallery**: scroll-scrubbed horizontal or progressive reveals
+7. **Footer**: parallax reveal or slow upward handoff
+
+## Preloader Sequence
+
+```typescript
+function initPreloader(): Promise<void> {
+  const loader = document.querySelector("[data-preloader]");
+  const bar = document.querySelector("[data-preloader-bar]");
+  if (!loader || reduceMotion) { loader?.remove(); return Promise.resolve(); }
+
+  return new Promise((resolve) => {
+    gsap.timeline({
+      defaults: { ease: "power3.out" },
+      onComplete: () => { loader.remove(); resolve(); },
+    })
+      .fromTo(bar, { scaleX: 0, transformOrigin: "left" }, { scaleX: 1, duration: 1.1 })
+      .to(loader, { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, "+=0.15");
+  });
+}
+```
+
+## Scroll-Linked Progression
+
+```typescript
+function initProgressionScenes() {
+  if (reduceMotion) return;
+
+  gsap.utils.toArray("[data-progress-scene]").forEach((scene) => {
+    const media = scene.querySelector("[data-progress-media]");
+    const copy = scene.querySelectorAll("[data-progress-copy]");
+
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: scene,
+        start: "top top",
+        end: "+=140%",
+        scrub: 1.1,
+        pin: true,
+        anticipatePin: 1,
+      },
+    })
+      .fromTo(media, { scale: 1.08 }, { scale: 1, ease: "none" })
+      .fromTo(copy, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, stagger: 0.15, ease: "none" }, 0.15);
+  });
+}
+```
+
+## Sticky Card Stack
+
+```css
+[data-sticky-stack] { position: relative; }
+[data-stack-card] {
+  position: sticky; top: 12vh;
+  transform-origin: center top;
+  will-change: transform, opacity;
+}
+```
+
+```typescript
+function initStickyCardStack() {
+  if (reduceMotion) return;
+
+  gsap.utils.toArray("[data-sticky-stack]").forEach((stack) => {
+    const cards = gsap.utils.toArray(stack.querySelectorAll("[data-stack-card]"));
+
+    cards.forEach((card, index) => {
+      const nextCard = cards[index + 1];
+      if (!nextCard) return;
+
+      gsap.to(card, {
+        scale: 0.92 + index * 0.015,
+        autoAlpha: 0.72,
+        y: -24,
+        ease: "none",
+        scrollTrigger: {
+          trigger: nextCard,
+          start: "top 78%",
+          end: "top 24%",
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      });
+    });
+  });
+}
+```
+
+## Footer Parallax Reveal
+
+```typescript
+function initFooterReveal() {
+  if (reduceMotion) return;
+
+  const footer = document.querySelector("[data-footer-parallax]");
+  if (!footer) return;
+
+  gsap.fromTo(footer,
+    { yPercent: -12, autoAlpha: 0.85 },
+    {
+      yPercent: 0, autoAlpha: 1, ease: "none",
+      scrollTrigger: { trigger: footer, start: "top bottom", end: "top 45%", scrub: 1 },
+    }
+  );
+}
+```
+
+## Storytelling QA Checklist
+- Content is readable with JavaScript disabled
+- Reduced-motion users see static content, no smooth-scroll hijacking
+- Scroll-triggered reveals play once (unless design asks for replay)
+- Pinned sections don't overlap the next section
+- Hover + cursor interactions disabled on touch devices
+- No layout properties animated during scroll
+- `ScrollTrigger.refresh()` runs after images/fonts/layout shifts
+- Mobile has simplified or no pinning if performance drops
+- Preloader exits reliably even if images load slowly
 
 ## Resources
 

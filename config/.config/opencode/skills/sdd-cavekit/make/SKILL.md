@@ -16,6 +16,12 @@ Verificar que coverage está completo antes de empezar:
 - Todos acceptance criteria tienen taskassigned
 - Si no →报告 gap, NO proceed
 
+### Feedback from Check (looping)
+
+Si el prompt incluye una sección `Previous gaps to address:`, tratá cada
+gap como un requirement bloqueante. Implementalos PRIMERO antes de seguir
+con tareas nuevas. El loop anterior falló por estos gaps — no los ignores.
+
 ### The Loop
 
 ```

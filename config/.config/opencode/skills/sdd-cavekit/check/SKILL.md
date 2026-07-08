@@ -62,6 +62,8 @@ Invocar segundo agente para revisar:
 
 ### Output
 
+Siempre incluir gaps detallados para que el orquestador pueda retry con feedback.
+
 ```
 Gap Analysis:
 - Complete: {n}
@@ -69,10 +71,18 @@ Gap Analysis:
 - Missing: {n}
 - Over-built: {n}
 
+Critical Gaps (blocking retry):
+- R-003: Rate limiting not implemented (P0)
+- R-007: Error responses don't match spec (P1)
+
 Peer Review:
 - P0: {n}, P1: {n}, P2: {n}, P3: {n}
 
 Verdict: {APPROVE|REVISE|REJECT}
+```
+
+El orquestador lee `Critical Gaps` y `Verdict`. Si el veredicto es REJECT,
+pasa los gaps al próximo make como feedback.
 ```
 
 ### Cavekit Auto-Load

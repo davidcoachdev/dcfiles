@@ -195,6 +195,84 @@ const CHART_COLORS = {
 <div className="bg-[#1e293b]" />  // NO
 ```
 
+## Scroll Animations (IntersectionObserver + CSS Keyframes)
+
+Zero-dependency scroll-reveal animations using Tailwind arbitrary values and native IntersectionObserver.
+
+### Setup
+
+Add to your `<head>` or entry script:
+
+```html
+<script>
+  (function () {
+    const style = document.createElement("style");
+    style.textContent = `
+      .animate-on-scroll { animation-play-state: paused !important; }
+      .animate-on-scroll.animate { animation-play-state: running !important; }
+    `;
+    document.head.appendChild(style);
+
+    const once = true;
+    if (!window.__inViewIO) {
+      window.__inViewIO = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate");
+            if (once) window.__inViewIO.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2, rootMargin: "0px 0px -10% 0px" });
+    }
+
+    window.initInViewAnimations = function (selector = ".animate-on-scroll") {
+      document.querySelectorAll(selector).forEach((el) => {
+        window.__inViewIO.observe(el);
+      });
+    };
+
+    document.addEventListener("DOMContentLoaded", () => initInViewAnimations());
+  })();
+</script>
+```
+
+### Keyframes
+
+```css
+@keyframes fadeUpIn {
+  0% { opacity: 0; transform: translateY(30px); filter: blur(8px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0px); }
+}
+```
+
+### Usage
+
+```html
+<div class="animate-on-scroll [animation:fadeUpIn_0.8s_ease-out_0.1s_both]">
+  Reveals on scroll
+</div>
+
+<!-- With custom timing -->
+<div class="animate-on-scroll [animation:fadeUpIn_1.2s_ease-out_0.3s_both]">
+  Slower reveal with delay
+</div>
+```
+
+### Customization Knobs
+
+| Knob | How to adjust |
+|------|--------------|
+| Trigger offset | Change `rootMargin: "0px 0px -10% 0px"` |
+| Repeat | Set `once = false` for replay on re-enter |
+| Motion style | Modify translateY, blur, or add scale in keyframes |
+| Timing | Change duration/delay in `[animation:name_duration_easing_delay]` |
+
+### Common Pitfalls
+
+- Forgetting to include keyframes before the JS snippet
+- Keyframe name mismatch between `@keyframes` and Tailwind `[animation:...]`
+- Elements already in view before observer init (lower `threshold`)
+
 ## Resources
 
 See `references/` for detailed guides:
