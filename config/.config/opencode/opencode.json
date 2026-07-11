@@ -341,6 +341,28 @@
     }
   },
   "share": "disabled",
+  "command": {
+    "tts-pause": {
+      "template": "bun run $HOME/Proyects/tts-control/client.ts --pause",
+      "description": "Pause TTS playback"
+    },
+    "tts-resume": {
+      "template": "bun run $HOME/Proyects/tts-control/client.ts --resume",
+      "description": "Resume TTS playback"
+    },
+    "tts-stop": {
+      "template": "bun run $HOME/Proyects/tts-control/client.ts --stop",
+      "description": "Stop TTS playback"
+    },
+    "tts-toggle": {
+      "template": "bun run $HOME/Proyects/tts-control/client.ts --toggle",
+      "description": "Toggle TTS on/off"
+    },
+    "tts-status": {
+      "template": "bun run $HOME/Proyects/tts-control/client.ts --status",
+      "description": "Show TTS status"
+    }
+  },
   "plugin": [
     "opencode-agent-tmux",
     "opencode-wakatime",

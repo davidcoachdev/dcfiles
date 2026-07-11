@@ -4,7 +4,8 @@
     "@slkiser/opencode-quota",
     "opencode-subagent-statusline",
     "opencode-sdd-engram-manage",
-    "/home/dcdebian/.config/opencode/tui-plugins/dc-studio.tsx"
+    "/home/dcdebian/.config/opencode/tui-plugins/dc-studio.tsx",
+    "/home/dcdebian/.config/opencode/tui-plugins/tts-monitor.tsx"
   ],
   "theme": "dc-studio"
 }
