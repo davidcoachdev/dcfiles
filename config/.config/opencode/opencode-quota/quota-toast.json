@@ -1,0 +1,29 @@
+{
+  "enabled": true,
+  "enabledProviders": [
+    "kiro",
+    "kilo",
+    "google-code-assist",
+    "opencode-go",
+    "openai",
+    "copilot"
+  ],
+  "enableToast": true,
+  "toastDurationMs": 9000,
+  "showOnIdle": true,
+  "showOnQuestion": true,
+  "showOnCompact": true,
+  "showOnBothFail": true,
+  "minIntervalMs": 300000,
+  "requestTimeoutMs": 5000,
+  "formatStyle": "singleWindow",
+  "percentDisplayMode": "remaining",
+  "onlyCurrentModel": false,
+  "showSessionTokens": true,
+  "layout": {
+    "maxWidth": 50,
+    "narrowAt": 42,
+    "tinyAt": 32
+  },
+  "debug": false
+}
