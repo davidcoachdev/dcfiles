@@ -1,0 +1,10 @@
+{
+  "name": "github-pr",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.041751Z",
+  "contentHash": "1cc28b8fc9511fa4",
+  "description": "Create high-quality Pull Requests with conventional commits and proper descriptions. Trigger: When creating PRs, writing PR descriptions, or using gh CLI for pull requests."
+}

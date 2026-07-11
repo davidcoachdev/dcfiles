@@ -1,0 +1,11 @@
+{
+  "name": "architect-nextjs",
+  "version": "1.0",
+  "category": "frontend",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.026000Z",
+  "contentHash": "873428bf34a2d71a",
+  "description": "Next.js architecture with Scope Rule and Screaming Architecture patterns. Trigger: When setting up new Next.js projects, deciding component placement, or implementing Server Actions and route groups.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

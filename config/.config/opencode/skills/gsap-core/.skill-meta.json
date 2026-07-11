@@ -1,0 +1,11 @@
+{
+  "name": "gsap-core",
+  "version": "1.0",
+  "category": "gsap",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.042681Z",
+  "contentHash": "988d9f12610cf36d",
+  "description": "GSAP core API patterns: gsap.to(), from(), fromTo(), easing, duration, stagger, defaults. Trigger: When using GSAP for animations - vanilla JS or any framework.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

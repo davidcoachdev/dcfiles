@@ -1,0 +1,11 @@
+{
+  "name": "react-native",
+  "version": "1.0",
+  "category": "specialized",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.056383Z",
+  "contentHash": "539e32782efa0ecc",
+  "description": "React Native patterns for mobile app development with Expo and bare workflow. Trigger: When building mobile apps, working with React Native components, using Expo, React Navigation, or NativeWind.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

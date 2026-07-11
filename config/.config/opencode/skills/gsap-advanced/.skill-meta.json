@@ -1,0 +1,10 @@
+{
+  "name": "gsap-advanced",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.042325Z",
+  "contentHash": "b1effc7f915ecfb2",
+  "description": "Advanced GSAP patterns: Timeline sequencing, ScrollTrigger scroll-driven animations, plugins (Flip, Draggable, MotionPath, SplitText), performance optimization, and utility methods. Trigger: When crea"
+}

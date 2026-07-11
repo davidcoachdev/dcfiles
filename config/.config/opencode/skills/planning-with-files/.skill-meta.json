@@ -1,0 +1,11 @@
+{
+  "name": "planning-with-files",
+  "version": "1.0",
+  "category": "meta",
+  "source": "github.com/OthmanAdi/planning-with-files",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.052961Z",
+  "contentHash": "a3aa81210ea2511d",
+  "description": "Implements Manus-style file-based planning to organize and track progress on complex tasks. Creates task_plan.md, findings.md, and progress.md. Use when asked to plan out, break down, or organize a mu",
+  "repoUrl": "https://github.com/OthmanAdi/planning-with-files"
+}

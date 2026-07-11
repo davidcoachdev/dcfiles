@@ -1,0 +1,11 @@
+{
+  "name": "systematic-debugging",
+  "version": "1.0",
+  "category": "testing",
+  "source": "github.com/obra/superpowers",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.064590Z",
+  "contentHash": "ba3355464c437f31",
+  "description": "Error analysis expert for root cause analysis, stack trace forensics, and pattern matching. Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes. Trigger: When d",
+  "repoUrl": "https://github.com/obra/superpowers"
+}

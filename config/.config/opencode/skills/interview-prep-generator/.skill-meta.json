@@ -1,0 +1,11 @@
+{
+  "name": "interview-prep-generator",
+  "version": "1.0",
+  "category": "resume",
+  "source": "github.com/Paramchoudhary/ResumeSkills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.044703Z",
+  "contentHash": "dfa319768070c978",
+  "description": "Generate STAR stories, practice questions, and talking points from resume",
+  "repoUrl": "https://github.com/Paramchoudhary/ResumeSkills"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "academic-cv-builder",
+  "version": "1.0",
+  "category": "resume",
+  "source": "github.com/Paramchoudhary/ResumeSkills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.022159Z",
+  "contentHash": "a5a63331f2b872af",
+  "description": "Format CVs for academic positions with publications, grants, and teaching",
+  "repoUrl": "https://github.com/Paramchoudhary/ResumeSkills"
+}

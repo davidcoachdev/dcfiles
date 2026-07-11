@@ -1,0 +1,9 @@
+{
+  "name": "ux-process",
+  "version": "1.0",
+  "category": "design",
+  "source": "consolidated: ux-designer",
+  "sourceType": "local",
+  "description": "UX design process: user research, wireframing, and prototyping. Trigger: When doing UX design, wireframing, user research, or prototyping flows.",
+  "repoUrl": ""
+}

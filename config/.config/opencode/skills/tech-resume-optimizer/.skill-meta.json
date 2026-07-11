@@ -1,0 +1,11 @@
+{
+  "name": "tech-resume-optimizer",
+  "version": "1.0",
+  "category": "resume",
+  "source": "github.com/Paramchoudhary/ResumeSkills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.065442Z",
+  "contentHash": "fe87feaf8f1a9120",
+  "description": "Optimize resumes for software engineering, PM, and technical roles",
+  "repoUrl": "https://github.com/Paramchoudhary/ResumeSkills"
+}

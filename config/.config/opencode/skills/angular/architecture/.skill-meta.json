@@ -1,0 +1,10 @@
+{
+  "name": "architecture",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.024313Z",
+  "contentHash": "8c6641f566bfe22c",
+  "description": "Angular architecture: Scope Rule, project structure, file naming, style guide. Trigger: When structuring Angular projects or deciding where to place components."
+}

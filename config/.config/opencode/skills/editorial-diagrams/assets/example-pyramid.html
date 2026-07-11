@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pyramid - Maslow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --paper: #faf7f2; --paper-2: #f2ede4; --ink: #1c1917; --muted: #57534e; --accent: #b5523a; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Geist', sans-serif; background: var(--paper); color: var(--ink); display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+    .eyebrow { font-family: 'Geist Mono', monospace; font-size: 7px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    h1 { font-family: 'Instrument Serif', serif; font-size: 1.75rem; font-weight: 400; margin-bottom: 24px; }
+    .diagram-container { background: var(--paper-2); border: 1px solid rgba(28,25,23,0.12); border-radius: 8px; padding: 24px; }
+    svg { display: block; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <p class="eyebrow">PYRAMID</p>
+  <h1>User Needs Hierarchy</h1>
+  <div class="diagram-container">
+    <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="#f2ede4"/>
+      
+      <polygon points="200,30 280,100 120,100" fill="#1c1917"/>
+      <text x="200" y="75" fill="#faf7f2" font-size="10" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Self-Actualization</text>
+      <text x="200" y="88" fill="#78716c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">Growth, purpose</text>
+      
+      <polygon points="120,100 280,100 340,170 60,170" fill="rgba(181,82,58,0.15)" stroke="#b5523a" stroke-width="1"/>
+      <text x="200" y="142" fill="#1c1917" font-size="10" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Esteem</text>
+      <text x="200" y="155" fill="#57534e" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">Respect, achievement</text>
+      
+      <polygon points="60,170 340,170 380,240 20,240" fill="#fff" stroke="#1c1917" stroke-width="1"/>
+      <text x="200" y="212" fill="#1c1917" font-size="10" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Love / Belonging</text>
+      <text x="200" y="225" fill="#57534e" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">Relationships, community</text>
+      
+      <polygon points="20,240 380,240 400,290 0,290" fill="rgba(28,25,23,0.05)" stroke="#57534e" stroke-width="0.8"/>
+      <text x="200" y="272" fill="#1c1917" font-size="10" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Safety Needs</text>
+      <text x="200" y="285" fill="#57534e" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">Security, stability</text>
+    </svg>
+  </div>
+</body>
+</html>

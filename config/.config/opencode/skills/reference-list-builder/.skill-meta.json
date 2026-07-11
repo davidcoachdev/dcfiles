@@ -1,0 +1,11 @@
+{
+  "name": "reference-list-builder",
+  "version": "1.0",
+  "category": "resume",
+  "source": "github.com/Paramchoudhary/ResumeSkills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.057093Z",
+  "contentHash": "9cfd5d210aecb0fb",
+  "description": "Format professional references properly and prepare reference materials",
+  "repoUrl": "https://github.com/Paramchoudhary/ResumeSkills"
+}

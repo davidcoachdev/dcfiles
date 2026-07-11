@@ -1,0 +1,11 @@
+{
+  "name": "threat-detection",
+  "version": "1.0",
+  "category": "testing",
+  "source": "local-created",
+  "sourceType": "local",
+  "installedAt": "2026-04-16T19:52:38.066651Z",
+  "contentHash": "ea279064851bf94a",
+  "description": "Security specialist for SIEM rules, threat hunting, MITRE ATT&CK mapping, detection engineering, and security monitoring. Trigger: When building detection rules, threat hunting, SIEM configuration, se",
+  "inspiredBy": "github.com/The-Agency-Archive/agency-agents"
+}

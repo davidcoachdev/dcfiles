@@ -1,0 +1,11 @@
+{
+  "name": "zustand-5",
+  "version": "1.0",
+  "category": "frontend",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.071510Z",
+  "contentHash": "a69b26a0384977f0",
+  "description": "Zustand 5 state management patterns. Trigger: When managing React state with Zustand.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

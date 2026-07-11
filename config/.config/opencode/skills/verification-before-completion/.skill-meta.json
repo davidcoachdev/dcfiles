@@ -1,0 +1,10 @@
+{
+  "name": "verification-before-completion",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.069186Z",
+  "contentHash": "ea52d15aabaf72bc",
+  "description": "Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence"
+}

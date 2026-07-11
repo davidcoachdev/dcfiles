@@ -1,0 +1,10 @@
+{
+  "name": "executing-plans",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.039238Z",
+  "contentHash": "a711f83fb762e2ea",
+  "description": "Use when you have a written implementation plan to execute in a separate session with review checkpoints"
+}

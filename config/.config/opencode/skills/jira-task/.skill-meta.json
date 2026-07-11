@@ -1,0 +1,10 @@
+{
+  "name": "jira-task",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.046679Z",
+  "contentHash": "372c38a6296e1d43",
+  "description": "Creates Jira tasks following Prowler's standard format. Trigger: When user asks to create a Jira task, ticket, or issue."
+}

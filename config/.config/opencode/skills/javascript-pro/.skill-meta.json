@@ -1,0 +1,11 @@
+{
+  "name": "javascript-pro",
+  "version": "1.0",
+  "category": "frontend",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.046004Z",
+  "contentHash": "03a57d361e5a4ac8",
+  "description": "JavaScript expert for modern ES6+, async programming, performance optimization, and Node.js. Trigger: When working with JavaScript, Node.js, ES6+ features, or async programming.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

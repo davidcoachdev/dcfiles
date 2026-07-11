@@ -1,0 +1,11 @@
+{
+  "name": "career-changer-translator",
+  "version": "1.0",
+  "category": "resume",
+  "source": "github.com/Paramchoudhary/ResumeSkills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.029933Z",
+  "contentHash": "b20b861780197b51",
+  "description": "Translate skills from one industry to another, identify transferable skills",
+  "repoUrl": "https://github.com/Paramchoudhary/ResumeSkills"
+}

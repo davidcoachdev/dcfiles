@@ -1,0 +1,11 @@
+{
+  "name": "monitoring-specialist",
+  "version": "1.0",
+  "category": "devops",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.049186Z",
+  "contentHash": "18c8fb8284091f6c",
+  "description": "Observability expert for metrics, logs, traces, alerting, and comprehensive system monitoring. Trigger: When setting up monitoring, observability, Prometheus, Grafana, or logging systems.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

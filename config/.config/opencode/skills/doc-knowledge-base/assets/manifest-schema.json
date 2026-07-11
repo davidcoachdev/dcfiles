@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DocKnowledgeBase Manifest",
+  "description": "Schema for the knowledge base manifest that tracks source files, their hashes, and sync state",
+  "type": "object",
+  "required": ["version", "created_at", "updated_at", "sources"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Manifest schema version",
+      "const": "1.0"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the knowledge base was first created"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the knowledge base was last synced"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["filename", "source_type", "hash", "added_at", "status"],
+        "properties": {
+          "filename": {
+            "type": "string",
+            "description": "Original filename in original_doc/"
+          },
+          "source_type": {
+            "type": "string",
+            "enum": ["pdf", "pptx", "ppt", "docx", "doc", "xlsx", "xls", "eml", "md", "markdown", "txt", "csv", "tsv", "mdx", "yaml", "yml", "tex"]
+          },
+          "hash": {
+            "type": "string",
+            "description": "SHA-256 hash of the source file for change detection"
+          },
+          "added_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["active", "unparseable", "encrypted_skipped", "requires_ocr", "deleted"],
+            "default": "active"
+          },
+          "page_count": {
+            "type": "integer",
+            "description": "Number of pages (PDF), slides (PPTX), or sheets (XLSX)"
+          },
+          "author": {
+            "type": ["string", "null"],
+            "description": "Document author if extractable"
+          },
+          "last_modified": {
+            "type": ["string", "null"],
+            "format": "date-time",
+            "description": "Document internal last-modified date"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+#
+# pre-commit hook para regenerar docs/adr/index.md automáticamente
+#
+# Instalación:
+#   1. Copiar este archivo a .git/hooks/pre-commit
+#   2. Hacerlo ejecutable: chmod +x .git/hooks/pre-commit
+#
+# Cómo funciona:
+#   - Antes de cada commit, verifica si se van a commitear cambios en docs/adr/
+#   - Si sí, regenera el index y lo agrega al mismo commit
+#   - Todo queda en un solo commit limpio
+
+set -euo pipefail
+
+# Verificar si hay archivos staged en docs/adr/ (excluyendo index.md)
+STAGED_ADR_FILES=$(git diff --cached --name-only --diff-filter=ACMR | grep '^docs/adr/[0-9]' || true)
+
+if [[ -z "$STAGED_ADR_FILES" ]]; then
+  # No se van a commitear ADRs, salir sin hacer nada
+  exit 0
+fi
+
+# Verificar que el script de actualización existe
+UPDATE_SCRIPT=".config/opencode/skills/adr/scripts/update-index.sh"
+if [[ ! -f "$UPDATE_SCRIPT" ]]; then
+  echo "Warning: $UPDATE_SCRIPT not found, skipping ADR index update"
+  exit 0
+fi
+
+# Regenerar el index
+echo "ADRs staged for commit, regenerating index..."
+bash "$UPDATE_SCRIPT"
+
+# Verificar si el index cambió
+if git diff --quiet docs/adr/index.md 2>/dev/null; then
+  # El index no cambió, no hacer nada
+  exit 0
+fi
+
+# Agregar el index actualizado al mismo commit
+git add docs/adr/index.md
+
+echo "ADR index updated and added to commit"

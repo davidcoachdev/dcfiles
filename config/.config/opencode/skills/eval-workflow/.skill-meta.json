@@ -1,0 +1,10 @@
+{
+  "name": "eval-workflow",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.038924Z",
+  "contentHash": "b7dc4c7283ef9af0",
+  "description": "Testing and evaluation methodology with checkpoint vs continuous evals, grader types, and pass@k metrics."
+}

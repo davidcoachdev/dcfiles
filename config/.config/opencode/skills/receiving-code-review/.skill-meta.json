@@ -1,0 +1,10 @@
+{
+  "name": "receiving-code-review",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.056780Z",
+  "contentHash": "c9382e92b8f32363",
+  "description": "Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative"
+}

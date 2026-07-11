@@ -1,0 +1,11 @@
+{
+  "name": "rapid-prototyper",
+  "version": "1.0",
+  "category": "meta",
+  "source": "local-created",
+  "sourceType": "local",
+  "installedAt": "2026-04-16T19:52:38.055377Z",
+  "contentHash": "b6dee575a03b7772",
+  "description": "Fast MVP and proof-of-concept builder. Specializing in rapid iteration from idea to working prototype in hours, not weeks. Prioritizes speed of learning over code perfection. Trigger: When building pr",
+  "inspiredBy": "github.com/The-Agency-Archive/agency-agents"
+}

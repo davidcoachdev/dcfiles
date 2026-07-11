@@ -1,0 +1,11 @@
+{
+  "name": "ui-anti-ai",
+  "version": "1.0",
+  "category": "frontend",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.067376Z",
+  "contentHash": "7ea56d0d862b0766",
+  "description": "Prevents generic AI UI patterns: no floating cards, gradient-heavy dashboards, glassmorphism. Trigger: When generating any frontend UI code - enforces Linear/Raycast/Stripe aesthetic.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

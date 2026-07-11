@@ -1,0 +1,10 @@
+{
+  "name": "performance",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.025163Z",
+  "contentHash": "1d90af4a6a8801ef",
+  "description": "Angular performance: NgOptimizedImage, @defer, lazy loading, SSR. Trigger: When optimizing Angular app performance, images, or lazy loading."
+}

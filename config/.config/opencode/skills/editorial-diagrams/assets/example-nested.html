@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nested - Project Structure</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --paper: #faf7f2; --paper-2: #f2ede4; --ink: #1c1917; --muted: #57534e; --accent: #b5523a; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Geist', sans-serif; background: var(--paper); color: var(--ink); display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+    .eyebrow { font-family: 'Geist Mono', monospace; font-size: 7px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    h1 { font-family: 'Instrument Serif', serif; font-size: 1.75rem; font-weight: 400; margin-bottom: 24px; }
+    .diagram-container { background: var(--paper-2); border: 1px solid rgba(28,25,23,0.12); border-radius: 8px; padding: 24px; }
+    svg { display: block; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <p class="eyebrow">NESTED</p>
+  <h1>Project Structure</h1>
+  <div class="diagram-container">
+    <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="#f2ede4"/>
+      <rect x="20" y="20" width="360" height="220" rx="8" fill="none" stroke="#1c1917" stroke-width="1.5"/>
+      <text x="200" y="45" fill="#1c1917" font-size="10" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">src/</text>
+      
+      <rect x="40" y="60" width="160" height="80" rx="6" fill="none" stroke="#1c1917" stroke-width="1"/>
+      <text x="120" y="85" fill="#1c1917" font-size="9" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">components/</text>
+      <rect x="50" y="100" width="60" height="30" rx="4" fill="#fff" stroke="#1c1917" stroke-width="0.8"/>
+      <text x="80" y="120" fill="#1c1917" font-size="8" font-family="'Geist', sans-serif" text-anchor="middle">Button</text>
+      <rect x="120" y="100" width="60" height="30" rx="4" fill="#fff" stroke="#1c1917" stroke-width="0.8"/>
+      <text x="150" y="120" fill="#1c1917" font-size="8" font-family="'Geist', sans-serif" text-anchor="middle">Input</text>
+      <rect x="50" y="135" width="60" height="30" rx="4" fill="#fff" stroke="#1c1917" stroke-width="0.8"/>
+      <text x="80" y="155" fill="#1c1917" font-size="8" font-family="'Geist', sans-serif" text-anchor="middle">Card</text>
+      <rect x="120" y="135" width="60" height="30" rx="4" fill="#fff" stroke="#1c1917" stroke-width="0.8"/>
+      <text x="150" y="155" fill="#57534e" font-size="8" font-family="'Geist', sans-serif" text-anchor="middle">Modal</text>
+      
+      <rect x="220" y="60" width="140" height="80" rx="6" fill="none" stroke="#1c1917" stroke-width="1"/>
+      <text x="290" y="85" fill="#1c1917" font-size="9" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">pages/</text>
+      <rect x="230" y="100" width="55" height="30" rx="4" fill="#fff" stroke="#1c1917" stroke-width="0.8"/>
+      <text x="257" y="120" fill="#1c1917" font-size="8" font-family="'Geist', sans-serif" text-anchor="middle">Home</text>
+      <rect x="295" y="100" width="55" height="30" rx="4" fill="rgba(181,82,58,0.08)" stroke="#b5523a" stroke-width="1"/>
+      <text x="322" y="120" fill="#1c1917" font-size="8" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Admin</text>
+      <rect x="230" y="135" width="55" height="30" rx="4" fill="#fff" stroke="#1c1917" stroke-width="0.8"/>
+      <text x="257" y="155" fill="#1c1917" font-size="8" font-family="'Geist', sans-serif" text-anchor="middle">Login</text>
+      <rect x="295" y="135" width="55" height="30" rx="4" fill="#fff" stroke="#1c1917" stroke-width="0.8"/>
+      <text x="322" y="155" fill="#57534e" font-size="8" font-family="'Geist', sans-serif" text-anchor="middle">Blog</text>
+      
+      <rect x="40" y="160" width="320" height="60" rx="6" fill="none" stroke="#1c1917" stroke-width="1"/>
+      <text x="200" y="185" fill="#1c1917" font-size="9" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">lib/</text>
+      <rect x="50" y="195" width="80" height="20" rx="3" fill="#fff" stroke="#1c1917" stroke-width="0.6"/>
+      <text x="90" y="209" fill="#1c1917" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">api.ts</text>
+      <rect x="140" y="195" width="80" height="20" rx="3" fill="#fff" stroke="#1c1917" stroke-width="0.6"/>
+      <text x="180" y="209" fill="#1c1917" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">utils.ts</text>
+      <rect x="230" y="195" width="80" height="20" rx="3" fill="#fff" stroke="#1c1917" stroke-width="0.6"/>
+      <text x="270" y="209" fill="#57534e" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">hooks.ts</text>
+    </svg>
+  </div>
+</body>
+</html>

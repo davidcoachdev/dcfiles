@@ -1,0 +1,11 @@
+{
+  "name": "hexagonal-architecture-layers-java",
+  "version": "1.0",
+  "category": "backend",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.043785Z",
+  "contentHash": "4ce68f4122bed590",
+  "description": "Hexagonal architecture layering for Java services with strict boundaries. Trigger: When structuring Java apps by Domain/Application/Infrastructure, or refactoring toward clean architecture.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

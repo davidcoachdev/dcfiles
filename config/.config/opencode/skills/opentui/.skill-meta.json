@@ -1,0 +1,10 @@
+{
+  "name": "opentui",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.051050Z",
+  "contentHash": "7c26ea1e6b37f17b",
+  "description": "Comprehensive OpenTUI skill for building terminal user interfaces. Covers the core imperative API, React reconciler, and Solid reconciler. Use for any TUI development task including components, layout"
+}

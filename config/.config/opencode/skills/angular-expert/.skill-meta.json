@@ -1,0 +1,11 @@
+{
+  "name": "angular-expert",
+  "version": "1.0",
+  "category": "frontend",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.025442Z",
+  "contentHash": "b681f32b62ac4149",
+  "description": "Angular 17+ expert for standalone components, signals, RxJS, and enterprise applications. Trigger: When building Angular apps, using signals, RxJS patterns, or Angular components.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

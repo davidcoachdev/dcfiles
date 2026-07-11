@@ -1,0 +1,10 @@
+{
+  "name": "vibe-coding",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.069464Z",
+  "contentHash": "c9968b18d0c8f18f",
+  "description": "Vibe Coding workflow 2025: PRD → Design → Tech Stack → LLM prompting → Git → CodeRabbit. Trigger: When user mentions vibe coding, AI coding, programming with LLM, or \"making web fast with AI\"."
+}

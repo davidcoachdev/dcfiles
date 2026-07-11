@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagram Title</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #1c1917;
+      --paper-2: #292524;
+      --ink: #faf7f2;
+      --muted: #a8a29e;
+      --soft: #8e8680;
+      --rule: rgba(250,247,242,0.12);
+      --accent: #d6724a;
+      --accent-tint: rgba(214,114,74,0.10);
+      --link: #60a5fa;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Geist', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    .eyebrow {
+      font-family: 'Geist Mono', monospace;
+      font-size: 7px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      margin-bottom: 24px;
+    }
+    .diagram-container {
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      padding: 24px;
+      overflow-x: auto;
+      width: 100%;
+      max-width: 900px;
+    }
+    svg { display: block; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <p class="eyebrow">DIAGRAM TYPE</p>
+  <h1>Diagram Title</h1>
+  <div class="diagram-container">
+    
+  </div>
+</body>
+</html>

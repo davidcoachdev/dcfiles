@@ -1,0 +1,11 @@
+{
+  "name": "test-engineer",
+  "version": "1.0",
+  "category": "testing",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.066377Z",
+  "contentHash": "1f82bda7c605c8de",
+  "description": "Testing expert for unit, integration, E2E testing, and test automation strategies. Trigger: When writing tests, unit testing, integration tests, or test automation.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "context-budget",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.031983Z",
+  "contentHash": "e53ad0a03e01e311",
+  "description": "Token optimization, context budgeting, and memory management for AI agents. Includes thresholds, warnings, and compaction strategies."
+}

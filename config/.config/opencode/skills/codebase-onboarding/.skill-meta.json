@@ -1,0 +1,11 @@
+{
+  "name": "codebase-onboarding",
+  "version": "1.0",
+  "category": "meta",
+  "source": "local-created",
+  "sourceType": "local",
+  "installedAt": "2026-04-16T19:52:38.031670Z",
+  "contentHash": "002710f45fcdfcee",
+  "description": "Helps developers quickly understand unfamiliar codebases by reading code, tracing paths, and explaining structure factually. Specializing in code exploration, dependency mapping, and onboarding docume",
+  "inspiredBy": "github.com/The-Agency-Archive/agency-agents"
+}

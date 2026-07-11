@@ -1,0 +1,11 @@
+{
+  "name": "spring-boot-3",
+  "version": "1.0",
+  "category": "backend",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.063956Z",
+  "contentHash": "1df15e73d1343eca",
+  "description": "Spring Boot 3 patterns for configuration, DI, and web services. Trigger: When building or refactoring Spring Boot 3 applications.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

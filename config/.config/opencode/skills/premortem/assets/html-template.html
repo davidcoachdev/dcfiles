@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premortem Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0e1a;
+            color: #e0e6ed;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid #1a2332;
+            padding-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+        
+        .subtitle {
+            color: #8892a8;
+            font-size: 1.1rem;
+        }
+        
+        .metadata {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .metadata-item {
+            background: #0f1419;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 3px solid #3b82f6;
+        }
+        
+        .metadata-label {
+            color: #8892a8;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .metadata-value {
+            color: #e0e6ed;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+        
+        section {
+            margin-bottom: 3rem;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            border-bottom: 2px solid #1a2332;
+            padding-bottom: 0.75rem;
+        }
+        
+        .synthesis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .synthesis-card {
+            background: #0f1419;
+            border: 1px solid #1a2332;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .synthesis-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+        }
+        
+        .synthesis-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #3b82f6;
+        }
+        
+        .synthesis-card p {
+            color: #c5cfe0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        .failure-modes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .failure-card {
+            background: #0f1419;
+            border: 1px solid #1a2332;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .failure-card:hover {
+            border-color: #ef4444;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.1);
+        }
+        
+        .failure-header {
+            background: linear-gradient(135deg, #1a2332 0%, #0f1419 100%);
+            padding: 1.5rem;
+            border-bottom: 2px solid #ef4444;
+        }
+        
+        .failure-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .severity-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        
+        .severity-critical {
+            background: #7f1d1d;
+            color: #fca5a5;
+        }
+        
+        .severity-high {
+            background: #92400e;
+            color: #fcd34d;
+        }
+        
+        .severity-medium {
+            background: #1e3a8a;
+            color: #93c5fd;
+        }
+        
+        .failure-body {
+            padding: 1.5rem;
+        }
+        
+        .failure-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .failure-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .failure-section-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #8892a8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+        }
+        
+        .failure-section-content {
+            color: #c5cfe0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        .warning-signal {
+            background: #0a0e1a;
+            padding: 0.75rem;
+            border-left: 3px solid #fbbf24;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .warning-signal:last-child {
+            margin-bottom: 0;
+        }
+        
+        .checklist {
+            background: #0f1419;
+            border: 1px solid #1a2332;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .checklist-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #1a2332;
+        }
+        
+        .checklist-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .checklist-number {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            background: #3b82f6;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .checklist-content {
+            flex: 1;
+        }
+        
+        .checklist-content p {
+            color: #c5cfe0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        footer {
+            border-top: 1px solid #1a2332;
+            padding-top: 2rem;
+            margin-top: 3rem;
+            color: #8892a8;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #3b82f6;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #8892a8;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 Premortem Report</h1>
+            <p class="subtitle">Análisis prospectivo de fallos — Asumiendo que el plan ya falló</p>
+            
+            <div class="metadata">
+                <div class="metadata-item">
+                    <div class="metadata-label">Plan</div>
+                    <div class="metadata-value">{PLAN_NAME}</div>
+                </div>
+                <div class="metadata-item">
+                    <div class="metadata-label">Audiencia</div>
+                    <div class="metadata-value">{AUDIENCE}</div>
+                </div>
+                <div class="metadata-item">
+                    <div class="metadata-label">Criterio de éxito</div>
+                    <div class="metadata-value">{SUCCESS_CRITERIA}</div>
+                </div>
+                <div class="metadata-item">
+                    <div class="metadata-label">Fecha del análisis</div>
+                    <div class="metadata-value">{TIMESTAMP}</div>
+                </div>
+            </div>
+        </header>
+        
+        <section>
+            <h2>🎯 Síntesis Ejecutiva</h2>
+            
+            <div class="synthesis">
+                <div class="synthesis-card">
+                    <h3>Fallo más probable</h3>
+                    <p>{MOST_LIKELY_FAILURE}</p>
+                </div>
+                
+                <div class="synthesis-card">
+                    <h3>Fallo más peligroso</h3>
+                    <p>{MOST_DANGEROUS_FAILURE}</p>
+                </div>
+                
+                <div class="synthesis-card">
+                    <h3>Supuesto oculto</h3>
+                    <p>{HIDDEN_ASSUMPTION}</p>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>🔧 Plan Revisado</h2>
+            <div class="synthesis-card">
+                <p>{REVISED_PLAN}</p>
+            </div>
+        </section>
+        
+        <section>
+            <h2>✅ Lista de Verificación Pre-Lanzamiento</h2>
+            <div class="checklist">
+                {CHECKLIST_ITEMS}
+            </div>
+        </section>
+        
+        <section>
+            <h2>⚠️ Modos de Fallo Identificados</h2>
+            <div class="failure-modes">
+                {FAILURE_CARDS}
+            </div>
+        </section>
+        
+        <footer>
+            <p>Premortem ejecutado usando el método de Klein — retrospectiva prospectiva</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">{FAILURE_COUNT}</div>
+                    <div class="stat-label">Modos de fallo</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">{AGENT_COUNT}</div>
+                    <div class="stat-label">Análisis profundos</div>
+                </div>
+            </div>
+            <p style="margin-top: 1rem;">Transcripción completa disponible en: premortem-transcript-{TIMESTAMP}.md</p>
+        </footer>
+    </div>
+</body>
+</html>

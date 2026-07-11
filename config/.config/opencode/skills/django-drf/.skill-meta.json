@@ -1,0 +1,11 @@
+{
+  "name": "django-drf",
+  "version": "1.0",
+  "category": "backend",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.035866Z",
+  "contentHash": "342035c72a13951d",
+  "description": "Django REST Framework patterns. Trigger: When building REST APIs with Django - ViewSets, Serializers, Filters.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

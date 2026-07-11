@@ -1,0 +1,11 @@
+{
+  "name": "pytest",
+  "version": "1.0",
+  "category": "testing",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.055038Z",
+  "contentHash": "b50c99905f64d3e3",
+  "description": "Pytest testing patterns for Python. Trigger: When writing Python tests - fixtures, mocking, markers.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

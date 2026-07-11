@@ -1,0 +1,11 @@
+{
+  "name": "react-hook-form",
+  "version": "1.0",
+  "category": "frontend",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.055966Z",
+  "contentHash": "9bd462cd4c17dde5",
+  "description": "React Hook Form v7 patterns for form handling, validation, and integration with UI libraries. Trigger: When building React forms, using react-hook-form, form validation, or integrating with Material U",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

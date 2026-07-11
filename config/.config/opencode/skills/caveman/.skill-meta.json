@@ -1,0 +1,10 @@
+{
+  "name": "caveman",
+  "version": "1.0",
+  "category": "meta",
+  "source": "opencode-builtin",
+  "sourceType": "builtin",
+  "installedAt": "2026-04-16T19:52:38.030387Z",
+  "contentHash": "cfe1130b5c95f846",
+  "description": "Ultra-compressed communication mode. Cuts token usage ~75% by speaking like caveman while keeping full technical accuracy. Supports intensity levels: lite, full (default), ultra, wenyan-lite, wenyan-f"
+}

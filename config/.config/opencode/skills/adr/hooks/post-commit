@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+#
+# post-commit hook para regenerar docs/adr/index.md automáticamente
+#
+# Instalación:
+#   1. Copiar este archivo a .git/hooks/post-commit
+#   2. Hacerlo ejecutable: chmod +x .git/hooks/post-commit
+#
+# Cómo funciona:
+#   - Después de cada commit, verifica si se modificó algún ADR
+#   - Si sí, regenera el index y hace un commit automático
+#   - El commit automático tiene un mensaje especial para evitar loops infinitos
+
+set -euo pipefail
+
+# Evitar loop infinito: si el último commit fue auto-generado por este hook, no hacer nada
+LAST_COMMIT_MSG=$(git log -1 --pretty=%B 2>/dev/null || echo "")
+if [[ "$LAST_COMMIT_MSG" == *"docs: auto-regenerate ADR index"* ]]; then
+  exit 0
+fi
+
+# Verificar si el último commit modificó archivos en docs/adr/
+CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r HEAD | grep '^docs/adr/' || true)
+
+if [[ -z "$CHANGED_FILES" ]]; then
+  # No se modificaron ADRs, salir sin hacer nada
+  exit 0
+fi
+
+# Verificar que el script de actualización existe
+UPDATE_SCRIPT=".config/opencode/skills/adr/scripts/update-index.sh"
+if [[ ! -f "$UPDATE_SCRIPT" ]]; then
+  echo "Warning: $UPDATE_SCRIPT not found, skipping ADR index update"
+  exit 0
+fi
+
+# Regenerar el index
+echo "ADRs modified, regenerating index..."
+bash "$UPDATE_SCRIPT"
+
+# Verificar si el index cambió
+if git diff --quiet docs/adr/index.md; then
+  # El index no cambió, no hacer nada
+  exit 0
+fi
+
+# Hacer commit automático con el index actualizado
+git add docs/adr/index.md
+git commit -m "docs: auto-regenerate ADR index" --no-verify
+
+echo "ADR index updated and committed automatically"

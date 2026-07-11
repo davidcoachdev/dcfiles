@@ -1,0 +1,11 @@
+{
+  "name": "doc-knowledge-base",
+  "version": "1.0",
+  "category": "meta",
+  "source": "local-created",
+  "sourceType": "local",
+  "installedAt": "2026-04-16T19:52:38.036255Z",
+  "contentHash": "22d63d669f5564d9",
+  "description": "Build and query local knowledge bases from office documents (PDF, PPTX, DOCX, XLSX, EML, MD, TXT) with strict provenance tracing and evidence-first answers. Trigger: When building document knowledge b",
+  "inspiredBy": "github.com/JetXu-LLM/DocMason"
+}

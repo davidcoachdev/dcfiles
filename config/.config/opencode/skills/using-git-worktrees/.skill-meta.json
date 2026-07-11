@@ -1,0 +1,10 @@
+{
+  "name": "using-git-worktrees",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.067952Z",
+  "contentHash": "de9dcde34840eee0",
+  "description": "Use when starting feature work that needs isolation from current workspace or before executing implementation plans - creates isolated git worktrees with smart directory selection and safety verificat"
+}

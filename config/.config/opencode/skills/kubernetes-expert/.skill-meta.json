@@ -1,0 +1,11 @@
+{
+  "name": "kubernetes-expert",
+  "version": "1.0",
+  "category": "devops",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.047667Z",
+  "contentHash": "eec36d8e38cc6903",
+  "description": "Kubernetes specialist focusing on cluster management, workload orchestration, and cloud-native architectures. Trigger: When working with Kubernetes, K8s clusters, Helm charts, or container orchestrati",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

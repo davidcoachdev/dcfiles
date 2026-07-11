@@ -1,0 +1,11 @@
+{
+  "name": "playwright",
+  "version": "1.0",
+  "category": "testing",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.053584Z",
+  "contentHash": "a8132ea82acf4bc2",
+  "description": "Playwright E2E testing patterns. Trigger: When writing E2E tests - Page Objects, selectors, MCP workflow.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

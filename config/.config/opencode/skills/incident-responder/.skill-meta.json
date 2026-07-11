@@ -1,0 +1,11 @@
+{
+  "name": "incident-responder",
+  "version": "2.0",
+  "category": "devops",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.044117Z",
+  "contentHash": "90f2fb8a52fe0146",
+  "description": "Production incident response expert for debugging, log analysis, root cause analysis, structured response coordination, post-mortem facilitation, and on-call process design. Trigger: When debugging pr",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

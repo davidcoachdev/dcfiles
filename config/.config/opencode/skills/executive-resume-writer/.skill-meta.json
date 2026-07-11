@@ -1,0 +1,11 @@
+{
+  "name": "executive-resume-writer",
+  "version": "1.0",
+  "category": "resume",
+  "source": "github.com/Paramchoudhary/ResumeSkills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.039518Z",
+  "contentHash": "fef2071e7b6622df",
+  "description": "Create C-suite and VP level resumes emphasizing strategic leadership",
+  "repoUrl": "https://github.com/Paramchoudhary/ResumeSkills"
+}

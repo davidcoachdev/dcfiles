@@ -1,0 +1,10 @@
+{
+  "name": "openagents-control",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.050498Z",
+  "contentHash": "485d35a75ae0faf5",
+  "description": "Pattern-first AI framework with approval gates, context-aware code generation, and token-efficient execution. Teaches agents your coding patterns upfront. Code matches your project from the start. Tri"
+}

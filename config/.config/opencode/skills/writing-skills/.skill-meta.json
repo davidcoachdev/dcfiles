@@ -1,0 +1,10 @@
+{
+  "name": "writing-skills",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.070660Z",
+  "contentHash": "9fa27e15f6f8fa22",
+  "description": "Use when creating new skills, editing existing skills, or verifying skills work before deployment"
+}

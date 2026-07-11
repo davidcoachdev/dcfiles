@@ -1,0 +1,11 @@
+{
+  "name": "cover-letter-generator",
+  "version": "1.0",
+  "category": "resume",
+  "source": "github.com/Paramchoudhary/ResumeSkills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.032624Z",
+  "contentHash": "a0a072ecaeb993e7",
+  "description": "Create personalized, compelling cover letters from resume and job description",
+  "repoUrl": "https://github.com/Paramchoudhary/ResumeSkills"
+}

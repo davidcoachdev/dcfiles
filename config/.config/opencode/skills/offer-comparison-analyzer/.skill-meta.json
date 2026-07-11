@@ -1,0 +1,11 @@
+{
+  "name": "offer-comparison-analyzer",
+  "version": "1.0",
+  "category": "resume",
+  "source": "github.com/Paramchoudhary/ResumeSkills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.050068Z",
+  "contentHash": "2581875576fd5b1a",
+  "description": "Compare multiple job offers side-by-side with total compensation analysis",
+  "repoUrl": "https://github.com/Paramchoudhary/ResumeSkills"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "accessibility-auditor",
+  "version": "1.0",
+  "category": "testing",
+  "source": "opencode-builtin",
+  "sourceType": "builtin",
+  "installedAt": "2026-04-16T19:52:38.022597Z",
+  "contentHash": "5bcc14eb0bbef291",
+  "description": "Accessibility expert for WCAG compliance, screen reader testing, and inclusive design auditing. Trigger: When auditing accessibility, WCAG compliance, or accessibility testing."
+}

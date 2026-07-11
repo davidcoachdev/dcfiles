@@ -1,0 +1,19 @@
+app/
+├── layout.tsx              # Root layout
+├── page.tsx                # Home page
+├── (auth)/                 # Route group
+│   ├── login/
+│   │   └── page.tsx
+│   └── register/
+│       └── page.tsx
+├── dashboard/              # Feature
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── components/
+│   │   ├── Header.tsx
+│   │   └── Sidebar.tsx
+│   └── lib/
+│       └── utils.ts
+└── api/                    # API routes
+    └── users/
+        └── route.ts

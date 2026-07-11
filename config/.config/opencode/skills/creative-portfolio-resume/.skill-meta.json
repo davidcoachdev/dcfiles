@@ -1,0 +1,11 @@
+{
+  "name": "creative-portfolio-resume",
+  "version": "1.0",
+  "category": "resume",
+  "source": "github.com/Paramchoudhary/ResumeSkills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.032929Z",
+  "contentHash": "ee894c1dd21a58aa",
+  "description": "Balance visual design with ATS compatibility for creative roles",
+  "repoUrl": "https://github.com/Paramchoudhary/ResumeSkills"
+}

@@ -1,0 +1,128 @@
+---
+name: refactoring
+description: >
+  Índice de refactoring y code smells. Carga la skill específica según el problema.
+  Trigger: Cuando ves código problemático, smell, o necesitás limpiar/refactorizar.
+license: Apache-2.0
+metadata:
+  author: gentleman-programming
+  version: "1.0"
+---
+
+## Cuándo Usar Esta Skill
+
+- Code review y ves code smells
+- Necesitás refactorizar código existente
+- Identificar problemas en el código
+- Aplicar técnicas de refactoring
+
+## Code Smells - Carga la Skill Específica
+
+### Bloaters (código inflado)
+| Smell | Skill |
+|-------|-------|
+| Método muy largo | ref-smell-long-method |
+| Clase muy grande | ref-smell-large-class |
+| Primitive Obsession | ref-smell-primitive-obsession |
+| Lista de parámetros larga | ref-smell-long-param-list |
+| Data Clumps | ref-smell-data-clumps |
+
+### Object-Orientation Abusers
+| Smell | Skill |
+|-------|-------|
+| Switch statements | ref-smell-switch |
+| Temporary Field | ref-smell-temp-field |
+| Refused Bequest | ref-smell-refused-bequest |
+| Alternative Classes | ref-smell-alt-classes |
+
+### Change Preventers (previenen cambios)
+| Smell | Skill |
+|-------|-------|
+| Divergent Change | ref-smell-divergent |
+| Shotgun Surgery | ref-smell-shotgun |
+| Parallel Inheritance | ref-smell-parallel |
+
+### Dispensables (eliminables)
+| Smell | Skill |
+|-------|-------|
+| Comentarios innecesarios | ref-smell-comments |
+| Código duplicado | ref-smell-duplicate |
+| Lazy Class | ref-smell-lazy |
+| Data Class | ref-smell-data-class |
+| Dead Code | ref-smell-dead-code |
+| Speculative Generality | ref-smell-speculative |
+
+### Couplers (acoplamiento)
+| Smell | Skill |
+|-------|-------|
+| Feature Envy | ref-smell-feature-envy |
+| Inappropriate Intimacy | ref-smell-intimacy |
+| Message Chains | ref-smell-message-chains |
+| Middle Man | ref-smell-middle-man |
+
+## Árbol de Decisión Rápido
+
+```
+¿Tenés código muy largo?
+├─ Método > 10 lineas → ref-smell-long-method
+├─ Clase > 10 métodos → ref-smell-large-class
+├─ Parámetros > 3 → ref-smell-long-param-list
+
+¿Tenés switch statements?
+└─ ref-smell-switch → State/Strategy pattern
+
+¿Hay código duplicado?
+├─ Mismo algoritmo → ref-smell-duplicate
+├─ Datos juntos → ref-smell-data-clumps
+
+¿Demasiadas dependencias?
+├─ Usa muchos datos de otro → ref-smell-feature-envy
+├─ Llamadas encadenadas → ref-smell-message-chains
+
+¿Clase no hace nada?
+└─ ref-smell-lazy
+
+¿Necesitás guardar estado?
+└─ refactor-hide-method-object (Memento)
+
+¿Tenés lógica compleja condicional?
+└─ refactor-guard-clauses, refactor-polymorphism
+```
+
+## Técnicas de Refactoring Principales
+
+| Técnica | Código |
+|---------|--------|
+| Extraer método | refactor-extract-method |
+| Mover método | refactor-move-method |
+| Renombrar | refactor-rename |
+| Introducir objeto parámetro | refactor-parameter-object |
+| Reemplazar condicional con polimorfismo | refactor-polymorphism |
+| Extraer clase | refactor-extract-class |
+| Inline class | refactor-inline-class |
+
+## Proceso de Refactoring
+
+1. **Identificar** code smell
+2. **Verificar** que hay tests
+3. **Aplicar** refactoring pequeño
+4. **Correr** tests
+5. **Commit** (si pasa)
+6. **Repetir**
+
+## Resources
+
+> Para referencias separadas, ver carpeta `references/`
+
+### Files
+
+- `references/refactoring-guru-smells.md` — Catálogo de code smells
+- `references/refactoring-guru-techniques.md` — Técnicas de refactoring
+- `references/refactoring-book.md` — Libro de Martin Fowler
+
+### External Links
+
+- **Main Source**: https://refactoring.guru/es/refactoring [Refactoring.Guru]
+- **Code Smells**: https://refactoring.guru/es/refactoring/smells
+- **Técnicas**: https://refactoring.guru/es/refactoring/techniques
+- **Libro**: https://refactoring.guru/es/refactoring/book

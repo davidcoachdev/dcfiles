@@ -1,0 +1,10 @@
+{
+  "name": "harness-audit",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.043240Z",
+  "contentHash": "a7c8b92e70199495",
+  "description": "Audit AI agent harness (OpenCode, Claude Code, Codex, Cursor) for performance, compatibility, and best practices."
+}

@@ -1,0 +1,11 @@
+{
+  "name": "resume-bullet-writer",
+  "version": "1.0",
+  "category": "resume",
+  "source": "github.com/Paramchoudhary/ResumeSkills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.058546Z",
+  "contentHash": "b4f349e61d16228e",
+  "description": "Transform weak resume bullets into achievement-focused statements with metrics and impact",
+  "repoUrl": "https://github.com/Paramchoudhary/ResumeSkills"
+}

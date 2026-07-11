@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flowchart - User Auth</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #faf7f2;
+      --paper-2: #f2ede4;
+      --ink: #1c1917;
+      --muted: #57534e;
+      --soft: #78716c;
+      --rule: rgba(28,25,23,0.12);
+      --accent: #b5523a;
+      --accent-tint: rgba(181,82,58,0.08);
+      --link: #2563eb;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Geist', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    .eyebrow {
+      font-family: 'Geist Mono', monospace;
+      font-size: 7px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      margin-bottom: 24px;
+    }
+    .diagram-container {
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      padding: 24px;
+      overflow-x: auto;
+      width: 100%;
+      max-width: 900px;
+    }
+    svg { display: block; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <p class="eyebrow">FLOWCHART</p>
+  <h1>User Authentication Flow</h1>
+  <div class="diagram-container">
+    <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#57534e"/>
+        </marker>
+      </defs>
+      <rect width="100%" height="100%" fill="#f2ede4"/>
+      
+      <ellipse cx="80" cy="40" rx="50" ry="20" fill="#fff" stroke="#1c1917" stroke-width="1"/>
+      <text x="80" y="45" fill="#1c1917" font-size="11" font-family="'Geist', sans-serif" text-anchor="middle">Start</text>
+      
+      <rect x="20" y="100" width="120" height="50" rx="6" fill="#fff" stroke="#1c1917" stroke-width="1"/>
+      <text x="80" y="130" fill="#1c1917" font-size="11" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Enter Email</text>
+      
+      <polygon points="80,180 50,200 80,220 110,200" fill="#fff" stroke="#1c1917" stroke-width="1"/>
+      <text x="80" y="205" fill="#1c1917" font-size="9" font-family="'Geist', sans-serif" text-anchor="middle">Valid?</text>
+      
+      <rect x="150" y="240" width="100" height="40" rx="6" fill="#fff" stroke="#1c1917" stroke-width="1"/>
+      <text x="200" y="265" fill="#1c1917" font-size="10" font-family="'Geist', sans-serif" text-anchor="middle">Show Error</text>
+      
+      <rect x="20" y="240" width="100" height="40" rx="6" fill="#fff" stroke="#1c1917" stroke-width="1"/>
+      <text x="70" y="265" fill="#1c1917" font-size="10" font-family="'Geist', sans-serif" text-anchor="middle">Enter Password</text>
+      
+      <polygon points="80,300 50,320 80,340 110,320" fill="rgba(181,82,58,0.08)" stroke="#b5523a" stroke-width="1"/>
+      <text x="80" y="325" fill="#1c1917" font-size="9" font-family="'Geist', sans-serif" text-anchor="middle">Correct?</text>
+      
+      <rect x="150" y="360" width="100" height="30" rx="6" fill="#fff" stroke="#1c1917" stroke-width="1"/>
+      <text x="200" y="380" fill="#1c1917" font-size="10" font-family="'Geist', sans-serif" text-anchor="middle">Login Failed</text>
+      
+      <rect x="20" y="360" width="100" height="30" rx="6" fill="rgba(181,82,58,0.08)" stroke="#b5523a" stroke-width="1"/>
+      <text x="70" y="380" fill="#1c1917" font-size="10" font-family="'Geist', sans-serif" text-anchor="middle">Login Success</text>
+      
+      <path d="M80 60 L80 100" stroke="#57534e" stroke-width="1" marker-end="url(#arrow)"/>
+      <path d="M80 150 L80 180" stroke="#57534e" stroke-width="1" marker-end="url(#arrow)"/>
+      <path d="M110 200 L150 220" stroke="#57534e" stroke-width="1" marker-end="url(#arrow)"/>
+      <text x="140" y="205" fill="#57534e" font-size="7" font-family="'Geist Mono', monospace">No</text>
+      
+      <path d="M50 200 L20 220 L20 240" stroke="#57534e" stroke-width="1" marker-end="url(#arrow)"/>
+      <text x="35" y="215" fill="#57534e" font-size="7" font-family="'Geist Mono', monospace">Yes</text>
+      
+      <path d="M80 260 L80 300" stroke="#57534e" stroke-width="1" marker-end="url(#arrow)"/>
+      <path d="M110 320 L150 345" stroke="#57534e" stroke-width="1" marker-end="url(#arrow)"/>
+      <text x="140" y="335" fill="#57534e" font-size="7" font-family="'Geist Mono', monospace">No</text>
+      
+      <path d="M50 320 L20 340 L20 360" stroke="#57534e" stroke-width="1" marker-end="url(#arrow)"/>
+      <text x="35" y="335" fill="#57534e" font-size="7" font-family="'Geist Mono', monospace">Yes</text>
+    </svg>
+  </div>
+</body>
+</html>

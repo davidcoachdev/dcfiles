@@ -1,0 +1,11 @@
+{
+  "name": "gsap-react",
+  "version": "1.0",
+  "category": "gsap",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.042975Z",
+  "contentHash": "c8bdca4bd913ead5",
+  "description": "GSAP React patterns: useGSAP hook, refs, gsap.context(), cleanup, SSR compatibility. Trigger: When using GSAP in React components - animations, timelines, ScrollTrigger.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "forms",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.024895Z",
+  "contentHash": "0358505d02bb4783",
+  "description": "Angular forms: Signal Forms (experimental) and Reactive Forms. Trigger: When working with forms, validation, or form state in Angular."
+}

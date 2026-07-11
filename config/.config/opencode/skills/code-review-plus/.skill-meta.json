@@ -1,0 +1,10 @@
+{
+  "name": "code-review-plus",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.031036Z",
+  "contentHash": "8ee64175df1dd994",
+  "description": "Enhanced code review with local + PR modes, security scanning, and quality gates. Blocks commits on CRITICAL/HIGH issues."
+}

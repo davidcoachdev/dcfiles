@@ -1,0 +1,10 @@
+{
+  "name": "multi-platform-sync",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.049452Z",
+  "contentHash": "325cbc6bd2fbc7fc",
+  "description": "Synchronize AI agent configs across multiple harnesses (OpenCode, Claude Code, Codex, Cursor, Gemini)."
+}

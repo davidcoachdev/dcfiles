@@ -1,0 +1,11 @@
+{
+  "name": "java-21",
+  "version": "1.0",
+  "category": "backend",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.045650Z",
+  "contentHash": "4c04430d5680dfb0",
+  "description": "Java 21 language and runtime patterns for modern, safe code. Trigger: When writing Java 21 code using records, sealed types, or virtual threads.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "core",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.024592Z",
+  "contentHash": "ef62f84cab2f0990",
+  "description": "Angular core patterns: standalone components, signals, inject, control flow, zoneless. Trigger: When creating Angular components, using signals, or setting up zoneless."
+}

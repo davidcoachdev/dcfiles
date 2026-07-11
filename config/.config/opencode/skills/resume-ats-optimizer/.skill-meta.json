@@ -1,0 +1,11 @@
+{
+  "name": "resume-ats-optimizer",
+  "version": "1.0",
+  "category": "resume",
+  "source": "github.com/Paramchoudhary/ResumeSkills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.057989Z",
+  "contentHash": "cb6fbbb8420a8312",
+  "description": "Optimize resumes for Applicant Tracking Systems, check ATS compatibility, and analyze keyword match",
+  "repoUrl": "https://github.com/Paramchoudhary/ResumeSkills"
+}

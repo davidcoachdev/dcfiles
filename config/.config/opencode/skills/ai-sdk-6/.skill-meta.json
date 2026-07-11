@@ -1,0 +1,11 @@
+{
+  "name": "ai-sdk-6",
+  "version": "1.0",
+  "category": "data",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.023767Z",
+  "contentHash": "8276e6744813c2e5",
+  "description": "Vercel AI SDK 6 patterns (latest). Trigger: When building AI chat features - v6 is latest (breaking changes from v4/v5).",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

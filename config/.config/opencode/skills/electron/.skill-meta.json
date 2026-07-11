@@ -1,0 +1,11 @@
+{
+  "name": "electron",
+  "version": "1.0",
+  "category": "frontend",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.037889Z",
+  "contentHash": "7ce7629a058ec425",
+  "description": "Electron patterns for building cross-platform desktop applications. Trigger: When building desktop apps, working with Electron main/renderer processes, IPC communication, or native integrations.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

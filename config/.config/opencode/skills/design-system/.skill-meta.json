@@ -1,0 +1,9 @@
+{
+  "name": "design-system",
+  "version": "1.0",
+  "category": "design",
+  "source": "consolidated: ux-architect",
+  "sourceType": "local",
+  "description": "CSS architecture, design tokens, component patterns, and accessibility-first design. Bridges the gap between design and engineering with implementation-ready specifications.",
+  "repoUrl": ""
+}

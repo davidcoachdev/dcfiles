@@ -1,0 +1,9 @@
+{
+  "name": "design-principles",
+  "version": "1.0",
+  "category": "design",
+  "source": "consolidated: ui-design-tips + interface-design",
+  "sourceType": "local",
+  "description": "Consolidated UI design principles: 16 logic-driven tips + 6 design directions + system persistence. Trigger: When creating UI components, pages, dashboards, admin panels, or improving existing interfaces.",
+  "repoUrl": ""
+}

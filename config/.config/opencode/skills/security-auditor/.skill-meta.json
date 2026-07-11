@@ -1,0 +1,11 @@
+{
+  "name": "security-auditor",
+  "version": "2.0",
+  "category": "testing",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.062050Z",
+  "contentHash": "fbc42b1daef0fd9c",
+  "description": "Security specialist for vulnerability assessment, penetration testing, threat modeling, and compliance auditing. Trigger: When doing security audits, vulnerability assessments, penetration testing, th",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

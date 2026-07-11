@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagram Title</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #faf7f2;
+      --paper-2: #f2ede4;
+      --ink: #1c1917;
+      --muted: #57534e;
+      --soft: #78716c;
+      --rule: rgba(28,25,23,0.12);
+      --accent: #b5523a;
+      --accent-tint: rgba(181,82,58,0.08);
+      --link: #2563eb;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Geist', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .eyebrow {
+      font-family: 'Geist Mono', monospace;
+      font-size: 7px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      margin-bottom: 24px;
+    }
+    .diagram-container {
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      padding: 24px;
+      overflow-x: auto;
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 32px;
+    }
+    svg { display: block; margin: 0 auto; }
+    .summary-cards {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 0.9fr;
+      gap: 16px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 1.25rem;
+    }
+    .card .eyebrow {
+      font-size: 7px;
+      margin-bottom: 12px;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .card-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--ink);
+    }
+    .card-dot.accent { background: var(--accent); }
+    .card-dot.muted { background: var(--muted); }
+    .card-dot.link { background: var(--link); }
+    .card h3 {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .card ul {
+      list-style: none;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .card li { margin-bottom: 4px; }
+    .card li::before {
+      content: "→ ";
+      color: var(--soft);
+    }
+    footer {
+      max-width: 900px;
+      margin: 40px auto 0;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule);
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <p class="eyebrow">DIAGRAM TYPE</p>
+  <h1>Diagram Title</h1>
+  <div class="diagram-container">
+    
+  </div>
+  <div class="summary-cards">
+    <div class="card">
+      <p class="eyebrow">SECTION</p>
+      <div class="card-header">
+        <span class="card-dot accent"></span>
+        <h3>Card Title</h3>
+      </div>
+      <ul>
+        <li>Point one</li>
+        <li>Point two</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="eyebrow">SECTION</p>
+      <div class="card-header">
+        <span class="card-dot"></span>
+        <h3>Card Title</h3>
+      </div>
+      <ul>
+        <li>Point one</li>
+        <li>Point two</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="eyebrow">SECTION</p>
+      <div class="card-header">
+        <span class="card-dot muted"></span>
+        <h3>Card Title</h3>
+      </div>
+      <ul>
+        <li>Point one</li>
+        <li>Point two</li>
+      </ul>
+    </div>
+  </div>
+  <footer>
+    Generated with editorial-diagrams skill
+  </footer>
+</body>
+</html>

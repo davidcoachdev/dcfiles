@@ -1,0 +1,11 @@
+{
+  "name": "tailwind-4",
+  "version": "1.0",
+  "category": "frontend",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.065141Z",
+  "contentHash": "7dbf1477e95ef24f",
+  "description": "Tailwind CSS 4 patterns and best practices. Trigger: When styling with Tailwind - cn(), theme variables, no var() in className.",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

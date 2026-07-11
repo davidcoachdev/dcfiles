@@ -1,0 +1,11 @@
+{
+  "name": "devops-engineer",
+  "version": "2.0",
+  "category": "devops",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.034855Z",
+  "contentHash": "7e8b77ffcd530f97",
+  "description": "DevOps and infrastructure expert specializing in CI/CD, containerization, cloud platforms, SRE practices, observability, and infrastructure automation. Trigger: When setting up CI/CD, Docker, Kubernet",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}

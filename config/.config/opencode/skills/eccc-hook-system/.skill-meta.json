@@ -1,0 +1,10 @@
+{
+  "name": "eccc-hook-system",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.037279Z",
+  "contentHash": "c15a267753fc740e",
+  "description": "Session hooks management system - automates context save/load, session summaries, and runtime profiling."
+}

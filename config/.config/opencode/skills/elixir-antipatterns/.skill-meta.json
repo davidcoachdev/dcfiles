@@ -1,0 +1,10 @@
+{
+  "name": "elixir-antipatterns",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.038207Z",
+  "contentHash": "613687d925cc621a",
+  "description": "Core catalog of 8 critical Elixir/Phoenix anti-patterns covering error handling, separation of concerns, Ecto queries, and testing. Trigger: During Elixir code review, refactoring sessions, or when wr"
+}

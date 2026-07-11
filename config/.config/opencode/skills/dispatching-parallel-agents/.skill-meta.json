@@ -1,0 +1,10 @@
+{
+  "name": "dispatching-parallel-agents",
+  "version": "1.0",
+  "category": "uncategorized",
+  "source": "unknown",
+  "sourceType": "unknown",
+  "installedAt": "2026-04-16T19:52:38.035201Z",
+  "contentHash": "76806091c7f923ba",
+  "description": "Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies"
+}

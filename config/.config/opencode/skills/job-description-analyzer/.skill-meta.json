@@ -1,0 +1,11 @@
+{
+  "name": "job-description-analyzer",
+  "version": "1.0",
+  "category": "resume",
+  "source": "github.com/Paramchoudhary/ResumeSkills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.046979Z",
+  "contentHash": "73e1599ad20882b7",
+  "description": "Analyze job postings, calculate match scores, identify gaps, and create application strategy",
+  "repoUrl": "https://github.com/Paramchoudhary/ResumeSkills"
+}

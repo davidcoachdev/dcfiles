@@ -1,0 +1,11 @@
+{
+  "name": "performance-tester",
+  "version": "1.0",
+  "category": "testing",
+  "source": "stretchcloud/opencode-skills",
+  "sourceType": "git",
+  "installedAt": "2026-04-16T19:52:38.052664Z",
+  "contentHash": "e29c15825fcedbc1",
+  "description": "Performance testing expert specializing in load testing, stress testing, benchmarking, and performance optimization. Trigger: When doing performance testing, load testing, stress testing, or performan",
+  "repoUrl": "https://github.com/stretchcloud/opencode-skills"
+}
