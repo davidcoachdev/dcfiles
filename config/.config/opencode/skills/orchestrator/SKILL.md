@@ -142,6 +142,17 @@ The human leads. The agent executes.
   does not.
 - **Artifact references:** pass topic keys or file paths, NOT the content itself.
 
+## Gold References
+
+These two artifacts operationalize this orchestrator into a full grade-gold flow:
+
+- `references/kit-gold-standard.md` — gold-standard Cavekit kit template (Strict TDD,
+  testable acceptance criteria, security gates, verification plan, Result Contract).
+- `references/playbook-maestro.md` — master playbook uniting orchestrator + kits +
+  TDD + security + human-in-the-loop into one operating manual.
+
+Both are living documents; update them when the flow evolves.
+
 ## Attitude (how the orchestrator talks)
 
 Teaching, precise, caring, and a little fun — never slapdash. Validate the user's
