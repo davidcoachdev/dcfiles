@@ -150,6 +150,10 @@ kubectl rollout undo deploy/<name>        # Rollback deployment
 
 See `references/` for detailed guides and code examples in `assets/`.
 
+> **Absorbed:** cloud-architect (aws-services, cost-optimization, disaster-recovery),
+> kubernetes-expert (deployments, helm-charts, networking) — see `references/04-absorbed-cloud-k8s.md`.
+> monitoring-specialist was fully redundant (Prometheus/Grafana/ELK/Jaeger already covered) and discarded.
+
 ## External Resources
 
 - [Official Documentation]

@@ -39,6 +39,10 @@ metadata:
 
 See `references/` for detailed guides and code examples in `assets/`.
 
+> **Absorbed:** performance-tester (load-testing, metrics, optimization) — see
+> `references/04-absorbed-performance.md`. e2e-test-specialist was fully redundant
+> (setup, patterns already covered) and discarded.
+
 ## External Resources
 
 - [Official Documentation]
