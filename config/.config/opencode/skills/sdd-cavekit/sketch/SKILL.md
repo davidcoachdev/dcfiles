@@ -1,17 +1,23 @@
 ---
 name: sdd-cavekit-sketch
 description: >
-  Fase Draft — escribir kits con R-numbered requirements y acceptance criteria.
-  Trigger: "/sdd-cavekit sketch", "write kits", "create specs"
+  Fase Sketch — escribir kits con R-numbered requirements, acceptance criteria
+  testeables, Strict TDD y security gates. Trigger: "/sdd-cavekit sketch", "write kits", "create specs"
 ---
 
-## Sketch Phase — Escribir Kits
+## Sketch Phase — Escribir Kits (Gold)
 
-Recibes: descripción de feature
-Produces: kits con acceptance criteria
+Recibes: descripción de feature.
+Produces: kits con acceptance criteria + Strict TDD + security gates.
+
+### Principios del flujo gold (mismo idioma en todas las fases)
+- **Calidad + Seguridad primero** — siempre, antes que speed/costo.
+- **Strict TDD** — cada requirement tiene acceptance criteria que se convierte en test fallido primero (red → green → refactor).
+- **Human-in-the-Loop (HITL)** — si el alcance es ambiguo o hay bloqueo, PREGUNTÁ. Una pregunta a la vez. Nunca asumas.
+- **Patrones / Anti-patterns** — usá patrones conocidos; evitá god services, catch silencioso, abstracción prematura.
+- **ROI** — solo lo que el usuario pidió. YAGNI: sacá requisitos no solicitados.
 
 ### Cavekit Structure
-
 ```
 context/
 ├── refs/           # PRD, docs, research (input)
@@ -19,73 +25,34 @@ context/
 └── impl/           # Living tracking
 ```
 
-### Formato de Kit
-
-```markdown
-# Kit: {Domain}
-
-## Scope
-{Una línea sobre qué cubre}
-
-## Requirements
-
-### R1: {Nombre}
-**Description:** {Qué debe ser true — comportamiento, no implementación}
-**Acceptance Criteria:**
-- [ ] {Criterio 1 — observable, determinista, automatizable}
-- [ ] {Criterio 2}
-- [ ] {Criterio 3}
-**Dependencies:** {None | R{n} from other kit}
-
-### R2: {Nombre}
-...
-
-## Out of Scope
-- {Cosa 1}
-- {Cosa 2}
-
-## Cross-References
-- Depends on: kits/{other}.md R{n}
-- Depended by: kits/{other}.md R{n}
-```
+### Formato de Kit (plantilla gold = fuente de verdad)
+Usá `cavekit-writing/references/kit-gold-standard.md`. Cada kit tiene:
+- **Goal** (una frase)
+- **Constraints**: calidad, seguridad, Strict TDD (no negociables)
+- **FR-1, FR-2...** con Acceptance Criteria testeables (observable, determinista, automatizable)
+- **Security Gates**: checklist (sin secretos, authz, input validado, sin SQL/shell crudo)
+- **Verification Plan**: comandos reales (test / lint / typecheck)
+- **Definition of Done (Result Contract)**
 
 ### Reglas
+1. **WHAT not HOW** — comportamiento, no framework.
+2. Todos los requirements tienen acceptance criteria testeables.
+3. **Security es cross-cutting**: cada dominio lista sus security gates.
+4. **Out of Scope** es mandatory.
+5. **Cross-references** entre dominios.
+6. **Number sequentially** (R1, R2...).
 
-1. **WHAT, not HOW** — describir comportamiento, no framework
-2. **Todos los requirements tienen acceptance criteria** — si no es testeable, no sirve
-3. **Out of Scope es mandatory** — previene sobre-building
-4. **Cross-references** — domains se linked
-5. **Number sequentially** — R1, R2, R3...
+### Human-in-the-Loop
+Si la feature es ambigua: hacé 1 pregunta específica, esperá respuesta, seguí. No inventes alcance.
 
-### Cavekit Index (overview)
-
-```markdown
-# Kit Overview
-
-| Domain | Kit File | Summary |
-|--------|---------|---------|
-| Auth | kits/auth.md | Login, sessions, OAuth |
-| API | kits/api.md | Endpoints, formats |
-| Data | kits/data.md | Models, relationships |
-```
-
-### Cavekit Writing Skills
-
-- **Validation-First**: Cada acceptance criterion debe poder verificarse automáticamente
-- **Hierarchical**: Un index + domain kits individuales
-- **Brownfield**: `/sketch --from-code` para existentes
-
-### Output
-
-Al terminar, reporta:
+### Output (Result Contract)
 ```
 {count} kits, {total_requirements} requirements, {total_criteria} acceptance criteria.
+Security gates: {n} definidos.
 Next: /sdd-cavekit map
 ```
 
-### Cavekit Auto-Load
-
-Cargar skills:
-- cavekit-writing
+### Auto-Load
+- cavekit-writing (lee la plantilla gold)
 - validation-first
 - complexity-detection
