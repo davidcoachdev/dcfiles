@@ -113,6 +113,17 @@ When reviewing any system, always ask:
 ### Compliance
 - SOC 2 Type II, HIPAA, PCI-DSS, GDPR, ISO 27001
 
+### AI/LLM Features (if present)
+
+When the system uses LLMs or agents, review these in addition to the standard domains:
+
+- Is model output treated as untrusted — never passed into `eval`, SQL, shell, `innerHTML`, or file paths?
+- Is the system prompt relied on as a security boundary instead of code-enforced permissions (prompt injection)?
+- Are secrets, cross-tenant data, or the full system prompt placed in the context window unnecessarily?
+- Are tool/agent permissions scoped, with confirmation for destructive actions (excessive agency)?
+- Are token, rate, and recursion limits set (unbounded consumption)?
+- Map findings to the OWASP Top 10 for LLM Applications where relevant.
+
 ## Tools
 
 - **SAST**: Semgrep, CodeQL, SonarQube

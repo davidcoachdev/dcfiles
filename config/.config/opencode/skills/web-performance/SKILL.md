@@ -191,6 +191,17 @@ document.startViewTransition(() => swapDOM(newView));
 @view-transition { navigation: auto; }
 ```
 
+### AI-Generated Anti-Patterns
+
+Code produced by LLMs tends to repeat the same performance mistakes. Watch for:
+
+- **React:** state duplication instead of lifting state; `React.memo`/`useMemo`/`useCallback` wrapping everything "just in case" (cost without benefit); over-eager `useEffect` dependencies causing redundant re-renders or update loops.
+- **Vue:** `watch`/`watchEffect` with broad dependencies triggering unnecessary updates; `computed` with side effects.
+- **Angular:** `ChangeDetectionStrategy.Default` where `OnPush` would suffice; subscriptions without `takeUntil`/`async` pipe accumulating listeners.
+- **Svelte:** `$:` blocks with expensive logic that re-runs more than needed.
+- **Vanilla:** `scroll`/`resize` listeners without `passive: true` or debounce; DOM manipulation inside a loop forcing repeated reflow.
+- **Network (any framework):** over-fetching data "just in case"; sequential `await`s where `Promise.all` would work; redundant API calls where one suffices; missing deduplication on parallel requests.
+
 ## Third-Party Scripts
 
 - Always `async` or loaded on interaction (IntersectionObserver)
@@ -210,6 +221,23 @@ document.startViewTransition(() => swapDOM(newView));
 ```bash
 npx lighthouse https://example.com --output html --output-path report.html
 ```
+
+## Audit Methodology
+
+Distinguish audit mode before reporting:
+
+- **Quick mode (default, no tool artifacts):** Scan source for structural anti-patterns. Tag every finding as `potential impact` — never as a measurement. Leave the scorecard `not measured`.
+- **Deep mode (when artifacts provided):** Interpret real data from Lighthouse JSON, PageSpeed Insights, CrUX (field, p75), or DevTools traces. Populate the scorecard only with measured values.
+
+**Metric-Honesty Rule:** Never fabricate metrics. An LLM reading static source cannot measure real-world LCP/INP/CLS. Field data (CrUX/RUM) and lab data (Lighthouse) are not interchangeable — label every scorecard value with its source (`Field`, `Lab`, `Trace`). If no data is available, return source-level findings only and mark the scorecard `not measured`.
+
+**Scorecard template:**
+
+| Metric | Value | Source | Target | Status |
+|--------|-------|--------|--------|--------|
+| LCP | [value or "not measured"] | [Field / Lab / Trace / —] | ≤ 2.5s | [Good / Needs Work / Poor / —] |
+| INP | [value or "not measured"] | [Field / Lab / Trace / —] | ≤ 200ms | [Good / Needs Work / Poor / —] |
+| CLS | [value or "not measured"] | [Field / Lab / Trace / —] | ≤ 0.1 | [Good / Needs Work / Poor / —] |
 
 ## Related Skills
 

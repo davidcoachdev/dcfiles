@@ -138,6 +138,24 @@ onLCP(console.log); onINP(console.log); onCLS(console.log);
 6. Break long tasks with `scheduler.yield()`
 7. Send HTTP 103 Early Hints
 
+## Advanced Signals
+
+- **LoAF (Long Animation Frames):** use the LoAF API to attribute INP regressions to specific long tasks in production.
+- **Soft navigation:** ensure SPA route changes report INP/LCP via soft-navigation APIs; otherwise only the first page load is measured.
+- **bfcache:** preserve the back/forward cache — no `unload` handlers, no `Cache-Control: no-store` on HTML — so subsequent navigations are instant.
+
+## Severity Classification
+
+| Severity | Criteria | Action |
+|----------|----------|--------|
+| **Critical** | Directly causes a Core Web Vital to fail the "Good" threshold | Fix before release |
+| **High** | Likely degrades a CWV or causes significant loading/interaction slowdown | Fix before release |
+| **Medium** | Suboptimal pattern with measurable but contained impact | Fix in current sprint |
+| **Low** | Best-practice gap with minor or speculative impact | Schedule for next sprint |
+| **Info** | Improvement opportunity with no current evidence of impact | Consider adopting |
+
+Tag every static-analysis finding as `potential impact`, never as a measurement.
+
 ## Related Skills
 
 - `web-performance` — full perf optimization toolkit

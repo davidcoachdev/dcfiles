@@ -38,6 +38,19 @@ Invocar segundo agente para revisar:
 | **Deciding Vote** | Voting entre modelos |
 | **Coverage Audit** | Test coverage |
 
+### Multi-Axis Review (Security + Web Perf)
+
+Además del peer review genérico, el check abre dos ejes especializados como fan-out
+paralelo. Cada eje produce gaps que se agregan al veredicto (igual que el peer review).
+
+- **Security axis** → usa la skill `security-auditor` (dominios estándar + sección AI/LLM:
+  prompt injection, excessive agency, límites de token/rate/recursion). Cubre OWASP Top 10 + LLM Top 10.
+- **Web Perf axis** → usa las skills `web-performance` + `core-web-vitals` (Metric-Honesty Rule,
+  modos Quick/Deep, scorecard con fuente, anti-patrones de código generado por IA, severidad por CWV).
+
+Ambos ejes alimentan `Critical Gaps`. Si alguno tira P0/P1 → REJECT del loop, igual que el peer review.
+No agregan pasos al loop del orquestador: corren dentro de este `check`.
+
 ### Severity Levels
 
 | Severity | Behavior |
@@ -91,3 +104,6 @@ Cargar skills:
 - peer-review
 - impl-tracking
 - revision (para fix gaps upstream)
+- security-auditor
+- web-performance
+- core-web-vitals
