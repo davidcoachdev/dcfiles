@@ -54,29 +54,27 @@ The outcome: a disciplined, repeatable engineering process layered on top of pro
 
 ---
 
-## The 5 Hunt Phases
+## The Hunt Phases (Sketch → Map → Make → Check)
 
 The Hunt is the four-phase lifecycle: **Sketch, Map, Make, Check**. Each phase has dedicated prompts that drive it.
 
 | Phase | Input | Output | AI Role | Human Role |
 |-------|-------|--------|---------|------------|
-| **Draft** | Source materials, domain knowledge, existing systems | Implementation-agnostic kits | Extract requirements, structure knowledge | Verify kits capture intent accurately |
-| **Architect** | Kits + framework research | Framework-specific implementation plans | Design architecture, break down work, order steps | Approve architectural choices |
-| **Build** | Plans + kits | Working code + tests + tracking docs | Write code, run tests, check against kits | Watch for drift and blockers |
-| **Inspect** | Failed validations, gaps, manual fixes | Updated kits/plans via revision | Identify root causes, propagate fixes upstream | Evaluate outcomes, set priorities |
-| **Monitor** | Running application, git history | Issues, anomalies, progress reports | Scan for regressions, surface metrics | Interpret reports, guide next steps |
+| **Sketch** | Source materials, domain knowledge, existing systems | Implementation-agnostic kits (R-numbered, AC testeables) | Extract requirements, structure knowledge | Verify kits capture intent accurately |
+| **Map** | Kits + framework research | Task dependency graph (waves) | Design architecture, break down work, order steps | Approve architectural choices |
+| **Make** | Plans + kits | Working code + tests + tracking docs (Strict TDD) | Write code, run tests, check against kits | Watch for drift and blockers |
+| **Check** | Implementation + kits, gaps, manual fixes | Verdict (APPROVE/REVISE/REJECT) + updated kits/plans via revision | Gap analysis, peer review, security axis; propagate fixes upstream | Evaluate outcomes, set priorities, approve verdict |
 
 ### Phase Transitions
 
 Each phase has **gate conditions** that must be met before moving to the next:
 
-1. **Draft → Architect:** All domains have kits with testable acceptance criteria. Human has reviewed for completeness.
-2. **Architect → Build:** Plans reference kits, define implementation sequence, and include test strategies. Architecture decisions validated.
-3. **Build → Inspect:** Code builds, tests pass at current coverage level, implementation tracking is up to date.
-4. **Inspect → Monitor:** Convergence detected (changes decreasing iteration-over-iteration). Remaining changes are trivial.
-5. **Monitor → Draft (cycle):** Gap found or new requirement identified. Revise kits and restart the cycle.
+1. **Sketch → Map:** All domains have kits with testable acceptance criteria. Human has reviewed for completeness.
+2. **Map → Make:** Plans reference kits, define the task sequence (waves), and include test strategies. Architecture decisions validated.
+3. **Make → Check:** Code builds, tests pass at current coverage level, implementation tracking is up to date.
+4. **Check → Sketch (cycle):** Gap found, REJECT on critical gaps, or new requirement identified. Revise kits and restart the cycle. On APPROVE/REVISE, the change ships.
 
-The **Inspect** phase is where the human serves as **reviewer and decision-maker**, not hands-on coder. You monitor the process, request changes as needed, and make systemic improvements to kits and prompts.
+The **Check** phase is where the human serves as **reviewer and decision-maker**, not hands-on coder. You monitor the process, request changes as needed, and make systemic improvements to kits and prompts.
 
 > For the full Hunt phase reference, see `references/hunt-phases.md`.
 
@@ -148,7 +146,7 @@ Cavekit AI Pipeline:
     → Generate Plans (iteration loop)
     → Generate Implementation (iteration loop)
     → Validate (Tests + Review)
-    → Human Audit (Monitor & Steer)
+     → Human Audit (Check & Steer)
     → [Gap Found]
     → Revise
     → Cavekit Change (cycle repeats)
@@ -185,9 +183,9 @@ Cavekit is composed of techniques that work together. This methodology skill is 
 
 | Skill | Purpose | When to Use |
 |-------|---------|-------------|
-| `ck:cavekit-writing` | Write implementation-agnostic kits with testable acceptance criteria | Draft phase — always the first step |
+| `ck:cavekit-writing` | Write implementation-agnostic kits with testable acceptance criteria | Sketch phase — always the first step |
 | `ck:context-architecture` | Organize context for progressive disclosure | Project setup and ongoing maintenance |
-| `ck:impl-tracking` | Track implementation progress, dead ends, test health | Build and Inspect phases |
+| `ck:impl-tracking` | Track implementation progress, dead ends, test health | Make and Check phases |
 | `ck:validation-first` | Design validation gates agents can execute | All phases — validation is continuous |
 
 ### Pipeline Skills
@@ -195,7 +193,7 @@ Cavekit is composed of techniques that work together. This methodology skill is 
 | Skill | Purpose | When to Use |
 |-------|---------|-------------|
 | `ck:prompt-pipeline` | Design numbered prompt pipelines for the Hunt | Setting up automation |
-| `ck:revision` | Trace bugs back to kits and fix at the source | Inspect phase — after finding gaps |
+| `ck:revision` | Trace bugs back to kits and fix at the source | Check phase — after finding gaps |
 | `cavekit:brownfield-adoption` | Adopt Cavekit on existing codebases | Starting Cavekit on legacy projects |
 
 ### Advanced Skills
