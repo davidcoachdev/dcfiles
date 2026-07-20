@@ -3,7 +3,7 @@
     "mentored-architect": {
       "description": "Senior Architect mentor - helpful first, challenging when it matters",
       "mode": "primary",
-      "model": "opencode/minimax-m2.5-free",
+      "model": "opencode/hy3-free",
       "prompt": "{file:./AGENTS.md}",
       "tools": {
         "edit": true,
@@ -13,7 +13,7 @@
     "obra-superpowers": {
       "description": "Superpowers workflow - rapid iteration, TDD, filesystem persistence",
       "mode": "primary",
-      "model": "opencode/minimax-m2.5-free",
+      "model": "opencode/hy3-free",
       "prompt": "{file:./AGENTS-superpowers.md}",
       "tools": {
         "bash": true,
@@ -28,7 +28,7 @@
     "cavekit": {
       "description": "Cavekit entry point - user-facing, conversational, delegates to cavekit-orchestrator",
       "mode": "primary",
-      "model": "opencode/minimax-m2.5-free",
+      "model": "opencode/hy3-free",
       "prompt": "# Cavekit Entry Point Agent\n\nYou are the USER-FACING entry point for Cavekit SDD workflows.\n\n\n## Your Role\n\nYou are NOT the orchestrator. You are the conversational interface.\n\n1. **Understand** what the user wants\n2. **Ask clarifying questions** if needed\n3. **Delegate to cavekit-orchestrator** for workflow coordination\n4. **Present results** back to user in friendly way\n\n## Cavekit Methodology\n\n**Specify Before Building** \u2014 kits primero, c\u00f3digo despu\u00e9s.\n\n### The Hunt Cycle\n\n```\n/sdd-cavekit sketch \u2192 /sdd-cavekit map \u2192 /sdd-cavekit make \u2192 /sdd-cavekit check\n(kits)       (plans)      (build)       (verify)\n```\n\n### Skills Available\n\n| Skill | Purpose |\n|-------|----------|\n| cavekit-writing | Escribir kits con acceptance criteria |\n| validation-first | Acceptance criteria = testeable |\n| peer-review | Segundo agente revisa |\n| autonomous-loop | Iteration hasta done |\n| revision | Fix gaps upstream |\n\n## When to Delegate\n\nWhen user invokes:\n- `/sdd-cavekit init` \u2192 Delegate to cavekit-orchestrator\n- `/sdd-cavekit sketch` \u2192 Delegate to cavekit-orchestrator\n- `/sdd-cavekit map` \u2192 Delegate to cavekit-orchestrator\n- `/sdd-cavekit make` \u2192 Delegate to cavekit-orchestrator\n- `/sdd-cavekit check` \u2192 Delegate to cavekit-orchestrator\n- `/sdd-cavekit ship` \u2192 Delegate to cavekit-orchestrator\n- Any Cave command \u2192 Delegate\n\n## When NOT to Delegate\n\nHandle inline:\n- General questions about Cavekit methodology\n- Explaining when to use Cavekit vs SDD vs Superpowers\n- Helping user understand their project\n- Debugging issues with previous Cave runs\n\n## Load AGENTS.md\n\nRead ./AGENTS.md for general rules, personality, and skill triggers. Apply them here.\n\n## Load Skills\n\nAlways load caveman at start for token efficiency.",
       "tools": {
         "bash": true,
@@ -43,7 +43,7 @@
     "cavekit-orchestrator": {
       "description": "Cavekit Orchestrator - coordinates sub-agents, never does work inline",
       "mode": "primary",
-      "model": "opencode/minimax-m2.5-free",
+      "model": "opencode/hy3-free",
       "permission": {
         "task": {
           "*": "deny",
@@ -65,7 +65,7 @@
       "description": "Write kits with R-numbered requirements and acceptance criteria",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/minimax-m2.5-free",
+      "model": "opencode/hy3-free",
       "prompt": "{file:/home/dcdebian/.config/opencode/skills/sdd-cavekit/sketch/SKILL.md}",
       "tools": {
         "bash": true,
@@ -78,7 +78,7 @@
       "description": "Generate task dependency graph from kits",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/minimax-m2.5-free",
+      "model": "opencode/hy3-free",
       "prompt": "{file:/home/dcdebian/.config/opencode/skills/sdd-cavekit/map/SKILL.md}",
       "tools": {
         "bash": true,
@@ -91,7 +91,7 @@
       "description": "Run autonomous iteration loop until complete",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/minimax-m2.5-free",
+      "model": "opencode/hy3-free",
       "prompt": "{file:/home/dcdebian/.config/opencode/skills/sdd-cavekit/make/SKILL.md}",
       "tools": {
         "bash": true,
@@ -105,7 +105,7 @@
       "description": "Gap analysis + peer review",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/minimax-m2.5-free",
+      "model": "opencode/hy3-free",
       "prompt": "{file:/home/dcdebian/.config/opencode/skills/sdd-cavekit/check/SKILL.md}",
       "tools": {
         "bash": true,
@@ -118,7 +118,7 @@
       "description": "Initialize Cavekit context directory",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/minimax-m2.5-free",
+      "model": "opencode/hy3-free",
       "prompt": "# Cavekit Init\n\nInitialize context directory for Cavekit workflow:\n\n```\nmkdir -p context/kits context/plans context/impl context/refs\n```\n\nFiles to create:\n- `context/kits/README.md` - Kit index template\n- `context/plans/README.md` - Plans template\n- `context/impl/README.md` - Implementation tracking template\n\nReport: 'Cavekit initialized. Next: /cave sketch <feature>'",
       "tools": {
         "bash": true,
@@ -131,7 +131,7 @@
       "description": "Full Cavekit cycle in one shot",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/minimax-m2.5-free",
+      "model": "opencode/hy3-free",
       "prompt": "# Cavekit Ship \u2014 Loop\n\nRun full Cavekit cycle: sketch \u2192 map \u2192 loop(make \u2192 check \u2192 retry)\n\nExecute sequentially:\n1. `task(cavekit-sketch, ...)`\n2. `task(cavekit-map, ...)`\n3. Loop (max 5):\n   a. `task(cavekit-make, ...)` \u2014 si hay feedback de check anterior, inclu\u00edlo\n   b. `task(cavekit-check, ...)`\n   c. Le\u00e9 `Verdict: APPROVE|REVISE|REJECT`\n   d. **APPROVE** \u2192 romp\u00e9 el loop\n   e. **REVISE** \u2192 romp\u00e9 el loop (warnings)\n   f. **REJECT** \u2192 extra\u00e9 gaps, increment\u00e1 contador, si <5 volv\u00e9 al paso 3a con feedback\n\nReport progress between phases.\n\n## Feedback format\n\n```\nPrevious gaps to address:\n- R-003: ...\n\nAddress these FIRST.\n```",
       "tools": {
         "bash": true,
