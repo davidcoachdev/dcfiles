@@ -30,6 +30,8 @@ Run this phase when the orchestrator/user asks to initialize SDD in a project. Y
 - Always build `.atl/skill-registry.md`; also save `skill-registry` to Engram when available.
 - Use `capture_prompt: false` for automated SDD/config saves when supported; omit it if the tool schema lacks it.
 - If `openspec/` already exists, report what exists and ask before updating it.
+- Classify detected knowledge on the stability axis and persist each tier with its own review cadence — see `ck:context-architecture` → *The Second Axis: Knowledge Stability*. You own **S0** (essence, ~500 tk) and **S1** (architecture, ~1000 tk) only. Never write S2 (owned by `ck:adr`) or S3 (graduated from `ck:impl-tracking`).
+- Respect the tier budgets. If detected context exceeds them, prune to what a new contributor could not learn by reading the code — do not expand the budget.
 
 ## Decision Gates
 

@@ -279,6 +279,56 @@ When implementation tracking files exceed approximately 500 lines, they become u
 
 ---
 
+## Graduation to Project Knowledge
+
+A tracking document is **scoped to one change and dies at `COMPLETE`**. Some of what it learned must outlive it.
+
+Before archiving a completed tracking document, run the graduation pass. For each item ask: **is this true about the change, or true about the project?**
+
+| Item in tracking | Verdict | Destination |
+|------------------|---------|-------------|
+| Task completed | about the change | archive |
+| Dead end from our own wrong turn | about the change | archive (keep locally to prevent retry) |
+| Dead end from a permanent external limit | **about the project** | graduate to S3 |
+| Constraint still true after merge | **about the project** | graduate to S3 |
+| Workaround still present in the codebase | **about the project** | graduate to S3 |
+| Issue this change resolved | about the change | archive |
+| Issue deferred, still open after merge | **about the project** | graduate to S3 |
+
+### Graduation Format
+
+Graduated entries follow the canonical **S3 artifact shape** (ported from Litho's `.ai-context/DYNAMICS.md`). The S3 artifact is a project file `DYNAMICS.md` (under `.ai-context/` when `artifact_store` is file/openspec) and/or an Engram topic `dynamics/{project}/active`.
+
+**Quick Scan** (top of the file):
+| Status | Issue | Impact | Workaround |
+|--------|-------|--------|------------|
+| 🟡 Standing constraint | {title} | {impact} | {workaround} |
+
+**Known Constraint** entry:
+```markdown
+### {Constraint title}
+- **Status:** 🟡 Standing constraint   (🔴 Active issue / 🟢 Recently resolved)
+- **What:** {brief description}
+- **Impact:** {how it affects development/workflow}
+- **Workaround / Mitigation:** {steps or code; "Not yet planned" if none}
+- **Resolution Path:** {planned fix or "Not yet planned"}
+- **Origin:** impl-{scope} DE-3 · {date}
+```
+
+Use 🔴 for active issues/blockers, 🟡 for standing constraints (permanent limits/workarounds), 🟢 for recently resolved (brief, with date). Recently Resolved entries are the ones re-checked by the S3 Stale Audit in `ck:context-architecture`.
+
+### Graduation Rules
+
+- **Graduate before archiving, never after** — once archived, nobody re-reads it.
+- **Graduate the constraint, not the story** — "X rate-limits at 100/min, batch the calls", not "we spent a day discovering X rate-limits".
+- **If it will be false next sprint, do not graduate it** — S3 is for standing constraints, not transient breakage.
+- **Re-check on the way out** — a constraint that this very change removed must not graduate.
+- **One line per constraint** — S3 has a ~600 token budget across the whole project.
+
+Destination follows `artifact_store`: Engram `dynamics/{project}/active`, or the project's dynamics file. See `ck:context-architecture` → *The Second Axis: Knowledge Stability*.
+
+---
+
 ## Inter-Session Feedback Protocol
 
 For structured handoffs between sessions (especially when different humans or automation systems manage sessions), use the inter-session feedback protocol.
