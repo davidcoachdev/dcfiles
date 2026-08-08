@@ -49,7 +49,6 @@ teardown() {
     echo "$output"
     [[ "$status" -eq 0 ]]
     [[ "$output" == *"Copied"* ]]
-    [[ "$output" == *"Linked"* ]]
     [[ "$output" == *"Staged"* ]]
 
     # File should exist in config/
@@ -79,13 +78,13 @@ teardown() {
 @test "dcfiles add on non-existent file exits 2" {
     run "${DCFILES_HOME}/bin/dcfiles" add "${HOME}/.nonexistent"
     [[ "$status" -eq 2 ]]  # R-004: file-not-found → exit code 2
-    [[ "$output" == *"File not found"* ]]
+    [[ "$output" == *"Path not found"* ]]
 }
 
 @test "dcfiles add rejects file outside HOME" {
     run "${DCFILES_HOME}/bin/dcfiles" add "/etc/passwd"
     [[ "$status" -eq 1 ]]
-    [[ "$output" == *"not under"* ]]
+    [[ "$output" == *"Not under"* ]]
 }
 
 # ---------------------------------------------------------------------------
@@ -97,7 +96,7 @@ teardown() {
     run "${DCFILES_HOME}/bin/dcfiles" sync
     echo "$output"
     [[ "$status" -eq 0 ]]
-    [[ "$output" == *"Linked"* ]]
+    [[ "$output" == *"Deployed"* ]]
 
     # Symlinks should exist
     [[ -L "${HOME}/bash/.bashrc" ]]

@@ -1,0 +1,142 @@
+# .dcfilesignore — paths dcfiles must never import into config/
+#
+# Syntax:
+#   name/      bare directory name — pruned at any depth
+#   a/b/       anchored directory  — pruned at that path only
+#   *.ext      glob matched against the basename
+#   a/b/*.ext  glob containing "/" — matched against the path relative to $HOME
+#   # comment  ignored
+#
+# Applies to `dcfiles add <dir>` and `dcfiles sync --import`.
+# Files already present in config/ are unaffected.
+
+# ---------------------------------------------------------------------------
+# Dependency + VCS trees
+# ---------------------------------------------------------------------------
+node_modules/
+.git/
+.svn/
+.hg/
+vendor/
+bower_components/
+.pnpm-store/
+
+# ---------------------------------------------------------------------------
+# Python / build artefacts
+# ---------------------------------------------------------------------------
+__pycache__/
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+target/
+.next/
+.turbo/
+
+# ---------------------------------------------------------------------------
+# Runtime state — regenerated, machine-specific, or huge
+# ---------------------------------------------------------------------------
+cache/
+.cache/
+log/
+logs/
+storage/
+tmp/
+.tmp/
+kiro-logs/
+sessions/
+snapshots/
+.atl/
+.serena/
+.kiro/
+opencode-agent-tmux/
+
+# ---------------------------------------------------------------------------
+# Local scratch — backups, audits, captures
+# ---------------------------------------------------------------------------
+backup/
+backups/
+auditoria/
+.trash/
+graphify-out/
+
+# ---------------------------------------------------------------------------
+# Externally-managed plugin trees — cloned by a plugin manager, not authored
+# Anchored so .config/opencode/plugins/ stays managed.
+# ---------------------------------------------------------------------------
+.config/tmux/plugins/
+.local/share/nvim/lazy/
+.vim/bundle/
+.oh-my-zsh/
+.tmux/plugins/
+
+# ---------------------------------------------------------------------------
+# Secrets — never leave the machine
+# ---------------------------------------------------------------------------
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+credentials.json
+.netrc
+# gh CLI stores oauth_token in plain text here
+hosts.yml
+# Fish persists universal variables (may hold tokens) and scratch files
+fish_variables
+fishd.tmp.*
+
+# ---------------------------------------------------------------------------
+# Databases + binary state
+# ---------------------------------------------------------------------------
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# ---------------------------------------------------------------------------
+# Noise
+# ---------------------------------------------------------------------------
+*.log
+*.log.*
+*.bak
+*.bak.*
+*-backup
+*.headroom-backup
+*.ipynb
+*.swp
+*.swo
+*.orig
+*.rej
+*.pyc
+*.pid
+*.lock
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+core
+
+# ---------------------------------------------------------------------------
+# Media — bloats the repo, rarely config
+# ---------------------------------------------------------------------------
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.mp4
+*.mov
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# opencode-go.json holds a session authCookie secret
+opencode-go.json
