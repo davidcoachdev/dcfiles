@@ -80,6 +80,32 @@ Generated docs must read like they were written for a human, not a slide deck:
 ### Confidence Scoring
 Tag each generated doc with a confidence score (1-10) and end with an execution summary (doc list, module coverage, confidence table, items needing human review). Low-confidence areas get flagged, not silently shipped.
 
+### C4 Architecture Documentation (ported from Litho's `litho-documents-skill`)
+Use the C4 model to document a codebase as layered diagrams + narrative. Levels:
+- **C1 Context** — the system, its users, and the external systems it touches.
+- **C2 Container** — deployable/runnable units (services, apps, datastores) with their tech and interactions.
+- **C3 Component** — major internal building blocks inside a container.
+- **C4 Code** — classes/internal structure (emit only when it earns its place; often skipped).
+
+**Recommended output modules** (one file each, under `architecture/`):
+
+| File | C4 level | Contents |
+|------|----------|----------|
+| `01-overview.md` | C1 | Context diagram + project overview + business value |
+| `02-containers.md` | C2 | Container/Component diagrams + architecture patterns + module responsibilities |
+| `03-workflow.md` | — | Sequence + flow + concurrency model + error handling |
+| `04-deep-exploration/` | C3 | one deep doc per domain module |
+| `05-boundaries.md` | — | external interfaces: CLI/API/config surface |
+| `06-data.md` | — | ER diagram + table structure (conditional on a DB) |
+
+**Pipeline:** preprocess (size-based scan) → research (C1 → C2 → C3 parallel) → orchestrate (write order: boundaries → overview → module deep-dives → architecture → workflow → data) → output (Mermaid validation + confidence score + execution summary).
+
+**Progressive depth:** score each domain module by importance — core domains (≥7) get deep analysis with 5+ files and full diagrams; supporting (4-6) standard with ~3 files; generic (≤3) a brief paragraph. Use DDD grouping (core / supporting / generic).
+
+**Context discipline:** persist intermediate research to Engram or a temp `.litho-agent/` dir so long analyses don't lose data to context pressure; write each module file independently and release it from context afterward. Every module references ≥3 file paths and ≥2 type names; component tables include a path column.
+
+This C4 output is the canonical **S1 (Architecture)** artifact in the stability axis — see `ck:context-architecture`.
+
 ## High-Quality README Template
 
 ```markdown
