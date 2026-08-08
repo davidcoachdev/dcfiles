@@ -16,7 +16,16 @@ set -euo pipefail
 # ---------------------------------------------------------------------------
 # Bootstrap paths
 # ---------------------------------------------------------------------------
-script_dir="$(cd "$(dirname "$0")" && pwd -P)"
+# Resolve the real path of this script, following symlinks. This matters when
+# dcfiles is launched through the ~/.local/bin/dcfiles symlink: without it, $0
+# points at the symlink's directory (~/.local) and DCFILES_HOME is wrongly
+# resolved to /home/.../.local, causing "lib/utils.sh: No such file" errors.
+script_path="$0"
+while [[ -L "$script_path" ]]; do
+    script_path="$(cd "$(dirname "$script_path")" && readlink "$script_path")"
+    script_path="$(cd "$(dirname "$script_path")" && pwd -P)/$(basename "$script_path")"
+done
+script_dir="$(cd "$(dirname "$script_path")" && pwd -P)"
 DCFILES_HOME="${DCFILES_HOME:-$(dirname "$script_dir")}"
 
 source "${DCFILES_HOME}/lib/utils.sh"
