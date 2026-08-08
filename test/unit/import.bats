@@ -87,3 +87,21 @@ stage_managed() {
     [[ "$status" -eq 0 ]]
     [[ "$output" == *"new file(s) in managed directories"* ]]
 }
+
+@test "sync --dry-run does NOT import unmanaged sibling trees (e.g. gcloud)" {
+    # Managed subtree with a nested file (no direct file in the container).
+    stage_managed ".config/opencode/skills/oldskill/SKILL.md" "old"
+    # New plugin directory under the managed subtree — SHOULD be discovered.
+    mkdir -p "${HOME}/.config/opencode/skills/newskill"
+    printf 'new\n' > "${HOME}/.config/opencode/skills/newskill/SKILL.md"
+    # Unmanaged sibling tree under .config (machine state) — MUST be ignored.
+    mkdir -p "${HOME}/.config/gcloud"
+    printf 'MACHINE STATE\n' > "${HOME}/.config/gcloud/active_config"
+    printf 'uuid\n' > "${HOME}/.config/gcloud/.metricsUUID"
+
+    run "${DCFILES_HOME}/bin/dcfiles" sync --dry-run
+    [[ "$status" -eq 0 ]]
+    [[ "$output" == *"skills/newskill/SKILL.md"* ]]
+    # The junk sibling must never be reported.
+    [[ "$output" != *"gcloud"* ]]
+}

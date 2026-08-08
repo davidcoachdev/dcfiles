@@ -124,37 +124,25 @@ import_roots() {
     local config_dir="${DCFILES_HOME}/config"
     [[ -d "$config_dir" ]] || return 0
 
+    # Roots = managed directories that are NOT the bare config root nor a
+    # top-level container (i.e. the path contains '/'). Scanning these subtrees
+    # catches newly-created subdirectories (skills/newskill/, a new plugin dir)
+    # while leaving unmanaged sibling trees (gcloud, caches, Crashpad ids, …)
+    # alone — even when their parent (.config) is itself partially managed.
+    # Top-level dotfiles still require an explicit `dcfiles add`.
     local -a minimal=()
     local r covered m
-
     while IFS= read -r r; do
-        # Skip $HOME itself (config root) and anything empty. Top-level
-        # dotfiles are intentionally not auto-imported — use `dcfiles add`.
-        [[ -z "$r" || "$r" == "." ]] && continue
-
+        [[ -z "$r" || "$r" == "." || "$r" != */* ]] && continue
         covered=false
-        if [[ ${#minimal[@]} -gt 0 ]]; then
-            for m in "${minimal[@]}"; do
-                if [[ "$r" == "$m/"* ]]; then
-                    covered=true
-                    break
-                fi
-            done
-        fi
-
-        if [[ "$covered" == false ]]; then
-            minimal+=("$r")
-        fi
-    done < <(
-        # Emit EVERY directory under config/ — including container directories
-        # that hold no managed file directly (e.g. skills/, or plugins/ when all
-        # content is nested one level down). The dedup above keeps the shallowest
-        # covering roots, so a newly-created subdirectory (skills/newskill/, a new
-        # plugin dir) is discovered instead of being silently skipped by
-        # `sync --import` and `status`.
-        find "$config_dir" -type d -printf '%P\n' 2>/dev/null \
-            | sort -u
-    )
+        for m in "${minimal[@]}"; do
+            if [[ "$r" == "$m/"* ]]; then
+                covered=true
+                break
+            fi
+        done
+        [[ "$covered" == false ]] && minimal+=("$r")
+    done < <(find "$config_dir" -type d -printf '%P\n' 2>/dev/null | sort -u)
 
     [[ ${#minimal[@]} -gt 0 ]] && printf '%s\n' "${minimal[@]}"
     return 0
