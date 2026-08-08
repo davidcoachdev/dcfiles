@@ -118,3 +118,132 @@ is_tracked() {
     # Must point inside DCFILES_HOME/config
     [[ "$target" == "${DCFILES_HOME}/config/"* ]]
 }
+
+# ---------------------------------------------------------------------------
+# Ignore rules (.dcfilesignore)
+# ---------------------------------------------------------------------------
+
+# Pattern cache — populated on first use by load_ignore_patterns.
+_DCFILES_IGNORE_LOADED=""
+_DCFILES_IGNORE_PATTERNS=()
+
+# load_ignore_patterns — read $DCFILES_HOME/.dcfilesignore into the cache
+#
+# Blank lines and `#` comments are dropped. Leading/trailing whitespace is
+# trimmed. Missing file is not an error — it just means "ignore nothing".
+#
+# _DCFILES_IGNORE_LOADED is set to "1" ONLY after the file has been read, so
+# the cache is genuinely populated. An external `[[ -n "$_DCFILES_IGNORE_LOADED" ]]`
+# guard elsewhere must NOT flip this to non-empty before the read happens — that
+# would skip the load entirely and silently match nothing.
+load_ignore_patterns() {
+    [[ "$_DCFILES_IGNORE_LOADED" == "1" ]] && return 0
+    _DCFILES_IGNORE_PATTERNS=()
+    _DCFILES_IGNORE_LOADED="1"
+
+    local file="${DCFILES_HOME}/.dcfilesignore"
+    [[ -f "$file" ]] || return 0
+
+    local line
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        line="${line%%#*}"                          # strip comment
+        line="${line#"${line%%[![:space:]]*}"}"     # ltrim
+        line="${line%"${line##*[![:space:]]}"}"     # rtrim
+        [[ -z "$line" ]] && continue
+        _DCFILES_IGNORE_PATTERNS+=("$line")
+    done < "$file"
+}
+
+# is_ignored — return 0 if a $HOME-relative path matches an ignore pattern
+#
+# Matching rules:
+#   "name/"     bare directory name — matches that component at any depth
+#   "a/b/"      anchored directory  — matches the path prefix a/b only
+#   "a/b/*.ext" path glob           — matched against the whole relative path
+#   "*.ext"     basename glob       — matched against the filename only
+#
+# The anchored form is what lets `.config/tmux/plugins/` be excluded while
+# `.config/opencode/plugins/` stays managed.
+#
+# Usage:
+#   is_ignored ".config/opencode/node_modules/x.js"   # → 0 (ignored)
+is_ignored() {
+    local rel="$1"
+    load_ignore_patterns
+
+    [[ ${#_DCFILES_IGNORE_PATTERNS[@]} -eq 0 ]] && return 1
+
+    local pat dir
+    for pat in "${_DCFILES_IGNORE_PATTERNS[@]}"; do
+        if [[ "$pat" == */ ]]; then
+            dir="${pat%/}"
+            if [[ "$dir" == */* ]]; then
+                # Anchored directory — match as a prefix of the relative path
+                [[ "$rel" == "$dir"/* ]] && return 0
+            else
+                # Bare directory name — match a whole component at any depth
+                [[ "/${rel}/" == *"/${dir}/"* ]] && return 0
+            fi
+        elif [[ "$pat" == */* ]]; then
+            # Path glob — match against the full relative path
+            # shellcheck disable=SC2053
+            [[ "$rel" == $pat ]] && return 0
+        else
+            # Basename glob
+            # shellcheck disable=SC2053
+            [[ "${rel##*/}" == $pat ]] && return 0
+        fi
+    done
+
+    return 1
+}
+
+# Largest file dcfiles will import, in bytes. Override with DCFILES_MAX_SIZE.
+# A dotfiles repo holds text config; a 150 MB ELF binary sitting in a config
+# directory is not something you want in git history.
+DCFILES_MAX_SIZE="${DCFILES_MAX_SIZE:-1048576}"   # 1 MiB
+
+# within_size_limit — return 0 if FILE is small enough to import
+within_size_limit() {
+    local file="$1"
+    local size
+    size="$(stat -c %s "$file" 2>/dev/null || printf '0')"
+    [[ "$size" -le "$DCFILES_MAX_SIZE" ]]
+}
+
+# walk_files — print NUL-separated files under a root, pruning ignored dirs
+#
+# Emits regular files and symlinks. Directories excluded by a `…/` pattern in
+# .dcfilesignore are pruned, so their contents are never even stat'ed. This is
+# what keeps a node_modules tree from costing 30k stat calls per scan.
+#
+# Args:
+#   $1  root — absolute directory to walk
+walk_files() {
+    local root="$1"
+    [[ -d "$root" ]] || return 0
+
+    load_ignore_patterns
+
+    local -a prune=()
+    local pat dir
+    if [[ ${#_DCFILES_IGNORE_PATTERNS[@]} -gt 0 ]]; then
+        for pat in "${_DCFILES_IGNORE_PATTERNS[@]}"; do
+            [[ "$pat" == */ ]] || continue
+            dir="${pat%/}"
+            if [[ "$dir" == */* ]]; then
+                prune+=(-path "*/${dir}" -o)
+            else
+                prune+=(-name "$dir" -o)
+            fi
+        done
+    fi
+
+    if [[ ${#prune[@]} -gt 0 ]]; then
+        unset "prune[$(( ${#prune[@]} - 1 ))]"   # drop trailing -o
+        find "$root" \( -type d \( "${prune[@]}" \) -prune \) -o \
+                     \( \( -type f -o -type l \) -print0 \)
+    else
+        find "$root" \( -type f -o -type l \) -print0
+    fi
+}

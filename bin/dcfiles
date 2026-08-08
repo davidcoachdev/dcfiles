@@ -3,10 +3,10 @@
 # dcfiles — Dotfiles CLI manager
 #
 # Usage:
-#   dcfiles add <file>     Add a dotfile to managed config and deploy symlink
-#   dcfiles sync [--fix]   Deploy all symlinks, commit, and push
-#   dcfiles status         Show tracked file states
-#   dcfiles diff           Show config diff
+#   dcfiles add <file|dir>   Add a dotfile or whole directory, deploy symlinks
+#   dcfiles sync [flags]     Deploy symlinks, optionally import, commit, push
+#   dcfiles status           Show tracked file states
+#   dcfiles diff             Show config diff
 #
 # Source the shared libs for symlink engine and utilities.
 # This script assumes it lives at $DCFILES_HOME/bin/dcfiles.
@@ -30,71 +30,378 @@ usage() {
 Usage: dcfiles <command> [<args>]
 
 Commands:
-    add <file>     Copy a dotfile into config/, deploy symlink, stage
-    sync [--fix]   Deploy all symlinks, commit, and push changes
-    status         Show state of each tracked file (ok/missing/overridden/broken)
-    diff           Show git diff of tracked config files
-    help           Show this message
+    add <file|dir>   Copy a file — or every file in a directory — into
+                     config/, deploy symlinks, and stage the result
+    sync [flags]     Deploy all symlinks, commit, and push changes
+    status           Show state of each tracked file, plus new-file count
+    diff             Show git diff of tracked config files
+    help             Show this message
+
+Sync flags:
+    --fix            Remove broken symlinks before deploying
+    --import         Import new files found in managed directories
+    --dry-run        Preview --import without writing anything
+    -y, --yes        Skip the confirmation prompt for --import
+
+Exclusions live in .dcfilesignore at the repo root.
 EOF
+}
+
+# ---------------------------------------------------------------------------
+# Import helpers
+# ---------------------------------------------------------------------------
+
+# add_one — import one regular file into config/ and symlink it back
+#
+# Args:
+#   $1  file   — absolute path under $HOME
+#   $2  quiet  — "true" to suppress per-file chatter (default: false)
+# Returns: 0 imported, 1 skipped
+add_one() {
+    local file="$1"
+    local quiet="${2:-false}"
+    local rel="${file#"$HOME"/}"
+
+    # Already managed by dcfiles — a symlink we own pointing into
+    # DCFILES_HOME/config. Idempotent: nothing to do. This is the correct
+    # check; it does not misfire on a nested .gitignore in the user's tree,
+    # and does not consult the git index (which would collide with a differently
+    # rooted $HOME in tests).
+    if is_tracked "$file"; then
+        [[ "$quiet" == true ]] || msg "Already tracked: ${file}"
+        return 2
+    fi
+
+    # Never chase symlinks we do not own
+    if [[ -L "$file" ]]; then
+        [[ "$quiet" == true ]] || warn "Skipped (foreign symlink): ${file}"
+        return 1
+    fi
+
+    if [[ ! -f "$file" ]]; then
+        [[ "$quiet" == true ]] || warn "Not a regular file: ${file}"
+        return 1
+    fi
+
+    local rel="${file#"$HOME"/}"
+    if [[ "$rel" == "$file" ]]; then
+        [[ "$quiet" == true ]] || warn "Not under \$HOME, skipped: ${file}"
+        return 1
+    fi
+
+    if is_ignored "$rel"; then
+        [[ "$quiet" == true ]] || warn "Ignored by .dcfilesignore: ${rel}"
+        return 1
+    fi
+
+    if ! within_size_limit "$file"; then
+        [[ "$quiet" == true ]] || warn "Too large, skipped: ${rel}"
+        return 1
+    fi
+
+    local dest="${DCFILES_HOME}/config/${rel}"
+    mkdir -p "$(dirname "$dest")"
+    cp -p "$file" "$dest"
+    [[ "$quiet" == true ]] || msg "Copied: ${file} → ${dest}"
+
+    if ! DCFILES_QUIET="$quiet" deploy_single "$dest"; then
+        warn "Copied but failed to link: ${rel}"
+        return 1
+    fi
+
+    return 0
+}
+
+# import_roots — print the minimal set of $HOME-relative managed directories
+#
+# A directory is a root when it *directly* contains at least one managed file.
+# Roots nested inside another root are dropped, since a recursive walk of the
+# parent already covers them.
+#
+# $HOME itself is deliberately excluded: walking it would pull in every stray
+# dotfile on the machine. Use `dcfiles add ~/.foo` for top-level files.
+import_roots() {
+    local config_dir="${DCFILES_HOME}/config"
+    [[ -d "$config_dir" ]] || return 0
+
+    local -a minimal=()
+    local r covered m
+
+    while IFS= read -r r; do
+        # Skip $HOME itself (config root) and anything empty. Top-level
+        # dotfiles are intentionally not auto-imported — use `dcfiles add`.
+        [[ -z "$r" || "$r" == "." ]] && continue
+
+        covered=false
+        if [[ ${#minimal[@]} -gt 0 ]]; then
+            for m in "${minimal[@]}"; do
+                if [[ "$r" == "$m/"* ]]; then
+                    covered=true
+                    break
+                fi
+            done
+        fi
+
+        if [[ "$covered" == false ]]; then
+            minimal+=("$r")
+        fi
+    done < <(
+        # Emit EVERY directory under config/ — including container directories
+        # that hold no managed file directly (e.g. skills/, or plugins/ when all
+        # content is nested one level down). The dedup above keeps the shallowest
+        # covering roots, so a newly-created subdirectory (skills/newskill/, a new
+        # plugin dir) is discovered instead of being silently skipped by
+        # `sync --import` and `status`.
+        find "$config_dir" -type d -printf '%P\n' 2>/dev/null \
+            | sort -u
+    )
+
+    [[ ${#minimal[@]} -gt 0 ]] && printf '%s\n' "${minimal[@]}"
+    return 0
+}
+
+# collect_new_files — print $HOME-relative paths of unmanaged files
+#
+# Walks every import root and reports regular files that are not yet in
+# config/ and not excluded by .dcfilesignore. Output is sorted and deduped.
+collect_new_files() {
+    local config_dir="${DCFILES_HOME}/config"
+    local -a found=()
+    local root abs f rel
+
+    while IFS= read -r root; do
+        abs="${HOME}/${root}"
+        [[ -d "$abs" ]] || continue
+
+        while IFS= read -r -d '' f; do
+            # Symlinks and non-regular entries are never imported
+            if [[ -L "$f" ]] || [[ ! -f "$f" ]]; then
+                continue
+            fi
+
+            rel="${f#"$HOME"/}"
+
+            # Already managed?
+            if [[ -e "${config_dir}/${rel}" ]]; then
+                continue
+            fi
+
+            if is_ignored "$rel"; then
+                continue
+            fi
+
+            if ! within_size_limit "$f"; then
+                continue
+            fi
+
+            found+=("$rel")
+        done < <(walk_files "$abs")
+    done < <(import_roots)
+
+    [[ ${#found[@]} -eq 0 ]] && return 0
+    printf '%s\n' "${found[@]}" | sort -u
+    return 0
 }
 
 # ---------------------------------------------------------------------------
 # Subcommand: add
 # ---------------------------------------------------------------------------
-cmd_add() {
-    local file="${1:-}"
 
-    if [[ -z "$file" ]]; then
-        die "Usage: dcfiles add <file>"
+# add_dir — recursively import every eligible file under a directory
+add_dir() {
+    local dir="$1"
+    local rel_dir="${dir#"$HOME"/}"
+
+    if [[ "$rel_dir" == "$dir" ]]; then
+        die 1 "Directory is not under \$HOME: ${dir}"
+    fi
+
+    msg "Scanning ${dir}"
+
+    local -a imported=()
+    local skipped=0
+    local f rel
+
+    while IFS= read -r -d '' f; do
+        if [[ -L "$f" ]] || [[ ! -f "$f" ]]; then
+            skipped=$(( skipped + 1 ))
+            continue
+        fi
+
+        rel="${f#"$HOME"/}"
+
+        if is_ignored "$rel"; then
+            skipped=$(( skipped + 1 ))
+            continue
+        fi
+
+        if [[ -e "${DCFILES_HOME}/config/${rel}" ]]; then
+            skipped=$(( skipped + 1 ))
+            continue
+        fi
+
+        if ! within_size_limit "$f"; then
+            warn "Too large, skipped: ${rel}"
+            skipped=$(( skipped + 1 ))
+            continue
+        fi
+
+        if add_one "$f" true; then
+            imported+=("$rel")
+            printf '  + %s\n' "$rel"
+        else
+            skipped=$(( skipped + 1 ))
+        fi
+    done < <(walk_files "$dir")
+
+    if [[ ${#imported[@]} -eq 0 ]]; then
+        msg "Nothing new in ${rel_dir} (${skipped} skipped)."
+        return 0
+    fi
+
+    git -C "$DCFILES_HOME" add -- "config/${rel_dir}"
+    msg "Added ${#imported[@]} file(s), skipped ${skipped}."
+    msg "Staged: config/${rel_dir}"
+}
+
+cmd_add() {
+    local path="${1:-}"
+
+    if [[ -z "$path" ]]; then
+        die 2 "Usage: dcfiles add <file|directory>"
     fi
 
     # Expand tilde if present
-    file="${file/#\~/$HOME}"
+    path="${path/#\~/$HOME}"
 
-    # Must exist and be a regular file
-    [[ -f "$file" ]] || die 2 "File not found: ${file}"
+    [[ -e "$path" ]] || die 2 "Path not found: ${path}"
+
 
     # Resolve to absolute canonical path
-    file="$(abspath "$file")"
+    path="$(abspath "$path")"
 
-    # Must not already be tracked by dcfiles
-    if is_tracked "$file"; then
-        msg "Already tracked: ${file}"
+    if [[ -d "$path" ]]; then
+        add_dir "$path"
+        return
+    fi
+
+    # Capture add_one's exit code without letting `set -e` see the non-zero
+    # return (a "2 = already tracked" must not abort the script).
+    local rc=0
+    add_one "$path" false || rc=$?
+    if [[ $rc -eq 0 ]]; then
+        local rel="${path#"$HOME"/}"
+        # -f: our .dcfilesignore is the real guard. A nested .gitignore in the
+        # user's tree (e.g. .config/kilo/.gitignore) would otherwise make plain
+        # `git add` silently drop the file. Never force past our own exclusion.
+        if is_ignored "$rel"; then
+            warn "Ignored by .dcfilesignore, not staged: ${rel}"
+        else
+            git -C "$DCFILES_HOME" add -f -- "config/${rel}"
+            msg "Staged: config/${rel}"
+        fi
         exit 0
+    elif [[ $rc -eq 2 ]]; then
+        # Already tracked — idempotent success.
+        exit 0
+    else
+        # add_one already warned (not under HOME, ignored, too large, …)
+        exit 1
     fi
-
-    # Must be under $HOME
-    local rel="${file#"$HOME"/}"
-    if [[ "$rel" == "$file" ]]; then
-        die "File is not under \$HOME: ${file}"
-    fi
-
-    local dest="${DCFILES_HOME}/config/${rel}"
-
-    # Create destination directory
-    mkdir -p "$(dirname "$dest")"
-
-    # Copy file into config/ tree
-    cp "$file" "$dest"
-    msg "Copied: ${file} → ${dest}"
-
-    # Deploy symlink back to target location
-    deploy_single "$dest"
-
-    # Stage the new config file for commit
-    git -C "$DCFILES_HOME" add "${dest}"
-    msg "Staged: ${dest}"
 }
 
 # ---------------------------------------------------------------------------
 # Subcommand: sync
 # ---------------------------------------------------------------------------
-cmd_sync() {
-    local fix=false
-    [[ "${1:-}" == "--fix" ]] && fix=true
 
+# do_import — find and import new files inside managed directories
+do_import() {
+    local dry="$1"
+    local assume_yes="$2"
+
+    msg "Scanning managed directories for new files"
+
+    local -a new=()
+    local rel
+    while IFS= read -r rel; do
+        [[ -n "$rel" ]] && new+=("$rel")
+    done < <(collect_new_files)
+
+    if [[ ${#new[@]} -eq 0 ]]; then
+        msg "No new files to import."
+        return 0
+    fi
+
+    printf "\nNew files (%d):\n" "${#new[@]}"
+    local shown=0
+    for rel in "${new[@]}"; do
+        if [[ $shown -ge 40 ]]; then
+            printf '  ... and %d more\n' $(( ${#new[@]} - shown ))
+            break
+        fi
+        printf '  + %s\n' "$rel"
+        shown=$(( shown + 1 ))
+    done
+    printf "\n"
+
+    if [[ "$dry" == true ]]; then
+        msg "Dry run — nothing imported."
+        return 0
+    fi
+
+    if [[ "$assume_yes" != true ]] && [[ -t 0 ]]; then
+        local reply=""
+        read -r -p "Import these ${#new[@]} file(s)? [y/N] " reply
+        if [[ ! "$reply" =~ ^[Yy]$ ]]; then
+            msg "Import skipped."
+            return 0
+        fi
+    fi
+
+    local ok_count=0 failed=0
+    for rel in "${new[@]}"; do
+        if add_one "${HOME}/${rel}" true; then
+            ok_count=$(( ok_count + 1 ))
+        else
+            failed=$(( failed + 1 ))
+        fi
+    done
+
+    msg "Imported ${ok_count} file(s)."
+    [[ $failed -gt 0 ]] && warn "${failed} file(s) could not be imported."
+    return 0
+}
+
+cmd_sync() {
+    local fix=false import=false dry=false assume_yes=false
+    local arg
+
+    for arg in "$@"; do
+        case "$arg" in
+            --fix)        fix=true ;;
+            --import)     import=true ;;
+            --dry-run)    dry=true; import=true ;;
+            -y|--yes)     assume_yes=true ;;
+            "")           ;;
+            *)            die 2 "Unknown sync flag: ${arg}" ;;
+        esac
+    done
+
+    # -----------------------------------------------------------------------
+    # Import pass: $HOME → config/
+    # -----------------------------------------------------------------------
+    if [[ "$import" == true ]]; then
+        do_import "$dry" "$assume_yes"
+        if [[ "$dry" == true ]]; then
+            msg "Dry run complete — no changes made."
+            return 0
+        fi
+    fi
+
+    # -----------------------------------------------------------------------
+    # Repair pass
+    # -----------------------------------------------------------------------
     if [[ "$fix" == true ]]; then
-        # Remove broken symlinks first so deploy_all can re-create them
         local config_dir="${DCFILES_HOME}/config"
         while IFS= read -r -d '' src; do
             local rel="${src#"${config_dir}"/}"
@@ -106,10 +413,18 @@ cmd_sync() {
         done < <(find "$config_dir" -type f -print0 2>/dev/null)
     fi
 
-    # Deploy all symlinks (two-pass: overrides, then base files)
-    deploy_all
+    # -----------------------------------------------------------------------
+    # Deploy pass: config/ → $HOME
+    # -----------------------------------------------------------------------
+    DCFILES_QUIET=true deploy_all || true
+    msg "Deployed ${DCFILES_DEPLOY_LINKED} symlink(s)."
+    if [[ ${DCFILES_DEPLOY_FAILED} -gt 0 ]]; then
+        warn "${DCFILES_DEPLOY_FAILED} symlink(s) failed — see warnings above."
+    fi
 
-    # Auto-commit and push
+    # -----------------------------------------------------------------------
+    # Commit and push
+    # -----------------------------------------------------------------------
     msg "Committing and pushing changes..."
     git -C "$DCFILES_HOME" add -A
     git -C "$DCFILES_HOME" commit -m "dcfiles sync" 2>/dev/null || msg "Nothing new to commit"
@@ -137,9 +452,9 @@ cmd_status() {
 
     while IFS= read -r -d '' src; do
         local name rel subdir
-        name="$(basename "$src")"
+        name="${src##*/}"
         rel="${src#"${config_dir}"/}"
-        subdir="$(dirname "$rel")"
+        if [[ "$rel" == */* ]]; then subdir="${rel%/*}"; else subdir="."; fi
         local target="$HOME/$rel"
 
         # Skip hostname-override files themselves (not deployed directly)
@@ -185,6 +500,14 @@ cmd_status() {
         msg "All files synced."
     fi
 
+    # Surface unmanaged files so they never go unnoticed again
+    local new_count
+    new_count="$(collect_new_files | grep -c . || true)"
+    if [[ "${new_count:-0}" -gt 0 ]]; then
+        warn "${new_count} new file(s) in managed directories are not tracked."
+        warn "Run 'dcfiles sync --dry-run' to preview, '--import' to add them."
+    fi
+
     exit 0  # Always informational per R-006
 }
 
@@ -216,9 +539,9 @@ cmd_diff() {
     local untracked=()
     while IFS= read -r -d '' src; do
         local name subdir rel
-        name="$(basename "$src")"
+        name="${src##*/}"
         rel="${src#"${config_dir}"/}"
-        subdir="$(dirname "$rel")"
+        if [[ "$rel" == */* ]]; then subdir="${rel%/*}"; else subdir="."; fi
         local target="$HOME/$rel"
 
         # Skip hostname-override files
@@ -253,7 +576,7 @@ case "${1:-help}" in
         ;;
     sync)
         shift
-        cmd_sync "${1:-}"
+        cmd_sync "$@"
         ;;
     status)
         cmd_status

@@ -115,7 +115,7 @@ setup_integration_sandbox() {
     source "${DCFILES_HOME}/lib/symlink.sh"
 
     # Initialise a git repo inside the fake DCFILES_HOME
-    git -C "$DCFILES_HOME" init
+    git -C "$DCFILES_HOME" init -q -b main
     git -C "$DCFILES_HOME" config user.email "test@dcfiles.dev"
     git -C "$DCFILES_HOME" config user.name "dcfiles test"
     git -C "$DCFILES_HOME" add -A
