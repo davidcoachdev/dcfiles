@@ -28,6 +28,90 @@ Each tier consumes the previous tier's output. Cross-references between tiers cr
 
 ---
 
+## The Second Axis: Knowledge Stability
+
+The 4-tier flow above answers **"where did this knowledge come from?"**. It does not answer **"how fast does it rot?"**. These are orthogonal axes — a `refs/` document and an `impl/` document can each be stable or volatile.
+
+Classify every piece of project knowledge on the stability axis as well:
+
+| Tier | Knowledge | Cadence | Budget | Owner |
+|------|-----------|---------|--------|-------|
+| **S0** | Essence — what the project is, why it exists, who it serves | Quarterly / major version | ~500 tk | `sdd-init` |
+| **S1** | Architecture — components, data flow, patterns | Monthly / sprint | ~1000 tk | `sdd-init`, `architecture-intelligence` |
+| **S2** | Decisions — tradeoffs and their rationale | Per decision | ~800 tk | `ck:adr` (canonical) |
+| **S3** | Dynamics — active issues, standing constraints, workarounds | As they arise | ~600 tk | graduated from `ck:impl-tracking` |
+
+**Total budget: ~2,900 tokens.** Loading the entire project knowledge base should cost under 3k. Exceeding a tier's budget is a signal to split or prune — never to expand the budget.
+
+### Never write a bare "Tier N"
+
+Flow tiers are `1-4`. Stability tiers are `S0-S3`. "Tier 2" is ambiguous — it means `kits/` on one axis and decisions on the other. Always qualify: **"Tier 2 (kits)"** or **"S2 (decisions)"**.
+
+### Where each tier lives
+
+The `artifact_store` mode chosen at SDD preflight decides persistence — do not introduce a separate switch:
+
+| Mode | S0 / S1 / S3 | S2 |
+|------|--------------|-----|
+| `engram` | topic_keys only | pointer to `docs/adr/` |
+| `openspec` | files under `openspec/` | `docs/adr/` |
+| `hybrid` | files canonical, Engram as decaying index | `docs/adr/` + Engram pointer |
+
+Engram topic_keys and their decay:
+
+```
+S0  sdd-init/{project}                review_after: quarterly
+S1  architecture/{project}/overview   review_after: monthly
+S2  → docs/adr/index.md               (file-canonical, pointer only)
+S3  dynamics/{project}/active         review_after: short
+```
+
+**S2 is always file-canonical.** ADRs get reviewed in pull requests; Engram holds a pointer, never a copy. Duplicating ADR content into `context/` guarantees drift.
+
+### Static knowledge complements exploration — it does not replace it
+
+Write S0-S3 to help an agent orient faster, not to describe everything. If an agent can learn it in one `grep`, it does not belong here. The test: **would a competent new contributor still be confused after reading the code?** If no, leave it out.
+
+---
+
+## Operating the Knowledge Tiers
+
+### Session-start protocol (ported from Litho's `.ai-context`)
+On any session that touches a project, an agent should:
+1. Read **S0** (`PROJECT-ESSENCE` / `sdd-init/{project}`) — always.
+2. Scan **S3** (`DYNAMICS` / `dynamics/{project}/active`) for active issues and standing constraints.
+3. Read **S1** (`ARCHITECTURE`) only when working across components.
+4. Read **S2** (`DECISIONS` / `docs/adr`) only when changing established patterns.
+
+Reading order: **S0 → S1 → S2 → S3**. Activate the full base when starting a session, hitting unfamiliar code/architecture, planning structural changes, or debugging unexpected behavior. Do **not** activate for simple mechanical edits with clear context.
+
+### Tier Drift Audit & S3 Stale Audit (ported from Litho's `check-drift` / `audit-dynamics`)
+Knowledge rots. Run periodically (monthly recommended) or before a release:
+- **Drift audit** — verify each tier still matches reality: S0/S1 reflect the current stack and architecture; S2 entries match actual `docs/adr`; S3 items are still true. Mismatch = stale tier → refresh or delete.
+- **S3 stale audit** — flag any S3 item whose `review_after` passed without re-validation. A standing constraint that silently expired is worse than none. If still true, bump the date; if resolved, move it to "Recently Resolved".
+
+These procedures operationalize the `review_after` decay above — decay without an audit is just forgotten knowledge.
+
+### Scaling knowledge discovery (ported from Litho's `litho-documents-skill`)
+Scale the scan to project size to avoid context bloat:
+
+| Size | Criterion | Strategy |
+|------|-----------|----------|
+| Small | <100 source files | README + entry points + config; list dirs |
+| Medium | 100–500 files | README + entry + config + semantic search for concepts |
+| Large | >500 files | README + main config + entry outline + targeted grep; delegate deep reads to sub-agents |
+
+Persist intermediate findings to Engram (or a temp `.litho-agent/`-style dir) so long analyses don't lose data to context pressure. Use progressive depth: analyze core modules deeply, supporting modules standard, generic modules briefly.
+
+### Tier templates
+Minimal starting shapes (full versions: Litho's `ai-context-generator/templates`):
+- **S0 PROJECT-ESSENCE** — What / Why / Who / Key features / Core constraints.
+- **S1 ARCHITECTURE** — system diagram + component responsibilities + data flow + key dependencies + patterns.
+- **S2 DECISIONS (ADR)** — non-obvious choice + trade-off + constraints accepted + revisit condition.
+- **S3 DYNAMICS** — see `ck:impl-tracking` graduation format (Quick Scan + Active Issues + Known Constraints + Recently Resolved).
+
+---
+
 ## Directory Layout
 
 ```

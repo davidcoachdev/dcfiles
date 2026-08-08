@@ -30,6 +30,7 @@ Do not use for:
 - Use the template from `assets/template.md` exactly — do not deviate
 - ADRs are numbered sequentially: `001-short-name.md`, `002-another-decision.md`
 - When superseding an ADR, you MUST add a `Superseded by` link in both the old and new ADR
+- ADRs are the canonical **S2 (decisions)** tier of the project knowledge base — see `ck:context-architecture` → *The Second Axis: Knowledge Stability*. S2 is always file-canonical because ADRs get reviewed in pull requests. Other artifacts (Engram topic_keys, `context/`, specs) link to `docs/adr/` and MUST NOT copy ADR content.
 
 ## Decision Gates
 

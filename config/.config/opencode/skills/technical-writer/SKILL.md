@@ -69,6 +69,17 @@ Expert technical writer specializing in developer documentation, API references,
 - Every breaking change has a migration guide before the release
 - Every README must pass the "5-second test": what is this, why should I care, how do I start
 
+### Narrative Style (P0 — ported from Litho's `litho-documents-skill`)
+Generated docs must read like they were written for a human, not a slide deck:
+- **Open every section with a narrative summary** — 2-4 sentences on what the section covers and why it matters; don't lead with a bare table or list.
+- **Interpret, don't just present** — after tables/lists, add a sentence on what it means and why it's designed that way.
+- **Justify decisions with "why"** — say what was rejected and why, not only what was chosen.
+- **Use analogies to build understanding** — e.g., compare a cache to a "shortcut counter", a pipeline to a "production line".
+- **Avoid cold title stacking** — let section titles naturally introduce the narrative.
+
+### Confidence Scoring
+Tag each generated doc with a confidence score (1-10) and end with an execution summary (doc list, module coverage, confidence table, items needing human review). Low-confidence areas get flagged, not silently shipped.
+
 ## High-Quality README Template
 
 ```markdown
