@@ -298,7 +298,7 @@
       "name": "TokenRouter",
       "options": {
         "baseURL": "https://api.tokenrouter.com/v1",
-        "apiKey": "REDACTED-OPENAI-KEY"
+        "apiKey": "{env:TOKENROUTER_API_KEY}"
       },
       "models": {
         "moonshotai/kimi-k3-free": {
@@ -311,7 +311,7 @@
       "name": "AgentRouter (Anthropic)",
       "options": {
         "baseURL": "https://agentrouter.org",
-        "apiKey": "sk-UzNbaI7M11AWhx9BH9ZEBBtNxstC9RhPtzq8mqg6hPjCFzOY"
+        "apiKey": "{env:AGENTROUTER_CLAUDIO_API_KEY}"
       },
       "models": {
         "claude-opus-4-8": {
@@ -327,7 +327,7 @@
       "name": "AgentRouter (OpenAI Compatible)",
       "options": {
         "baseURL": "https://agentrouter.org/v1",
-        "apikey": "sk-UzNbaI7M11AWhx9BH9ZEBBtNxstC9RhPtzq8mqg6hPjCFzOY"
+        "apikey": "{env:AGENTROUTER_GPT_API_KEY}"
       },
       "models": {
         "gpt-5.6-sol": {

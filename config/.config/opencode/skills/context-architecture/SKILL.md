@@ -106,7 +106,7 @@ Persist intermediate findings to Engram (or a temp `.litho-agent/`-style dir) so
 ### Tier templates
 Minimal starting shapes (full versions: Litho's `ai-context-generator/templates`):
 - **S0 PROJECT-ESSENCE** — What / Why / Who / Key features / Core constraints.
-- **S1 ARCHITECTURE** — system diagram + component responsibilities + data flow + key dependencies + patterns.
+- **S1 ARCHITECTURE** — system diagram (produce it with the `c4-architecture` skill) + component responsibilities + data flow + key dependencies + patterns.
 - **S2 DECISIONS (ADR)** — non-obvious choice + trade-off + constraints accepted + revisit condition.
 - **S3 DYNAMICS** — see `ck:impl-tracking` graduation format (Quick Scan + Active Issues + Known Constraints + Recently Resolved).
 
@@ -350,6 +350,7 @@ Each framework repo includes the shared context as a submodule. Updates propagat
 | `ck:impl-tracking` | Tracking lives in `context/impl/`, compacted when exceeding ~500 lines |
 | `ck:validation-first` | Validation results recorded in impl tracking within the hierarchy |
 | `ck:revision` | `/ck:revise` traverses CLAUDE.md edges in reverse to trace bugs to specs |
+| `c4-architecture` | Generates the 4-level C4 model; diagrams populate the S1 (ARCHITECTURE) tier via `ctx_index(source: "architecture")` |
 | `ck:methodology` | Context structure established during Draft phase, maintained throughout the Hunt |
 
 ---

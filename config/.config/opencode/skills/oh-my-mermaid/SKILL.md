@@ -41,6 +41,19 @@ En VS Code (conectado a WSL):
 - extensión "Mermaid Preview"
 - Copiá el código en [mermaid.live](https://mermaid.live)
 
+## Validation Gate (Mermaid Fixer)
+
+After `/omm-scan` emits `.mmd` files, validate them before publishing:
+
+```bash
+node <mermaid-fixer-skill-dir>/assets/validate-mermaid.mjs .omm/**/*.mmd
+```
+
+Fix any reported errors (unbalanced brackets, unknown diagram type, edges with a
+missing endpoint) and re-run until exit code `0`. This ports the "Mermaid Fixer"
+idea from `sopaco/deepwiki-rs` — broken diagrams silently fail to render, so a
+quick validation pass prevents shipping dead diagrams.
+
 ## Trigger
 
 - Onboarding a nuevo proyecto
