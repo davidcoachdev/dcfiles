@@ -7,7 +7,7 @@ description: >
 
 ## Sketch Phase — Escribir Kits (Gold)
 
-Recibes: descripción de feature.
+Recibes: descripción de feature + `context/refs/reuse-report.md` (si existe, generado por la Fase 0 Retrieve).
 Produces: kits con acceptance criteria + Strict TDD + security gates.
 
 ### Principios del flujo gold (mismo idioma en todas las fases)
@@ -24,6 +24,9 @@ context/
 ├── kits/           # R1, R2, R3... (output)
 └── impl/           # Living tracking
 ```
+
+### Reuse — Restricción de la Fase 0 (OBLIGATORIO)
+Antes de escribir, leé `context/refs/reuse-report.md` si existe. Si la Fase 0 reportó kits reutilizables (veredicto REUSE/PARTIAL), **DEBÉS** citarlos y reusarlos en vez de reescribirlos. Si es GREENFIELD, seguí normal. Nunca ignores el reuse-report: es la restricción que te da el orquestador para no inventar lo que ya existe.
 
 ### Formato de Kit (plantilla gold = fuente de verdad)
 Usá `cavekit-writing/references/kit-gold-standard.md`. Cada kit tiene:

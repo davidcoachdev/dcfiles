@@ -47,6 +47,12 @@ Verdict: APPROVE | REVISE | REJECT
 ```
 El orchestrator lee `Verdict` + `Critical Gaps` y feedback al próximo make.
 
+### Trace
+Al emitir el verdict, APPENDÉ a `context/impl/trace.md` una línea: `Verdict: {APPROVE|REVISE|REJECT} — gaps: {…}`. Así la traza por paso queda completa (build + verdict) para auditoría y steering.
+
+### Eval opcional (Patrón #5)
+Si hay candidatos alternativos, podés rankearlos con `cavekit-eval` (pairwise + Bradley-Terry). No es obligatorio; úsalo para desempatar críticas.
+
 ### Auto-Load
 - peer-review
 - impl-tracking

@@ -15,6 +15,9 @@ Produces: working code + tests (Strict TDD) + tracking.
 - **Human-in-the-Loop**: si el task está bloqueado o el alcance es ambiguo → PARÁ y preguntá. No adivines. Una pregunta a la vez.
 - **Surgical changes**: cada línea trackea a un acceptance criterion.
 
+### Fast Path (Triage Verde)
+Si el entry te pasa UNA tarea trivial y directa (sin build site, porque triage la marcó Verde), NO esperes kits ni map: hacé el cambio quirúrgico + 1 test mínimo + validación, y pasá a check. Es el camino liviano; salteás retrieve/sketch/map.
+
 ### Pre-flight
 - Todos acceptance criteria + security gates tienen task asignado.
 - Si no → reportá gap, NO proceed.
@@ -50,6 +53,17 @@ Tareas del mismo tier en paralelo (subagents). Merge one at a time, validá entr
 
 ### Result Contract (por task)
 - Kit requirement ref, files modified, tests added, security gate status.
+
+### Trace (observabilidad por iteración)
+Al final de cada iteración del loop, APPENDÉ a `context/impl/trace.md` un bloque:
+```markdown
+## Iter {n}
+- Task(s): T-xxx
+- Tests: +N (archivo)
+- Status: PASS | FAIL
+- Artefactos: ruta1, ruta2
+```
+Esto da la **traza por paso** (como los logs de AgentSkillOS) para auditar y hacer steering del loop.
 
 ### Output
 ```

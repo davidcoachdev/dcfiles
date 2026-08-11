@@ -7,13 +7,22 @@ description: >
 
 ## Map Phase — Generar Build Plan (Gold)
 
-Recibes: kits con R-numbers + security gates.
+Recibes: kits con R-numbers + security gates + la **estrategia** indicada por el orquestador (`quality` | `efficiency` | `simplicity`).
 Produces: task dependency graph (funcional + security + calidad).
 
 ### Principios gold
 - **ROI**: el router asigna depth (quick/standard/thorough) para optimizar costo sin sacrificar calidad.
 - **Cobertura total**: TODO acceptance criterion Y todo security gate debe tener task que lo cubra.
 - **Calidad + Seguridad** son primeros ciudadanos: no solo tareas funcionales.
+
+### Estrategia de Orquestación (la elige el orquestador según el tier de triage)
+Define la TOPOLOGÍA del grafo, no solo el depth. Aplicá la indicada (si no se indica, default `efficiency`):
+
+- **quality** (🔴 Rojo / core): pipeline PROFUNDO y multi-etapa. Más granularidad (sub-tasks por criterion), tareas de verificación/validación extra por capa, dependencias conservadoras (una capa a la vez). Máxima trazabilidad; más lento.
+- **efficiency** (🟡 Amarillo / standard): balanceado. Waves ANCHOS y paralelos donde no hay dependencia; colapsá tareas triviales; 1 capa de verificación por wave. Rápido sin sacrificar cobertura.
+- **simplicity** (🟢 Verde / trivial): SOLO pasos esenciales; un task por requirement, sin tareas de verificación separadas. Mínima superficie.
+
+Se combina con el `Cavekit Router (ROI)` de depth (quick/standard/thorough) que ya resolvés vía complexity-detection.
 
 ### Input
 Lee `context/kits/`.
@@ -51,6 +60,7 @@ Verificar que TODOS acceptance criteria + security gates tienen task. Si falta �
 
 ### Output (Result Contract)
 ```
+Estrategia: {quality|efficiency|simplicity}.
 {count} tasks across {tiers} tiers.
 Coverage: {covered}/{total} criteria + gates mapped.
 Next: /sdd-cavekit make
