@@ -1,0 +1,81 @@
+# Gentleman.Dots-inspired prompt using the tmux Kanagawa Dragon palette.
+add_newline = true
+palette = "kanagawa_dragon"
+
+format = "$directory$os$git_branch$fill$nodejs$rust$golang$php$bun$java$c$conda$zig$cmd_duration\n$character"
+[palettes.kanagawa_dragon]
+bg_bar = "#16161d"       # sumi_ink_0
+bg_pane = "#1e1f28"      # sumi_ink_1
+text = "#dcd7ba"         # fuji_white
+muted = "#727169"        # fuji_gray
+accent = "#c34043"       # autumn_red
+highlight = "#c4746e"    # dragon_red
+selection = "#e82424"    # samurai_red
+info = "#ff5d62"         # peach_red
+red_soft = "#e46876"     # wave_red
+red_deep = "#43242b"     # winter_red
+
+[fill]
+symbol = " "
+
+[directory]
+style = "bold fg:text"
+format = "[$path]($style) "
+truncation_length = 3
+truncate_to_repo = false
+
+[os]
+disabled = false
+style = "fg:info"
+format = "[$symbol]($style) "
+
+[os.symbols]
+Linux = ""
+Debian = ""
+Ubuntu = ""
+
+[git_branch]
+symbol = ""
+format = "[$symbol$branch]($style) "
+style = "bold fg:info"
+
+[git_status]
+style = "fg:highlight"
+format = "([$all_status$ahead_behind]($style) )"
+
+[cmd_duration]
+min_time = 2_000
+format = "[$duration]($style) "
+style = "fg:muted"
+
+[character]
+success_symbol = "[❯](bold fg:accent)"
+error_symbol = "[❯](bold fg:selection)"
+vimcmd_symbol = "[❮](bold fg:info)"
+
+[nodejs]
+style = "fg:accent"
+
+[rust]
+style = "fg:highlight"
+
+[golang]
+style = "fg:info"
+
+[php]
+style = "fg:red_soft"
+
+[bun]
+style = "fg:accent"
+
+[java]
+style = "fg:highlight"
+
+[c]
+style = "fg:info"
+
+[conda]
+style = "fg:red_soft"
+
+[zig]
+style = "fg:accent"

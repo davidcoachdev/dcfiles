@@ -1,0 +1,25 @@
+# Kanagawa Wave theme for Atuin — misma paleta que tmux-kanagawa wave
+[theme]
+name = "kanagawa"
+parent = "default"
+
+# Meanings válidos (atuin theme.rs):
+# AlertInfo, AlertWarn, AlertError, Annotation, Base, Guidance, Important,
+# Title, Muted, SyntaxCommand, SyntaxFlag, SyntaxString, SyntaxVariable,
+# SyntaxOperator, SyntaxComment
+[colors]
+Base            = "#dcd7ba" # fuji_white — texto normal
+Title           = "#7aa89f" # wave_aqua_2 — título cabecera
+Important       = "#938aa9" # spring_violet_1 — acentos/selección
+Guidance        = "#6a9589" # wave_aqua — ayuda (fallback AlertInfo)
+Annotation      = "#727169" # fuji_gray — metadatos (fallback AlertInfo)
+Muted           = "#54546d" # sumi_ink_6 — texto apagado
+AlertInfo       = "#7fb4ca" # spring_blue — info
+AlertWarn       = "#dca561" # autumn_orange/yellow — warnings
+AlertError      = "#e46876" # wave_red — errores
+SyntaxCommand   = "#98bb6c" # spring_green — comando
+SyntaxFlag      = "#7fb4ca" # spring_blue — flags
+SyntaxString    = "#dca561" # autumn_yellow — strings
+SyntaxVariable  = "#e46876" # wave_red — variables
+SyntaxOperator  = "#9cabca" # spring_violet_2 — operadores
+SyntaxComment   = "#54546d" # sumi_ink_6 — comentarios

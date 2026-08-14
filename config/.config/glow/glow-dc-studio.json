@@ -1,0 +1,91 @@
+{
+  "document": {
+    "block_prefix": "\n",
+    "block_suffix": "\n",
+    "color": "#ffcccc",
+    "margin": 2
+  },
+  "block_quote": {
+    "indent": 1,
+    "indent_token": "│ ",
+    "color": "#ff8080"
+  },
+  "paragraph": {},
+  "list": { "level_indent": 2 },
+  "heading": {
+    "block_suffix": "\n",
+    "color": "#ff3333",
+    "bold": true
+  },
+  "h1": {
+    "prefix": " ",
+    "suffix": " ",
+    "color": "#000000",
+    "background_color": "#ff3333",
+    "bold": true
+  },
+  "h2": { "prefix": "## ", "color": "#ff4d4d" },
+  "h3": { "prefix": "### ", "color": "#ff3333" },
+  "h4": { "prefix": "#### ", "color": "#ff6666" },
+  "h5": { "prefix": "##### ", "color": "#ff8080" },
+  "h6": { "prefix": "###### ", "color": "#ffcccc", "bold": false },
+  "text": {},
+  "strikethrough": { "crossed_out": true },
+  "emph": { "italic": true, "color": "#ff8080" },
+  "strong": { "bold": true, "color": "#ff3333" },
+  "hr": { "color": "#404040", "format": "\n────────\n" },
+  "item": { "block_prefix": "• ", "color": "#ff4d4d" },
+  "enumeration": { "block_prefix": ". ", "color": "#ff6666" },
+  "task": { "ticked": "[✓] ", "unticked": "[ ] " },
+  "link": { "color": "#ff4d4d", "underline": true },
+  "link_text": { "color": "#ff6666", "bold": true },
+  "image": { "color": "#ff4d4d", "underline": true },
+  "image_text": { "color": "#ff6666", "format": "Image: {{.text}} →" },
+  "code": {
+    "prefix": " ",
+    "suffix": " ",
+    "color": "#ff8080",
+    "background_color": "#0d0d0d"
+  },
+  "code_block": {
+    "color": "#ffb3b3",
+    "margin": 2,
+    "chroma": {
+      "text": { "color": "#ffcccc" },
+      "error": { "color": "#ffcccc", "background_color": "#cc0000" },
+      "comment": { "color": "#595959", "italic": true },
+      "comment_preproc": { "color": "#ff8080" },
+      "keyword": { "color": "#ff3333", "bold": true },
+      "keyword_reserved": { "color": "#ff1a1a" },
+      "keyword_namespace": { "color": "#ff4d4d" },
+      "keyword_type": { "color": "#ff6666" },
+      "operator": { "color": "#ff3333" },
+      "punctuation": { "color": "#ffb3b3" },
+      "name": { "color": "#ffcccc" },
+      "name_builtin": { "color": "#ff4d4d" },
+      "name_tag": { "color": "#ff4d4d" },
+      "name_attribute": { "color": "#ff8080" },
+      "name_class": { "color": "#ff6666", "bold": true },
+      "name_constant": { "color": "#ff8080" },
+      "name_decorator": { "color": "#ff9999" },
+      "name_exception": { "color": "#ff0000" },
+      "name_function": { "color": "#ff4d4d" },
+      "name_other": {},
+      "literal": {},
+      "literal_number": { "color": "#ff9999" },
+      "literal_date": {},
+      "literal_string": { "color": "#ff8080" },
+      "literal_string_escape": { "color": "#ff9999" },
+      "generic_deleted": { "color": "#ff0000" },
+      "generic_emph": { "italic": true },
+      "generic_inserted": { "color": "#ff6666" },
+      "generic_strong": { "bold": true }
+    }
+  },
+  "table": {},
+  "definition_list": {},
+  "definition_term": {},
+  "definition_description": { "block_prefix": "\n🠶 " },
+  "html_block": {},
+  "html_span": {}
+}
