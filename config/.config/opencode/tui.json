@@ -10,7 +10,8 @@
     "/home/dcdebian/.config/opencode/tui-plugins/opencode-restart.tsx",
     "/home/dcdebian/.config/opencode/tui-plugins/context-mode-stats.tsx",
     "/home/dcdebian/.config/opencode/tui-plugins/headroom-stats.tsx",
-    "/home/dcdebian/.config/opencode/tui-plugins/screenshot.tsx"
+    "/home/dcdebian/.config/opencode/tui-plugins/screenshot.tsx",
+    "/home/dcdebian/.config/opencode/tui-plugins/previu.tsx"
   ],
   "theme": "dc-studio"
 }

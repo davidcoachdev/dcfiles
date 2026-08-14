@@ -93,12 +93,22 @@ export const AgentFlow: Plugin = async (ctx) => {
     return { lastRun: now(), count: arr.length, nodes: arr }
   }
 
+  // Serialize writes so the periodic timer and event writes never interleave
+  // (which could leave a half-written file that the viewer reads as corrupt).
+  let writeChain: Promise<void> = Promise.resolve()
+
   async function write(): Promise<void> {
-    try {
-      await fs.writeFile(stateFile, JSON.stringify(snapshot(), null, 2), "utf8")
-    } catch {
-      /* ignore write errors */
+    const run = async () => {
+      const tmp = `${stateFile}.${process.pid}.${Date.now()}.tmp`
+      try {
+        await fs.writeFile(tmp, JSON.stringify(snapshot(), null, 2), "utf8")
+        await fs.rename(tmp, stateFile) // atomic swap on the same filesystem
+      } catch {
+        /* ignore write errors */
+      }
     }
+    writeChain = writeChain.then(run).catch(() => {})
+    return writeChain
   }
 
   // Periodic write so the viewer always has fresh data even between events.

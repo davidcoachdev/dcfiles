@@ -479,6 +479,7 @@
   },
   "plugin": [
     "opencode-agent-tmux",
+    "/home/dcdebian/.config/opencode/plugins/agent-flow.ts",
     "opencode-wakatime",
     "@oh-my-kiro/oh-my-kiro",
     "@zhafron/opencode-kiro-auth",
