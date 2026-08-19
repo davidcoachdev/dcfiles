@@ -316,6 +316,19 @@
         "read": true,
         "write": true
       }
+    },
+    "dc-dev": {
+      "description": "Dc-Dev unified agent entry point",
+      "mode": "primary",
+      "model": "opencode-go/gpt-5.6-luna",
+      "prompt": "Delegate consultation and approved builds through the Dc-Dev preflight and Cavekit lifecycle. Never infer approval.",
+      "tools": {
+        "bash": true,
+        "delegate": true,
+        "read": true,
+        "write": true,
+        "edit": true
+      }
     }
   },
   "provider": {
