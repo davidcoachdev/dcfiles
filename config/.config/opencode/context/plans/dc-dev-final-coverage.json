@@ -1,0 +1,6 @@
+{
+  "feature": "Dc-Dev unified agent",
+  "coverage": {"requirements": "25/25", "acceptance_criteria": "88/88"},
+  "source": "context/kits",
+  "fail_closed": true
+}

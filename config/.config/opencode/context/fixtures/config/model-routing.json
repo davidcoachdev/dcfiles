@@ -1,0 +1,11 @@
+{
+  "valid": {
+    "make": "opencode-go/gpt-5.6-luna",
+    "check": "opencode-go/glm-5.3",
+    "distinct": true
+  },
+  "invalid": [
+    {"make": "opencode-go/gpt-5.6-luna", "check": "opencode-go/gpt-5.6-luna", "reason": "same-model"},
+    {"make": "", "check": "opencode-go/glm-5.3", "reason": "missing-make"}
+  ]
+}

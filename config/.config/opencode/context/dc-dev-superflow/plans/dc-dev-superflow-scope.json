@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "feature": "dc-dev-superflow",
+  "primary_entry": "dc-dev",
+  "approved_additive_prefixes": [
+    "agents/dc-dev-superflow-",
+    "skills/dc-dev-superflow-",
+    "tests/dc-dev-superflow/",
+    "fixtures/dc-dev-superflow/",
+    "context/dc-dev-superflow/kits/",
+    "context/dc-dev-superflow/impl/",
+    "context/dc-dev-superflow/plans/"
+  ],
+  "protected_families": ["cavekit-", "gentle-", "sdd-", "kiroExplore", "external-agent"],
+  "max_quality_iterations": 5
+}

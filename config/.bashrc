@@ -152,3 +152,7 @@ export PATH="$HOME/.local/bin:$PATH"
 alias cb='codeburn report --provider opencode'
 alias cbs='codeburn status --provider opencode'
 alias cbo='codeburn optimize --provider opencode'
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/dcdebian/.local/bin:$PATH"

@@ -1,0 +1,23 @@
+total 112
+drwxrwxr-x  2 dcdebian dcdebian 4096 Aug 18 13:50 .
+drwxr-xr-x 31 dcdebian dcdebian 4096 Aug 18 14:35 ..
+lrwxrwxrwx  1 dcdebian dcdebian   83 Aug 11 00:50 agent-flow-status.test.ts -> ../../../Proyects/dcfiles/config/.config/opencode/plugins/agent-flow-status.test.ts
+lrwxrwxrwx  1 dcdebian dcdebian   71 Aug 11 00:50 agent-flow.ts -> ../../../Proyects/dcfiles/config/.config/opencode/plugins/agent-flow.ts
+-rw-rw-r--  1 dcdebian dcdebian 7587 Aug 13 22:45 agent-flow-tts.test.ts
+-rw-rw-r--  1 dcdebian dcdebian 6953 Aug 13 22:44 agent-flow-tts.ts
+lrwxrwxrwx  1 dcdebian dcdebian   78 Aug 11 00:50 background-agents.ts -> ../../../Proyects/dcfiles/config/.config/opencode/plugins/background-agents.ts
+-rw-r--r--  1 dcdebian dcdebian  894 Aug 17 22:16 dc-dev-runtime.boot.test.mjs
+-rw-r--r--  1 dcdebian dcdebian 1349 Aug 17 23:08 dc-dev-runtime.loader-contract.test.mjs
+-rw-r--r--  1 dcdebian dcdebian 3838 Aug 17 23:08 dc-dev-runtime.mjs
+-rw-rw-r--  1 dcdebian dcdebian 6615 Aug 18 02:16 dc-dev-superflow-dispatch.test.mjs
+-rw-rw-r--  1 dcdebian dcdebian 9346 Aug 18 13:34 dc-dev-superflow-dispatch.ts
+-rw-rw-r--  1 dcdebian dcdebian  751 Aug 18 13:46 _diag.mjs
+lrwxrwxrwx  1 dcdebian dcdebian   67 Aug 11 00:50 engram.ts -> ../../../Proyects/dcfiles/config/.config/opencode/plugins/engram.ts
+lrwxrwxrwx  1 dcdebian dcdebian   69 Aug 11 00:50 graphify.js -> ../../../Proyects/dcfiles/config/.config/opencode/plugins/graphify.js
+lrwxrwxrwx  1 dcdebian dcdebian   75 Aug 11 00:50 model-variants.ts -> ../../../Proyects/dcfiles/config/.config/opencode/plugins/model-variants.ts
+lrwxrwxrwx  1 dcdebian dcdebian   77 Aug 11 00:50 open-code-review.ts -> ../../../Proyects/dcfiles/config/.config/opencode/plugins/open-code-review.ts
+lrwxrwxrwx  1 dcdebian dcdebian   64 Aug 11 00:50 rtk.ts -> ../../../Proyects/dcfiles/config/.config/opencode/plugins/rtk.ts
+-rw-rw-r--  1 dcdebian dcdebian 4483 Aug 13 21:31 service-manager.ts
+lrwxrwxrwx  1 dcdebian dcdebian   74 Aug 11 00:50 skill-tracker.js -> ../../../Proyects/dcfiles/config/.config/opencode/plugins/skill-tracker.js
+-rw-rw-r--  1 dcdebian dcdebian  487 Aug 18 13:34 _test_json.mjs
+-rw-rw-r--  1 dcdebian dcdebian  266 Aug 18 13:47 _test_min2.mjs

@@ -1,4 +1,1 @@
-return {
-  "sphamba/smear-cursor.nvim",
-  opts = {},
-}
+smear.lua

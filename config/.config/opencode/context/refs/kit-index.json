@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "feature": "Dc-Dev core mínimo verificable (rebaseline): dc-dev → dispatch → subagente real → resultado → receipt",
+  "generated_by": "sdd-cavekit-retrieve",
+  "note": "Rebaseline 2026-08-18. Supera los reportes previos (unified-agent / superflow). El overlay dc-dev-superflow-* está ARCHIVADO, no es reusable para el core mínimo.",
+  "source_roots": [
+    "/home/dcdebian/.config/opencode/agents/dc-dev",
+    "/home/dcdebian/.config/opencode/hooks/dc-dev",
+    "/home/dcdebian/.config/opencode/plugins/dc-dev-runtime.mjs",
+    "/home/dcdebian/.config/opencode/context/kits/dc-dev-*",
+    "/home/dcdebian/.config/opencode/context/plans/dc-dev-contract.md",
+    "/home/dcdebian/.config/opencode/context/plans/dc-dev-hook-runtime.md",
+    "/home/dcdebian/.config/opencode/tests/dc-dev",
+    "/home/dcdebian/.config/opencode/plugins/agent-flow-tts.ts"
+  ],
+  "reuse": [
+    {"id":"agent-flow-tts","path":"/home/dcdebian/.config/opencode/plugins/agent-flow-tts.ts","capabilities":["TTS narration","subagent phase/status","debounce","fails-silent","PRESERVAR"],"confidence":"high","decision":"preserve"},
+    {"id":"dc-dev-kits-contract","path":"/home/dcdebian/.config/opencode/context/kits/dc-dev-*.md","capabilities":["R1-R25","front-door","gold-loop","protocols","enforcement","result contract"],"confidence":"high","decision":"reuse (acotar a R2,R4,R10-R14,R20-R25)"},
+    {"id":"dc-dev-contract-plan","path":"/home/dcdebian/.config/opencode/context/plans/dc-dev-contract.md","capabilities":["port/adapt boundary","artifact contract","non-goals"],"confidence":"high","decision":"reuse"},
+    {"id":"dc-dev-hook-runtime","path":"/home/dcdebian/.config/opencode/context/plans/dc-dev-hook-runtime.md","capabilities":["supported hook events probe","OpenCode 1.18.18","enforcement fallback check-phase"],"confidence":"high","decision":"reuse (restricción dura)"},
+    {"id":"dc-dev-entry","path":"/home/dcdebian/.config/opencode/agents/dc-dev/entry/entry.mjs","capabilities":["intent triage","approval gate","route"],"confidence":"high","decision":"reuse"},
+    {"id":"dc-dev-preflight","path":"/home/dcdebian/.config/opencode/agents/dc-dev/preflight/preflight.mjs","capabilities":["attributable approve/stop","receipt base"],"confidence":"high","decision":"reuse"},
+    {"id":"dc-dev-check-verdict","path":"/home/dcdebian/.config/opencode/agents/dc-dev/check/verdict/verdict.mjs","capabilities":["APPROVE/REVISE/REJECT parse","P0/P1 block"],"confidence":"high","decision":"reuse"},
+    {"id":"dc-dev-check-adversarial","path":"/home/dcdebian/.config/opencode/agents/dc-dev/check/adversarial/adversarial.mjs","capabilities":["adversarial verification"],"confidence":"high","decision":"reuse"},
+    {"id":"dc-dev-delegation","path":"/home/dcdebian/.config/opencode/agents/dc-dev/delegation/delegation.mjs","capabilities":["in-memory dedup","scope conflict reject"],"confidence":"high","decision":"reuse pattern; REAL launch missing"},
+    {"id":"dc-dev-tdd-protocol-loop","path":"/home/dcdebian/.config/opencode/agents/dc-dev/{make/tdd,protocol,gold-loop,spec-sync}","capabilities":["strict TDD","gentle protocol","bounded loop","bidirectional kit sync"],"confidence":"high","decision":"reuse"},
+    {"id":"dc-dev-hooks","path":"/home/dcdebian/.config/opencode/hooks/dc-dev/{trace,scope,evidence,artifact-validation,runtime-adapter}","capabilities":["deterministic trace","write-scope guard","evidence parser","artifact validation","event adapter"],"confidence":"high","decision":"reuse (no global registration)"},
+    {"id":"dc-dev-runtime-plugin","path":"/home/dcdebian/.config/opencode/plugins/dc-dev-runtime.mjs","capabilities":["hook enforcement","protected-path deny","command guard"],"confidence":"medium","decision":"reuse modules; AVOID global registration"},
+    {"id":"dc-dev-tests","path":"/home/dcdebian/.config/opencode/tests/dc-dev","capabilities":["12-test legacy suite","runtime/e2e/security/result/receipt coverage"],"confidence":"high","decision":"reuse as verification baseline"}
+  ],
+  "archive": [
+    "agents/dc-dev-superflow-*",
+    "skills/dc-dev-superflow-*",
+    "context/dc-dev-superflow/*",
+    "context/refs/dc-dev-superflow-reuse-report.md",
+    "context/refs/caveman-reuse-report.md",
+    "context/impl/check-1..5.md",
+    "context/impl/trace.md",
+    "context/plans/dc-dev-* (salvo contract/hook-runtime/security-review)",
+    "restore-backup-20260818-143514/"
+  ],
+  "discard": [
+    "claim: live dispatch works (INCONCLUSIVE)",
+    "claim: 25/25+12/12 = runtime correctness (false-green)",
+    "dc-dev-superflow-core/transport.mjs as dispatch (capability gate only)",
+    "kiroExplore delegation path (DE-1 dead end)",
+    "global dc-dev-runtime plugin registration",
+    "external frozen deps (Caveman/Cavemem/Cavekit/Cavegemma/Caveman Code)",
+    "Check 5 = REVISE (do not convert to ok)"
+  ],
+  "gaps": [
+    "real dispatch via @opencode-ai/sdk session.prompt/subtask to a registered child",
+    "end-to-end receipt writer (JSONL) bound to context/impl/trace.md",
+    "minimal opencode.json wiring (dc-dev entry + 1 real worker child)",
+    "live dispatch test that captures status:dispatched/done + selectedChild",
+    "write-scope confinement applied to the live child (reuse scope-guard)"
+  ]
+}

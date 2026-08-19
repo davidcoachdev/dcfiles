@@ -1,0 +1,5 @@
+{
+  "blocked": ["prompt-injection", "protected-file", "path-traversal", "symlink-escape", "scope-change", "inferred-approval"],
+  "severity": {"P0": "block", "P1": "block", "P2": "record", "P3": "record"},
+  "redaction": "fail-closed"
+}

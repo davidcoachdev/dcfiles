@@ -1,0 +1,19 @@
+style: /home/dcdebian/.config/glow/glow-dc-studio.json
+mouse: true
+pager: true
+width: 100
+all: true
+
+# Estilos TUI (glow >= 1.5) — nuestros rojos dc-studio
+tui:
+  file-tree:
+    foreground: "#ffcccc"
+    selected-foreground: "#000000"
+    selected-background: "#ff3333"
+  status-bar:
+    foreground: "#ffcccc"
+    background: "#1a1a1a"
+  help:
+    foreground: "#ff8080"
+  spinner:
+    foreground: "#ff4d4d"

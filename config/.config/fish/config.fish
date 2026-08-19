@@ -9,3 +9,7 @@ end
 
 # Pi
 fish_add_path "/home/dcdebian/.local/share/fnm/node-versions/v24.14.0/installation/bin"
+
+
+# Added by Antigravity CLI installer
+set -gx PATH "/home/dcdebian/.local/bin" $PATH

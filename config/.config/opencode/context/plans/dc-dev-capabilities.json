@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "feature": "Dc-Dev unified agent",
+  "status": "setup-required",
+  "available": ["OpenCode 1.18.18", "node:test", "opencode-go/gpt-5.6-luna", "opencode-go/glm-5.3"],
+  "unavailable": ["capability-discovery helper at advertised path"],
+  "source": "context/refs/kit-index.json",
+  "policy": "do-not-invent-capabilities"
+}

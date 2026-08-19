@@ -1,3 +1,1 @@
-return {
-  "tris203/precognition.nvim",
-}
+precognition.lua

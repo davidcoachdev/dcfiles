@@ -1,0 +1,6 @@
+{
+  "supported": ["permission.ask", "command.execute.before", "tool.execute.before", "tool.execute.after"],
+  "unsupported": ["command.executed", "permission.*"],
+  "changed": {"from": "1.18.18", "to": "unknown"},
+  "fallback": "check-phase"
+}

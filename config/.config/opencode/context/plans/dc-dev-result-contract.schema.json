@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["status", "executive_summary", "artifacts", "next_recommended", "risks", "skill_resolution"],
+  "properties": {
+    "status": {"enum": ["ok", "failed", "blocked"]},
+    "executive_summary": {"type": "string", "minLength": 1},
+    "artifacts": {"type": "array", "items": {"type": "string"}},
+    "next_recommended": {"type": "string"},
+    "risks": {"type": "array", "items": {"type": "string"}},
+    "skill_resolution": {"enum": ["resolved", "partial", "unavailable"]}
+  },
+  "additionalProperties": false
+}

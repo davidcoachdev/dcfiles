@@ -1,0 +1,11 @@
+{
+  "approvals": {
+    "8da25199-4547-4e17-8c6b-82752b83a672": {
+      "approvalId": "8da25199-4547-4e17-8c6b-82752b83a672",
+      "actor": "human:alice",
+      "approvedAt": 1000,
+      "expiresAt": 6000,
+      "requestHash": "98a7bbb11b9e6e17a0a6c0da20b71d01f86602098145e0d551ff2ac611856e0d"
+    }
+  }
+}

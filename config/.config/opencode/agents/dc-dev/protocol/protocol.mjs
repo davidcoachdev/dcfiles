@@ -1,0 +1,1 @@
+export function createEnvelope(input) { return Object.fromEntries(Object.entries(input).map(([key, value]) => [/token|secret|password|api[_-]?key/i.test(key) ? key : key, /token|secret|password|api[_-]?key/i.test(key) ? "[REDACTED]" : value])) }

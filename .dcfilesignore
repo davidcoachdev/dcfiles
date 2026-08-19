@@ -140,3 +140,8 @@ core
 
 # opencode-go.json holds a session authCookie secret
 opencode-go.json
+
+# ---------------------------------------------------------------------------
+# CLI Proxy API Console — account tokens and credentials
+# ---------------------------------------------------------------------------
+.cli-proxy-api/

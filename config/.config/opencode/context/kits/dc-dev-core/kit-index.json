@@ -1,0 +1,112 @@
+{
+  "feature": "dc-dev-core-minimal",
+  "title": "Rebuild the minimal verifiable core of Dc-Dev (basic phase closed)",
+  "verdict": "PARTIAL-from-reuse-report",
+  "scope": "dc-dev (sole visible agent) -> triage -> experience-mode -> dispatch -> real worker -> result -> receipt",
+  "entryAgent": "dc-dev",
+  "visibleAgents": ["dc-dev"],
+  "workers": [
+    {
+      "id": "dc-dev-worker",
+      "mode": "subagent",
+      "hidden": true,
+      "role": "performs the delegated task under bounded write-scope; the ONLY subagent",
+      "superflowPrefix": false
+    }
+  ],
+  "sdk": "@opencode-ai/sdk@1.18.18",
+  "experienceModes": {
+    "selector": "resolved up-front per run inside dc-dev",
+    "values": ["interactive", "minimal", "automatic"],
+    "default": "interactive",
+    "failClosed": "unrecognized/missing mode -> interactive",
+    "rules": {
+      "interactive": "prompts at every relevant gate",
+      "minimal": "prompts only at critical decisions",
+      "automatic": "runs only within an approved scope; halts on risk/block/out-of-scope"
+    },
+    "ttsNeverGate": true
+  },
+  "triage": {
+    "role": "precondition gate — runs BEFORE experience-mode resolution (R5) and dispatch (R9)",
+    "readOnly": true,
+    "executesChanges": false,
+    "autoApproves": false,
+    "recommendsOnly": true,
+    "resolvedBy": "R5 remains the authoritative fail-closed mode resolver; triage recommendation is advisory",
+    "tiers": {
+      "green": {
+        "match": "pointwise fix / cosmetic / simple config (color, button, typo, single config value); single surface, bounded validation, no data/security/permission/architectural concern",
+        "recommendedExperienceMode": ["interactive", "minimal"],
+        "recommendedDepth": "shallow / minimal test set + minimal workflow"
+      },
+      "yellow": {
+        "match": "feature or multi-file change with moderate risk, standard flow; >=2 files or non-trivial logic; no security/data/permission/architectural ambiguity",
+        "recommendedExperienceMode": ["interactive"],
+        "recommendedDepth": "standard"
+      },
+      "red": {
+        "match": "architecture, security, data, permissions, or ambiguous scope",
+        "recommendedExperienceMode": ["interactive"],
+        "recommendedDepth": "deep + maximum gates + HITL",
+        "forcedInteractive": true,
+        "singleHumanQuestionOnAmbiguity": true
+      }
+    },
+    "ambiguity": "asks exactly ONE human question and halts until answered; never auto-classifies",
+    "requirements": ["R19", "R20", "R21", "R22", "R23", "R24", "R25"]
+  },
+  "kits": [
+    {
+      "file": "context/kits/dc-dev-core/overview.md",
+      "requirements": ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R19", "R20", "R21", "R22", "R23", "R24", "R25"],
+      "role": "dc-dev entry / boundary / result contract / experience-mode / triage gate"
+    },
+    {
+      "file": "context/kits/dc-dev-core/dispatch.md",
+      "requirements": ["R9", "R10", "R11", "R12", "R13"],
+      "role": "real SDK dispatch to dc-dev-worker + wiring + fail-closed + scope"
+    },
+    {
+      "file": "context/kits/dc-dev-core/receipt.md",
+      "requirements": ["R14", "R15", "R16", "R17", "R18"],
+      "role": "receipt schema + e2e live + no-secrets + real-evidence + experienceMode"
+    }
+  ],
+  "totalRequirements": 25,
+  "preservedIntact": ["plugins/agent-flow-tts.ts"],
+  "reusedModules": [
+    "agents/dc-dev/check/verdict (parseVerdict)",
+    "hooks/dc-dev/scope/scope-guard.mjs",
+    "context/plans/dc-dev-contract.md"
+  ],
+  "archivedOutOfScope": [
+    "agents/dc-dev-superflow-* (archive-only, never reactivated)",
+    "skills/dc-dev-superflow-* (archive-only)",
+    "context/dc-dev-superflow/* (archive-only)",
+    "capability-gate / recovery / provenance / token-efficiency",
+    "global dc-dev-runtime.mjs hook registration",
+    "legacy cavekit-* / gentle-orchestrator / sdd-* (reference only, untouched)"
+  ],
+  "dispatchMechanism": {
+    "sdk": "@opencode-ai/sdk@1.18.18",
+    "call": "client.session.prompt({ id, prompt, agent: 'dc-dev-worker', subtask: true })",
+    "observe": "client.session.children({ id })",
+    "agents": "client.app.agents() returns dc-dev-worker (hidden subagent)",
+    "subtaskPart": "{ type: 'subtask', prompt, description, agent: 'dc-dev-worker' }",
+    "wiring": "opencode.json command with agent: 'dc-dev-worker' + subtask:true"
+  },
+  "statusEnum": ["dispatched", "done", "blocked", "setup-required"],
+  "receiptFields": [
+    "status",
+    "selectedChild",
+    "requestId",
+    "timestamp",
+    "resultRef",
+    "evidenceRef",
+    "verdict",
+    "experienceMode"
+  ],
+  "testsDir": "tests/dc-dev-core/",
+  "next": "/sdd-cavekit map"
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["status", "executive_summary", "artifacts", "next_recommended", "risks", "skill_resolution", "receipt", "lineage", "provenance", "verification", "recovery", "coverage"],
+  "properties": {
+    "status": {"enum": ["ok", "failed", "blocked", "setup-required", "inconclusive"]},
+    "executive_summary": {"type": "string", "minLength": 1},
+    "artifacts": {"type": "array"},
+    "next_recommended": {"type": "string"},
+    "risks": {"type": "array"},
+    "skill_resolution": {"type": "string"},
+    "receipt": {"type": "object"},
+    "lineage": {"type": "object"},
+    "provenance": {"type": "array"},
+    "verification": {"type": "object"},
+    "recovery": {"type": "object"},
+    "coverage": {
+      "type": "object",
+      "required": ["new_superflow", "legacy"],
+      "additionalProperties": false,
+      "properties": {
+        "new_superflow": {"$ref": "#/$defs/corpusCounts"},
+        "legacy": {"$ref": "#/$defs/corpusCounts"}
+      }
+    }
+  },
+  "$defs": {
+    "corpusCounts": {
+      "type": "object",
+      "required": ["requirements", "acceptance_criteria", "tests"],
+      "additionalProperties": false,
+      "properties": {
+        "requirements": {"type": "integer", "minimum": 0},
+        "acceptance_criteria": {"type": "integer", "minimum": 0},
+        "tests": {"type": "integer", "minimum": 0}
+      }
+    }
+  },
+  "additionalProperties": false
+}

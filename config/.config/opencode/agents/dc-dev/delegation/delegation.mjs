@@ -1,0 +1,1 @@
+export function createDelegator() { const active = new Map(); return { launch(task) { const id = `${task.phase}:${task.task}`; const prior = active.get(id); if (prior) return { ok: false, duplicate: JSON.stringify(prior.scope) === JSON.stringify(task.scope) }; active.set(id, task); return { ok: true, id } } } }

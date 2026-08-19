@@ -1,0 +1,8 @@
+{
+  "status": "failed",
+  "executive_summary": "Iteration 3 closes the disk-validatable P1 gaps: the global plugin has an explicit workspace fallback allowlist, scope enforcement rejects traversal, outside paths, protected paths, and symlinks for edit/write/patch and Bash candidates, approvals are durable request-bound records with expiry and revocation, and T-033 executes eight adversarial checks with real output. The trace now records Check 1 and Check 2 as REJECT and Iteration 3 as a disk PASS with a runtime limitation. Live OpenCode 1.18.18 dispatch after restart remains unverified, so the overall result stays failed until Check 3.",
+  "artifacts": ["plugins/dc-dev-runtime.mjs", "hooks/dc-dev/scope/scope-guard.mjs", "agents/dc-dev/front-door/triage.mjs", "agents/dc-dev/entry/entry.mjs", "context/fixtures/security/workspace-audit.mjs", "context/plans/dc-dev-security-review.md", "context/plans/dc-dev-runtime-validation.md", "context/impl/trace.md", "opencode.json.bak-dc-dev-iter3"],
+  "next_recommended": "/sdd-cavekit check",
+  "risks": ["OpenCode 1.18.18 must be restarted before live plugin dispatch can be verified", "25/25 and 88/88 remain parser-level coverage counts rather than complete criterion evidence", "no Git repository is available for git diff --check"],
+  "skill_resolution": "partial"
+}

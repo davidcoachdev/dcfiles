@@ -1,0 +1,13 @@
+{
+  "feature": "Dc-Dev unified agent",
+  "bindings": [
+    {"source": "cavekit-gold-loop", "target": "gold lifecycle", "mode": "adapt"},
+    {"source": "gentle-orchestrator", "target": "preflight, routing, receipts, context envelope", "mode": "adapt"},
+    {"source": "cavekit-make", "target": "delegated Strict TDD implementation", "mode": "adapt"},
+    {"source": "cavekit-check", "target": "adversarial evidence and security verification", "mode": "adapt"},
+    {"source": "autonomous-loop", "target": "bounded iteration and stop controls", "mode": "adapt"},
+    {"source": "impl-tracking", "target": "implementation records", "mode": "reuse"}
+  ],
+  "factory_policy": "preserve-existing-factory",
+  "artifact_language": "neutral-English"
+}
