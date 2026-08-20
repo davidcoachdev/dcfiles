@@ -24,7 +24,9 @@ export async function dispatchToWorker({
   // debug client keys
   try {
     const fs = await import("node:fs");
-    fs.appendFileSync("/tmp/dc-dev-agents.log", JSON.stringify({ time: new Date().toISOString(), clientKeys: Object.keys(client||{}), sessionKeys: Object.keys(client?.session||{}), appKeys: Object.keys(client?.app||{}) }) + "\n");
+    const sess = client?.session;
+    const app = client?.app;
+    fs.appendFileSync("/tmp/dc-dev-agents.log", JSON.stringify({ time: new Date().toISOString(), clientKeys: Object.keys(client||{}), sessionKeys: Object.keys(sess||{}), appKeys: Object.keys(app||{}), sessClientKeys: Object.keys(sess?._client||{}), appClientKeys: Object.keys(app?._client||{}), hasPrompt: typeof sess?.prompt, hasChildren: typeof sess?.children, hasAppAgents: typeof app?.agents }) + "\n");
   } catch {}
   let agents
   try {
