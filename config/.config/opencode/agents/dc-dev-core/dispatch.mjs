@@ -24,21 +24,13 @@ export async function dispatchToWorker({
   let agents
   try {
     agents = await client.app.agents({})
-    // debug log
-    try {
-      const fs = await import("node:fs");
-      fs.appendFileSync("/tmp/dc-dev-agents.log", JSON.stringify({ time: new Date().toISOString(), agents: agents?.slice?.(0,5)?.map(a=>({id:a?.id, name:a?.name})) || agents, total: Array.isArray(agents)?agents.length:0 }) + "\n");
-    } catch {}
   } catch (e) {
     return { status: "setup-required", selectedChild: null, resultRef: null, evidenceRef: null, reason: `agents-unavailable:${e.message}` }
   }
+  const agentList = Array.isArray(agents) ? agents : agents?.data || []
   const registered =
-    Array.isArray(agents) && agents.some((a) => a && (a.id === agent || a.name === agent))
+    Array.isArray(agentList) && agentList.some((a) => a && (a.id === agent || a.name === agent))
   if (!registered) {
-    try {
-      const fs = await import("node:fs");
-      fs.appendFileSync("/tmp/dc-dev-agents.log", `NOT FOUND ${agent} in ${JSON.stringify(agents?.map(a=>a?.id||a?.name))}\n`);
-    } catch {}
     return { status: "setup-required", selectedChild: null, resultRef: null, evidenceRef: null, reason: "worker-unregistered" }
   }
 
