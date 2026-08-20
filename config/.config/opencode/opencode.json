@@ -345,6 +345,246 @@
         "skill": true,
         "task": true
       }
+    },
+    "dc-dev-superflow-architecture-review": {
+      "description": "Review solution fitness, YAGNI, boundaries, and ownership.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-architecture-review executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-architecture-review/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
+    },
+    "dc-dev-superflow-research-provenance": {
+      "description": "Acquire bounded research with provenance and untrusted-data isolation.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-research-provenance executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-research-provenance/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
+    },
+    "dc-dev-superflow-token-budget": {
+      "description": "Measure transport savings with safe Headroom and RTK adapters.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-token-budget executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-token-budget/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
+    },
+    "dc-dev-superflow-triage": {
+      "description": "Choose fast, standard, or deep execution paths deterministically.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-triage executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-triage/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
+    },
+    "dc-dev-superflow-routing": {
+      "description": "Route Dc-Dev work to owned children after admission.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-routing executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-routing/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
+    },
+    "dc-dev-superflow-execution-tdd": {
+      "description": "Execute bounded tasks with mechanical red-green-refactor receipts.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-execution-tdd executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-execution-tdd/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
+    },
+    "dc-dev-superflow-evidence-bundle": {
+      "description": "Assemble publication evidence with ordered validation gates.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-evidence-bundle executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-evidence-bundle/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
+    },
+    "dc-dev-superflow-review-adversarial": {
+      "description": "Independently challenge Dc-Dev output and security claims.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-review-adversarial executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-review-adversarial/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
+    },
+    "dc-dev-superflow-memory": {
+      "description": "Persist deduplicated, conflict-aware, provenance-bearing run memory.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-memory executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-memory/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
+    },
+    "dc-dev-superflow-caveman": {
+      "description": "Compress transport without losing security or evidence meaning.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-caveman executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-caveman/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
+    },
+    "dc-dev-superflow-recovery": {
+      "description": "Recover failed Dc-Dev work without losing lineage.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-recovery executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-recovery/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
+    },
+    "dc-dev-superflow-security-gate": {
+      "description": "Scan inputs and enforce P0/P1 blocking security decisions.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-security-gate executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-security-gate/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
+    },
+    "dc-dev-superflow-intake": {
+      "description": "Normalize Dc-Dev requests and approval boundaries.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-intake executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-intake/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
+    },
+    "dc-dev-superflow-context": {
+      "description": "Assemble bounded context capsules owned by the orchestrator.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-context executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-context/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
+    },
+    "dc-dev-superflow-capability-gate": {
+      "description": "Admit explicit CLI, MCP, plugin, browser, TTS, and model capabilities.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-capability-gate executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-capability-gate/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
+    },
+    "dc-dev-superflow-plan-graph": {
+      "description": "Build owned dependency waves and checkpointed handoffs.",
+      "mode": "subagent",
+      "prompt": "You are a Dc-Dev dc-dev-superflow-plan-graph executor. Read your skill file at ~/.config/opencode/skills/dc-dev-superflow-plan-graph/SKILL.md and follow it exactly. Do not delegate.",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "glob": true,
+        "grep": true,
+        "skill": true,
+        "task": true
+      }
     }
   },
   "provider": {
