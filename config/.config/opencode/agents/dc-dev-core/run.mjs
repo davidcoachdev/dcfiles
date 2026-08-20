@@ -61,7 +61,8 @@ export async function runDcDevCore({
   }
 
   // PHASE 4 — dispatch via real SDK. R9/R11.
-  const dispatch = await dispatchToWorker({ client, sessionId, prompt: request.text, agent: "dc-dev-worker" })
+  const promptText = typeof request === "string" ? request : request?.text || String(request);
+  const dispatch = await dispatchToWorker({ client, sessionId, prompt: promptText, agent: "dc-dev-worker" })
 
   const status = dispatch.status === "dispatched" ? "done" : dispatch.status
   const receipt = safeReceipt({
