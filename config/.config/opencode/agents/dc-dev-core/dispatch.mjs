@@ -21,6 +21,11 @@ export async function dispatchToWorker({
   subtask = true,
   body,
 } = {}) {
+  // debug client keys
+  try {
+    const fs = await import("node:fs");
+    fs.appendFileSync("/tmp/dc-dev-agents.log", JSON.stringify({ time: new Date().toISOString(), clientKeys: Object.keys(client||{}), sessionKeys: Object.keys(client?.session||{}), appKeys: Object.keys(client?.app||{}) }) + "\n");
+  } catch {}
   let agents
   try {
     agents = await client.app.agents({})
