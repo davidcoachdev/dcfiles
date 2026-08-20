@@ -50,9 +50,21 @@ export async function dispatchToWorker({
         subtask,
         part: { type: "subtask", prompt, agent, description: "dc-dev-core dispatch" },
       }
+    try {
+      const fs = await import("node:fs");
+      fs.appendFileSync("/tmp/dc-dev-agents.log", JSON.stringify({ time: new Date().toISOString(), step: "before-prompt", sessionId, agent, payload: JSON.stringify(payload).slice(0,500) }) + "\n");
+    } catch {}
     await client.session.prompt({ id: sessionId, body: payload })
+    try {
+      const fs = await import("node:fs");
+      fs.appendFileSync("/tmp/dc-dev-agents.log", JSON.stringify({ time: new Date().toISOString(), step: "after-prompt" }) + "\n");
+    } catch {}
 
     const children = await client.session.children({ id: sessionId })
+    try {
+      const fs = await import("node:fs");
+      fs.appendFileSync("/tmp/dc-dev-agents.log", JSON.stringify({ time: new Date().toISOString(), step: "after-children", children: JSON.stringify(children).slice(0,2000) }) + "\n");
+    } catch {}
     const list = Array.isArray(children) ? children : children && children.children ? children.children : []
     const child = list.find((c) => c && (c.agent === agent || c.name === agent))
     if (!child || !child.id) {
