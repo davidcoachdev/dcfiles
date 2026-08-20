@@ -25,6 +25,10 @@ export default async function dcDevCorePlugin(ctx: any) {
           mode: tool.schema.string().optional(),
         },
         async execute(args: any, context: any) {
+          try {
+            const fs2 = await import("node:fs");
+            fs2.appendFileSync("/tmp/dc-dev-agents.log", JSON.stringify({ time: new Date().toISOString(), step: "core-execute", contextKeys: Object.keys(context||{}), sessionKeys: Object.keys(context?.session||{}), sessionId: context?.session?.id, hasClient: !!context?.client }) + "\n");
+          } catch {}
           const receiptPath = path.join(directory || process.cwd(), "dc-dev-core-receipts.jsonl")
           const receiptWriter = {
             writeLine: (line: string) => {
