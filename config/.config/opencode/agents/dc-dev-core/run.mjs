@@ -62,6 +62,10 @@ export async function runDcDevCore({
 
   // PHASE 4 — dispatch via real SDK. R9/R11.
   const promptText = typeof request === "string" ? request : request?.text || String(request);
+  try {
+    const fs = await import("node:fs");
+    fs.appendFileSync("/tmp/dc-dev-agents.log", JSON.stringify({ time: new Date().toISOString(), step: "run-before-dispatch", sessionId, contextSessionId: context?.session?.id, hasClientSession: !!client?.session }) + "\n");
+  } catch {}
   const dispatch = await dispatchToWorker({ client, sessionId, prompt: promptText, agent: "dc-dev-worker" })
 
   const status = dispatch.status === "dispatched" ? "done" : dispatch.status
