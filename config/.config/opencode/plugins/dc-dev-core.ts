@@ -51,8 +51,8 @@ export default async function dcDevCorePlugin(ctx: any) {
           }
           const out = await runDcDevCore({
             request: args.request,
-            client: context?.client ?? client,
-            sessionId: context?.session?.id ?? "unknown",
+            client: context?.client ?? client ?? ctx?.client,
+            sessionId: context?.sessionID ?? context?.session?.id ?? "unknown",
             modeInput: args.mode,
             receiptWriter,
             hitl,
