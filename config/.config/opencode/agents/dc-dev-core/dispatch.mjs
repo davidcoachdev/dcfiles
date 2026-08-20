@@ -60,6 +60,10 @@ export async function dispatchToWorker({
       fs.appendFileSync("/tmp/dc-dev-agents.log", JSON.stringify({ time: new Date().toISOString(), step: "after-prompt" }) + "\n");
     } catch {}
 
+    try {
+      const fs = await import("node:fs");
+      fs.appendFileSync("/tmp/dc-dev-agents.log", JSON.stringify({ time: new Date().toISOString(), step: "before-children", sessionId }) + "\n");
+    } catch {}
     const children = await client.session.children({ id: sessionId })
     try {
       const fs = await import("node:fs");
