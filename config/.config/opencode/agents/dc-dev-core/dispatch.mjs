@@ -43,28 +43,20 @@ export async function dispatchToWorker({
 
   try {
     const payload =
-      body ||
-      {
-        prompt,
-        agent,
-        subtask,
-        part: { type: "subtask", prompt, agent, description: "dc-dev-core dispatch" },
+      body || {
+        parts: [{ type: "subtask", prompt, description: "dc-dev-core dispatch", agent }],
       }
     try {
       const fs = await import("node:fs");
       fs.appendFileSync("/tmp/dc-dev-agents.log", JSON.stringify({ time: new Date().toISOString(), step: "before-prompt", sessionId, agent, payload: JSON.stringify(payload).slice(0,500) }) + "\n");
     } catch {}
-    await client.session.prompt({ id: sessionId, body: payload })
+    await client.session.prompt({ path: { id: sessionId }, body: payload })
     try {
       const fs = await import("node:fs");
       fs.appendFileSync("/tmp/dc-dev-agents.log", JSON.stringify({ time: new Date().toISOString(), step: "after-prompt" }) + "\n");
     } catch {}
 
-    try {
-      const fs = await import("node:fs");
-      fs.appendFileSync("/tmp/dc-dev-agents.log", JSON.stringify({ time: new Date().toISOString(), step: "before-children", sessionId }) + "\n");
-    } catch {}
-    const children = await client.session.children({ id: sessionId })
+    const children = await client.session.children({ path: { id: sessionId } })
     try {
       const fs = await import("node:fs");
       fs.appendFileSync("/tmp/dc-dev-agents.log", JSON.stringify({ time: new Date().toISOString(), step: "after-children", children: JSON.stringify(children).slice(0,2000) }) + "\n");
@@ -75,7 +67,7 @@ export async function dispatchToWorker({
       return { status: "blocked", selectedChild: null, resultRef: null, evidenceRef: null, reason: "no-child-observed" }
     }
 
-    const messages = await client.session.messages({ id: child.id })
+    const messages = await client.session.messages({ path: { id: child.id } })
     const msgList = Array.isArray(messages) ? messages : messages && messages.messages ? messages.messages : []
     const last = msgList[msgList.length - 1]
     return {
