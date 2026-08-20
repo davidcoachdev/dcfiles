@@ -94,6 +94,27 @@ Before scraping, follow this sequence:
 
 > Avoid standalone `goto` — prefer `markdown <url>` or `html <url>` to navigate and read in one call.
 
+## CLI vs MCP — Not Interchangeable
+
+> **Critical**: MCP tools (`goto`, `tree`, `click`, `fill`, `extract`, etc.) are **NOT CLI flags**. Do NOT run `lightpanda tree` or `lightpanda click` — they don't exist. MCP tools only work via `lightpanda mcp` (JSON-RPC). `lightpanda fetch` is the CLI read-only equivalent.
+
+| Intent (MCP tool) | CLI Equivalent | Direct? |
+|---|---|---|
+| `goto` + `markdown`/`html`/`tree` | `lightpanda fetch <url> --dump markdown|html|links` | ✅ Yes |
+| `waitForSelector` / `waitForState` | `lightpanda fetch --wait-selector "#x" --wait-until networkidle0 <url>` | ✅ Yes |
+| `evaluate` / inject JS | `lightpanda fetch --inject-script "js" --wait-script "expr" <url>` | ⚠️ Partial |
+| `click` / `fill` / `type` / `selectOption` / `setChecked` | No CLI — requires `lightpanda mcp` or `lightpanda serve` (CDP) | ❌ MCP only |
+| `extract {schema}` | `fetch --dump markdown` + parse externally | ⚠️ Partial |
+| Sessions `session_new/list/close` | `lightpanda mcp --port 9223` + `curl POST /mcp` with `Mcp-Session-Id` header | ✅ Via HTTP |
+
+**Terminal usage of MCP (when you must):**
+```bash
+lightpanda mcp --port 9223   # HTTP mode, one session per client
+# then in another shell:
+curl -X POST http://127.0.0.1:9223/mcp -H "Content-Type: application/json" -H "Mcp-Session-Id: s1" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"markdown","arguments":{"url":"https://example.com"}}}'
+```
+
 ## CLI Workflow
 
 ### Fetch a page (CLI mode)
