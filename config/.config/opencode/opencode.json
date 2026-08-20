@@ -376,6 +376,15 @@
     }
   },
   "mcp": {
+    "codegraph": {
+      "command": [
+        "codegraph",
+        "serve",
+        "--mcp"
+      ],
+      "enabled": true,
+      "type": "local"
+    },
     "context7": {
       "enabled": true,
       "type": "remote",
@@ -401,6 +410,14 @@
         "lightpanda",
         "mcp"
       ],
+      "type": "local"
+    },
+    "repowise": {
+      "command": [
+        "repowise",
+        "mcp"
+      ],
+      "enabled": true,
       "type": "local"
     },
     "serena": {

@@ -43,7 +43,7 @@ repowise init --wiki-style caveman    # token-condensed, AI-first docs
 repowise init --language es           # output language for wiki pages
 repowise init --skip-tests            # skip test files
 repowise init --no-claude-md          # skip generating CLAUDE.md
-repowise init --no-editor-setup       # index without writing editor configs
+repowise init --no-editor-setup      # index without writing editor configs
 repowise init -x vendor/ -x dist/     # exclude patterns (repeatable)
 ```
 
@@ -225,7 +225,7 @@ repowise hook uninstall               # remove hooks
 repowise hook rewrite                 # distill command-rewrite hook
 repowise hook read-skeleton           # skeleton-served Reads
 repowise hook read-reread             # collapsed re-reads
-repowise hook search-digest           # digest-served searches
+repowise hook search-digest            # digest-served searches
 repowise hook stats                   # what hooks fired + efficacy
 repowise hook backfill                # replay transcripts into efficacy ledger
 ```
@@ -255,7 +255,7 @@ repowise uninstall                    # remove repowise from repo
 
 ## MCP Tools Reference
 
-repowise exposes MCP tools for agents. These mirror the CLI but as structured JSON-RPC.
+Repowise exposes MCP tools for agents. These mirror the CLI but as structured JSON-RPC.
 
 ### Default tools (11, single-repo)
 
